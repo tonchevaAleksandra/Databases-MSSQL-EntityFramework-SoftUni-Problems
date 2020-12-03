@@ -49,6 +49,12 @@
           <AssociatedConnUserName />
           <FullPath>14. Car Rental Database.sql</FullPath>
         </FileNode>
+        <FileNode Name="15. Hotel Database.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:DESKTOP-LPUSTF5\SQLEXPRESS:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>DESKTOP-LPUSTF5\SQLEXPRESS</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>15. Hotel Database.sql</FullPath>
+        </FileNode>
         <FileNode Name="2.CreateTebles3.AlterMinionsTables4InsertRecords.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:DESKTOP-LPUSTF5\SQLEXPRESS:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>DESKTOP-LPUSTF5\SQLEXPRESS</AssociatedConnSrvName>
