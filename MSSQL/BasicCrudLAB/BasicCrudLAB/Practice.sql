@@ -49,6 +49,26 @@ FROM [Employees]
 SELECT COUNT(DISTINCT JobTitle)
 FROM Employees
 
+SELECT JobTitle, COUNT(*) AS Count
+FROM [Employees]
+GROUP BY JobTitle
+
+SELECT JobTitle,
+       MAX(Salary)               AS MaxSalary,
+       MIN(Salary)               AS MinSalary,
+       MAX(Salary) - MIN(Salary) AS DiffSalary
+FROM [Employees]
+GROUP BY JobTitle
+ORDER BY MaxSalary DESC
+
+SELECT *
+FROM Employees
+WHERE (FirstName LIKE '%et%') OR NOT (LastName='Nakov')
+AND Salary >= 4000 AND Salary BETWEEN 4000 AND 20000
+ORDER BY Salary DESC
+
+
+
 
 
 
