@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# SQL Server Management Studio Solution File, Format Version 18.00
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "BasicCrudLAB", "BasicCrudLAB\BasicCrudLAB.ssmssqlproj", "{792DF9C0-00BA-4C24-BB1E-D385701F5DB5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Default|Default = Default|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{792DF9C0-00BA-4C24-BB1E-D385701F5DB5}.Default|Default.ActiveCfg = Default
+		{FDE32AC4-959C-4615-B682-2DD497DC7739}.Default|Default.ActiveCfg = Default
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {25F838B6-E0C3-4C21-BB6F-2E8A9237C19B}
+	EndGlobalSection
+EndGlobal
