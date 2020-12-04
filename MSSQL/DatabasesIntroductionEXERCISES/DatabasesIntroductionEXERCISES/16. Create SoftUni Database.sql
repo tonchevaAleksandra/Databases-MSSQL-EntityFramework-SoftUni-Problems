@@ -28,19 +28,12 @@ CREATE TABLE Employees (
 	MiddleName NVARCHAR(20) NOT NULL,
 	LastName NVARCHAR(20) NOT NULL,
 	JobTitle NVARCHAR(20) NOT NULL,
-	DepartmentId INT NOT NULL,
+	DepartmentId INT FOREIGN KEY REFERENCES Departments (Id),
 	HireDate DATE NOT NULL,
 	Salary DECIMAL(7, 2) NOT NULL,
-	AddressId INT,
-
-	CONSTRAINT FK_Employees_DepartmentId
-		FOREIGN KEY (DepartmentId)
-			REFERENCES Departments (Id),
-
-	CONSTRAINT FK_Employees_AddressId
-		FOREIGN KEY (AddressId)
-			REFERENCES Addresses (Id)
+	AddressId INT FOREIGN KEY REFERENCES Addresses (Id)
 	)
+
 
 
 
