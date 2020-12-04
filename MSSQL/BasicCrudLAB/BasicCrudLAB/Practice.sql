@@ -21,4 +21,19 @@ SELECT A.AddressText, T.Name
 	JOIN Towns T ON A.TownID = T.TownID
 	WHERE Name= 'Bellevue'
 
+SELECT * FROM
+	(SELECT TownId, [Name], LEN([Name]) AS NameLength, 
+SUBSTRING([Name],1,3) AS FirstThreeLetters
+	FROM Towns) AS tmp
+	WHERE FirstThreeLetters='SOF'
+
+
+SELECT  [FirstName] + ' ' + [LastName] AS FullName,
+	EmployeeID AS [No.]
+	FROM [Employees]
+
+SELECT [FirstName]+ ' ' + [LastName] AS FullName,
+	JobTitle, Salary
+	FROM Employees
+	ORDER BY Salary DESC
 
