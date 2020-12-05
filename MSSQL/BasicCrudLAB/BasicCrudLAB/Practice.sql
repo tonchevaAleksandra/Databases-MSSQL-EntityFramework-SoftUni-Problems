@@ -63,9 +63,41 @@ ORDER BY MaxSalary DESC
 
 SELECT *
 FROM Employees
-WHERE (FirstName LIKE '%et%') OR NOT (LastName='Nakov')
-AND Salary >= 4000 AND Salary BETWEEN 4000 AND 20000
+WHERE (FirstName LIKE '[A-P]%')
+   OR NOT (LastName = 'Nakov')
+    AND Salary >= 4000 AND Salary BETWEEN 4000 AND 20000
 ORDER BY Salary DESC
+
+SELECT *
+FROM Employees
+WHERE Salary IN (10000, 2000, 200000, 30000)
+
+SELECT *
+FROM Employees
+WHERE DepartmentID IN (3, 6);
+
+SELECT *
+FROM Employees
+WHERE MiddleName IS NOT NULL
+  AND MiddleName != ' ';
+
+SELECT *
+FROM Employees
+ORDER BY FirstName, Salary DESC;
+
+SELECT *
+FROM Employees
+WHERE YEAR(HireDate) = 2000
+  AND DATEPART(DW, HireDate) = 2
+--monday=2
+--HireDate>='2000-01-01' AND HireDate<'2001-01-01'
+
+CREATE VIEW v_GetHireDateAndDayOfWeek AS
+SELECT HireDate, LEFT(DATENAME(DW, HireDate), 3) AS DayOfWeek
+FROM Employees
+
+SELECT * FROM v_GetHireDateAndDayOfWeek
+ORDER BY DayOfWeek DESC
 
 
 
