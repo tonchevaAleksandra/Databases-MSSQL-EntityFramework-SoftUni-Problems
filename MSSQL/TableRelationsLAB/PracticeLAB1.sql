@@ -1,0 +1,30 @@
+CREATE DATABASE Blog
+USE Blog
+CREATE TABLE Article
+(
+    Id          INT PRIMARY KEY IDENTITY,
+    Title       NVARCHAR(50)  NOT NULL,
+    Description NVARCHAR(200) NOT NULL
+
+)
+CREATE TABLE Comment
+(
+    Id   INT PRIMARY KEY IDENTITY,
+    Text NVARCHAR(200) NOT NULL
+)
+
+CREATE TABLE Authors
+(
+    Id        INT PRIMARY KEY IDENTITY,
+    FirstName NVARCHAR(50) NOT NULL,
+    LastName  NVARCHAR(50) NOT NULL
+)
+
+ALTER TABLE Article
+    ADD AuthorId INT FOREIGN KEY REFERENCES Authors (Id)
+
+ALTER TABLE Comment
+    ADD ArticleId INT FOREIGN KEY REFERENCES Article (Id)
+
+
+

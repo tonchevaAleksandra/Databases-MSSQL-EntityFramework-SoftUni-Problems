@@ -19,6 +19,7 @@
               <name qname="SoftUni" />
               <name qname="Geography" />
               <name qname="Diablo" />
+              <name qname="Blog" />
               <node kind="schema" qname="dbo" />
             </node>
           </node>
