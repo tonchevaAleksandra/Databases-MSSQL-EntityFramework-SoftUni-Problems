@@ -22,9 +22,10 @@
               <name qname="Blog" />
               <name qname="PersonIdentifier" />
               <name qname="Cars" />
+              <name qname="Students" />
+              <name qname="OnlineStore" />
               <node kind="schema" qname="dbo" />
             </node>
-            <node kind="database" qname="Students" />
           </node>
         </introspection-scope>
       </schema-mapping>
