@@ -24,6 +24,7 @@
               <name qname="Cars" />
               <name qname="Students" />
               <name qname="OnlineStore" />
+              <name qname="University" />
               <node kind="schema" qname="dbo" />
             </node>
           </node>
