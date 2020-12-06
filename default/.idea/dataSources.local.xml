@@ -21,8 +21,10 @@
               <name qname="Diablo" />
               <name qname="Blog" />
               <name qname="PersonIdentifier" />
+              <name qname="Cars" />
               <node kind="schema" qname="dbo" />
             </node>
+            <node kind="database" qname="Students" />
           </node>
         </introspection-scope>
       </schema-mapping>
