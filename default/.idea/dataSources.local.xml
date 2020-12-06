@@ -20,6 +20,7 @@
               <name qname="Geography" />
               <name qname="Diablo" />
               <name qname="Blog" />
+              <name qname="PersonIdentifier" />
               <node kind="schema" qname="dbo" />
             </node>
           </node>
