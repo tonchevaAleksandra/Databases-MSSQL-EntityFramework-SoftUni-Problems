@@ -25,10 +25,13 @@
               <name qname="Students" />
               <name qname="OnlineStore" />
               <name qname="University" />
+              <name qname="Demo" />
+              <name qname="Orders" />
               <node kind="schema" qname="dbo" />
             </node>
           </node>
         </introspection-scope>
+        <substitutions use-mini-cat="false" />
       </schema-mapping>
     </data-source>
   </component>

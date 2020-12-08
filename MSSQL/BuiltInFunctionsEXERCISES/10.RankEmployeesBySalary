@@ -4,7 +4,10 @@ SELECT EmployeeID,
        FirstName,
        LastName,
        Salary,
-       DENSE_RANK() OVER (ORDER BY Salary DESC ) AS RANK
+       DENSE_RANK()
+               OVER (PARTITION BY Salary
+                   ORDER BY EmployeeID)
+           AS Rank
 FROM Employees
-ORDER BY EmployeeID, Salary DESC
-WHERE Salary BETWEEN (10000, 50000)
+WHERE Salary BETWEEN 10000 AND 50000
+ORDER BY Salary DESC

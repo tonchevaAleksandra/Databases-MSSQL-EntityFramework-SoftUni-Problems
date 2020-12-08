@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cef3f75a-fcdf-4f5f-85f6-be5b168e04d5" name="Default Changelist" comment="" />
+    <list default="true" id="cef3f75a-fcdf-4f5f-85f6-be5b168e04d5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/11.FindAllEmployeesWithRan2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/12.CountriesHoldingAThreeOrMoreTimes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/13.MixOfPeaksAndRiverNames" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/14.GamesFrom2011And2012Year" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/15.UserEmailProviders" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/16.GetUsersWithIPAdressLikePattern" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/17.ShowAllGamesWithDurationAndPartOfTheDay" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/18.OrdersTable" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/10.RankEmployeesBySalary" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/10.RankEmployeesBySalary" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/6.FindTownsStartingWith" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/6.FindTownsStartingWith" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -9,6 +23,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
   </component>
   <component name="ProjectId" id="1lEsVmbgiAoZw4qzAqquHLmyOBm" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -21,7 +38,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../MSSQL/TableRelationsEXERCISES" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.uml" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="Vcs.Log.Tabs.Properties">
