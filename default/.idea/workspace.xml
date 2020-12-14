@@ -2,6 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cef3f75a-fcdf-4f5f-85f6-be5b168e04d5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/1.EmployeeAddress" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/10.EmployeeSummary" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/11.MinAverageSalary" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/12.HighestPeaksInBulgaria" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/13.CountMountainRanges" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/14.CountriesWithRivers" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/15.ContinentsAndCurrencies" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/16.CountriesWithoutAnyMountains" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/17.HighestPeakAndLongestRiverByCountry" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/18.HighestPeakNameAndElevationByCountry" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/2.AddressesWithTowns" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/3.SalesEmployee" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/4.EmployeeDepartments" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/5.EmployeesWithoutProject" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/6.EmployeesHiredAfter" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/7.EmployeesWithProject" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/8.Employee24" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/9.EmployeeManager" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsAndIndicesLAB/PracticeLAB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsLAB/PracticeLAB.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>

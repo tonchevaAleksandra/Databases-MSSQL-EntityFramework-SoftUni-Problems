@@ -1,0 +1,10 @@
+USE Geography
+
+SELECT c.CountryCode, m.MountainRange, p.PeakName, p.Elevation
+FROM Countries AS c
+         JOIN MountainsCountries mc ON c.CountryCode = mc.CountryCode
+         JOIN Mountains M ON M.Id = mc.MountainId
+         JOIN Peaks P ON M.Id = P.MountainId
+WHERE c.CountryName LIKE 'Bulgaria'
+  AND p.Elevation > 2835
+ORDER BY p.Elevation DESC

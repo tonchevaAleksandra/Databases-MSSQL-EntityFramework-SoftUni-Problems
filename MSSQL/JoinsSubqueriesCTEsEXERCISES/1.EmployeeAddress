@@ -1,0 +1,6 @@
+USE SoftUni
+
+SELECT TOP (5) e.EmployeeID, e.JobTitle, a.AddressID, a.AddressText
+FROM Employees AS e
+         JOIN Addresses A ON e.AddressID = A.AddressID
+ORDER BY a.AddressID;

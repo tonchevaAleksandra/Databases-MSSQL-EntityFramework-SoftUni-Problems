@@ -1,0 +1,9 @@
+USE Geography
+
+SELECT COUNT(*) as Count
+FROM (
+    SELECT CountryName
+      FROM Countries AS c
+               LEFT JOIN MountainsCountries MC
+                   ON c.CountryCode = MC.CountryCode
+      WHERE mc.CountryCode IS NULL) as CountriesWithoutMountains

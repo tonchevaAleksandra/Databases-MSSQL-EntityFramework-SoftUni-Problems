@@ -68,18 +68,50 @@ WHERE e.DepartmentID IN
           WHERE Name = 'Finance'
       )
 
-SELECT top(1)
-       (SELECT AVG(Salary)
-        FROM Employees e
-        WHERE e.DepartmentID = d.DepartmentID
-       ) as MinAverageSalary
+SELECT TOP (1) (SELECT AVG(Salary)
+                FROM Employees e
+                WHERE e.DepartmentID = d.DepartmentID
+               ) AS MinAverageSalary
 FROM Departments d
-WHERE (SELECT count(*)
-FROM Employees e WHERE e.DepartmentID=d.DepartmentID) > 0
-ORDER BY  MinAverageSalary
+WHERE (SELECT COUNT(*)
+       FROM Employees e
+       WHERE e.DepartmentID = d.DepartmentID) > 0
+ORDER BY MinAverageSalary
+
+SELECT DepartmentID, COUNT(*), MIN(Salary), MIN(FirstName)
+FROM Employees
+GROUP BY DepartmentID
+
+SELECT DepartmentID,
+       COUNT(*)                   AS CountEmployees,
+       STRING_AGG(FirstName, ' ') AS EmployyesInDepartment
+FROM Employees
+GROUP BY DepartmentID
+
+SELECT TOP (1) AVG(Salary) AS MinAverageSalary
+FROM Employees
+GROUP BY DepartmentID
+ORDER BY AVG(Salary)
 
 
+SELECT MIN(a.AverageSalary) AS MinAverageSalary
+FROM (
+    SELECT e.DepartmentID,
+             AVG(e.Salary) AS AverageSalary
+      FROM Employees AS e
+      GROUP BY e.DepartmentID
+     ) AS a
 
+
+CREATE TABLE  #Tmp
+(
+    Id int PRIMARY KEY  IDENTITY ,
+    Name nvarchar(100)
+)
+
+INSERT INTO #Tmp (Name) VALUES ('Aleksandra')
+
+SELECT * FROM  #Tmp
 
 
 
