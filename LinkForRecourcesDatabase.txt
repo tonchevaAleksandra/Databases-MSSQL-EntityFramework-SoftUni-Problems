@@ -1,0 +1,4 @@
+http://svn.softuni.org/admin/svn/csharp-databases/2020-May/
+
+username- student
+pass - student

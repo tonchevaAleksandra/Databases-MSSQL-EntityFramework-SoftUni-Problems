@@ -27,8 +27,12 @@
               <name qname="University" />
               <name qname="Demo" />
               <name qname="Orders" />
+              <name qname="tempdb" />
+              <name qname="Gringotts" />
+              <name qname="Incomes" />
               <node kind="schema" qname="dbo" />
             </node>
+            <node kind="database" qname="PerformanceDB" />
           </node>
         </introspection-scope>
         <substitutions use-mini-cat="false" />
