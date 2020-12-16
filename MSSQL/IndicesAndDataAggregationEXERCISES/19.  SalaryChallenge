@@ -1,0 +1,17 @@
+USE SoftUni
+
+
+SELECT TOP (10) E.FirstName, E.LastName, E.DepartmentID
+FROM Employees AS E
+WHERE E.Salary >
+      (
+          SELECT AVG(Salary) AS AverageSalary
+          FROM Employees AS eAverageSalary
+          WHERE eAverageSalary.DepartmentID = E.DepartmentID
+          GROUP BY DepartmentID)
+ORDER BY DepartmentID
+
+
+
+
+

@@ -1,0 +1,10 @@
+USE Gringotts
+
+SELECT SUM(Difference) AS SumDifference
+FROM (
+         SELECT FirstName                                                AS HostWirzard,
+                DepositAmount                                            AS HostWizardDeposit,
+                LEAD(FirstName) OVER (ORDER BY Id )                      AS GuestWizard,
+                LEAD(DepositAmount) OVER (ORDER BY id)                   AS GuestDeposit,
+                (DepositAmount - LEAD(DepositAmount) OVER (ORDER BY id)) AS Difference
+         FROM WizzardDeposits) AS DifferenceAmountQuery

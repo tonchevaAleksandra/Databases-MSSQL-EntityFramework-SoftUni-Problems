@@ -1,13 +1,15 @@
-use Gringotts
+USE Gringotts
 
 
 SELECT DepositGroup,
-      case
-          WHEN  IsDepositExpired LIKE 0 then '0'
-              else '1'
-                  end as IsDepositExpired,
-       DepositInterest
+       CASE
+           WHEN IsDepositExpired LIKE 0 THEN '0'
+           ELSE '1'
+           END              AS IsDepositExpired,
+       AVG(DepositInterest) AS AverageInterest
 FROM WizzardDeposits
-WHERE DepositStartDate>'1985-01-01'
+WHERE DepositStartDate > '1985-01-01'
+GROUP BY DepositGroup, IsDepositExpired
+ORDER BY DepositGroup DESC, IsDepositExpired
 
 
