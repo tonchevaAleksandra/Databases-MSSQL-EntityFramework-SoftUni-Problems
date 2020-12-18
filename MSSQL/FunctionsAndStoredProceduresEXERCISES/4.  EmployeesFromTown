@@ -1,0 +1,15 @@
+USE SoftUni
+
+CREATE OR
+ALTER PROC usp_GetEmployeesFromTown(@TownName nvarchar(20))
+AS
+SELECT FirstName AS 'First Name', LastName AS 'Last Name'
+FROM Employees
+         JOIN Addresses A ON A.AddressID = Employees.AddressID
+         JOIN Towns T ON A.TownID = T.TownID
+WHERE t.Name = @TownName
+    GO
+
+exec usp_GetEmployeesFromTown 'Sofia'
+
+

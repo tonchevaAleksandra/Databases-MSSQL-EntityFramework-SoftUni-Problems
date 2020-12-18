@@ -2,9 +2,10 @@ USE SoftUni
 
 CREATE OR
 ALTER FUNCTION ufn_GetSalaryLevel(@Salary decimal(19,4))
-    RETURNS varchar(MAX)
+    RETURNS nvarchar(20)
 AS
 BEGIN
+
     IF (@Salary IS NULL) RETURN NULL
     IF (@Salary < 30000)
         RETURN 'Low';

@@ -1,0 +1,18 @@
+USE Bank
+
+CREATE OR
+ALTER PROC usp_CalculateFutureValueForAccount
+AS
+BEGIN
+    SELECT a.Id                              AS 'Account Id',
+           ah.FirstName                      AS 'First Name',
+           ah.LastName                       AS 'Last Name',
+           CAST(a.Balance AS decimal(18, 2)) AS 'Current Balance',
+           dbo.ufn_CalculateFutureValue(Balance, 0.1, 5)
+                                             AS 'Balance in 8 Years'
+    FROM Accounts AS a
+             JOIN AccountHolders AH ON AH.Id = a.AccountHolderId;
+END
+GO
+
+EXEC usp_CalculateFutureValueForAccount;
