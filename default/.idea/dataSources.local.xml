@@ -30,6 +30,7 @@
               <name qname="tempdb" />
               <name qname="Gringotts" />
               <name qname="Incomes" />
+              <name qname="Bank" />
               <node kind="schema" qname="dbo" />
             </node>
             <node kind="database" qname="PerformanceDB" />

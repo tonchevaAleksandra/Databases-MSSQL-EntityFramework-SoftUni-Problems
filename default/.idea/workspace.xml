@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="cef3f75a-fcdf-4f5f-85f6-be5b168e04d5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/12.   RichWizardPoorWizard" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/13.  DepartmentsTotalSalaries" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/14.  EmployeesMinimumSalaries" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/15.  EmployeesAverageSalaries" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/16.  EmployeesMaximumSalaries" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/17.  EmployeesCountSalaries" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/18.  3rdHighestSalary" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/19.  SalaryChallenge" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/11.  AverageInterest" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/11.  AverageInterest" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/Bank-Database.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/FunctionEmployeeList.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/GetSalaryLevelFunction.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/StoredProcedures.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/ThrowExceptions.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/CreateFunction.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/CreateFunction.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae/storage_v2/_src_/database/SoftUni.Roji6Q/schema/dbo.sYMBAA.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae/storage_v2/_src_/database/SoftUni.Roji6Q/schema/dbo.sYMBAA.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

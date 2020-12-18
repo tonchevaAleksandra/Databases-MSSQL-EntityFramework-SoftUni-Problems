@@ -66,4 +66,9 @@ BEGIN
     RETURN
 END
 
+SELECT *
+FROM dbo.udf_Squares(10)
+WHERE id > 5
+ORDER BY id DESC
+
 
