@@ -1,0 +1,33 @@
+USE Bank
+
+CREATE PROC usp_WithdrawMoney(@AccountId int, @MoneyAmount money)
+AS
+    BEGIN TRANSACTION
+    IF @MoneyAmount <= 0
+        BEGIN
+            THROW 50005,'Amount should be positive',1;
+        END
+    IF (SELECT COUNT(*)
+        FROM Accounts
+        WHERE Id = @AccountId) != 1
+        BEGIN
+            THROW 50006,'Invalid AccountID',1;
+        END
+    IF (SELECT Balance
+        FROM Accounts
+        WHERE Id = @AccountId) < @MoneyAmount
+        BEGIN
+            THROW 50007,'Not sufficient amount in that account',1
+        END
+
+UPDATE Accounts
+SET Balance= Balance - @MoneyAmount
+WHERE Id = @MoneyAmount
+    COMMIT
+GO
+
+exec usp_WithdrawMoney 1,10
+
+SELECT * FROM Logs
+SELECT *
+FROM NotificationEmails;

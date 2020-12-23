@@ -1,0 +1,104 @@
+USE Diablo
+--1
+SELECT *
+FROM UsersGames
+
+CREATE TRIGGER tr_RestrictInsetingItems
+    ON UserGameItems
+    INSTEAD OF INSERT AS
+BEGIN
+    INSERT INTO UserGameItems
+    SELECT i.Id, ug.Id
+    FROM inserted
+             JOIN UsersGames AS ug
+                  ON UserGameId = ug.Id
+             JOIN Items AS i
+                  ON ItemId = i.id
+    WHERE ug.Level >= i.MinLevel
+END
+GO
+
+--2
+
+UPDATE UsersGames
+SET Cash +=50000
+FROM UsersGames AS ug
+         JOIN Games G ON G.Id = ug.GameId
+         JOIN Users U ON U.Id = ug.UserId
+WHERE g.Name LIKE 'Bali'
+  AND u.Username IN
+      ('baleremuda', 'loosenoise', 'inguinalself', 'buildingdeltoid', 'monoxidecos')
+
+--3
+
+CREATE PROC usp_BuyItems(@Username nvarchar(50))
+AS
+BEGIN
+    DECLARE @UserId int =
+        (SELECT id
+         FROM Users
+         WHERE Username = @Username)
+    DECLARE @GameId int=
+        (SELECT id
+         FROM Games
+         WHERE Name = 'Bali')
+    DECLARE @UserGameId int=
+        (SELECT Id
+         FROM UsersGames
+         WHERE UserId = @UserId
+           AND GameId = @GameId)
+    DECLARE @UserGameLevel int=
+            (SELECT Level FROM UsersGames WHERE Id = @UserGameId)
+    DECLARE @IdCounter int = 251;
+
+    WHILE @IdCounter <= 539
+        BEGIN
+            DECLARE @ItemId int = @IdCounter;
+            DECLARE @ItemPrice money=
+                    (SELECT Price FROM Items WHERE Id = @ItemId)
+            DECLARE @ItemLevel int=
+                    (SELECT MinLevel FROM Items WHERE Id = @ItemId)
+            DECLARE @UserGameCash money=
+                    (SELECT Cash FROM UsersGames WHERE id = @UserGameId)
+
+            IF (@UserGameCash >= @ItemPrice AND @UserGameLevel >= @ItemLevel)
+                BEGIN
+                    UPDATE UsersGames
+                    SET Cash-=@ItemPrice
+                    WHERE Id = @UserGameId
+                    INSERT INTO UserGameItems
+                    VALUES (@ItemId, @UserGameId)
+                END
+
+            SET @IdCounter+=1;
+            IF (@IdCounter = 300)
+                BEGIN
+                    SET @IdCounter = 501;
+                END
+        END
+END
+GO
+
+EXEC usp_BuyItems 'baleremuda'
+EXEC usp_BuyItems 'loosenoise'
+EXEC usp_BuyItems 'inguinalself'
+EXEC usp_BuyItems 'buildingdeltoid'
+EXEC usp_BuyItems 'monoxidecos'
+
+GO
+
+--4
+SELECT u2.Username AS Username,
+       g.Name      AS Name,
+       Cash,
+       i.Name      AS [Item Name]
+FROM UsersGames
+         JOIN Users U2 ON U2.Id = UsersGames.UserId
+         JOIN Games G ON G.Id = UsersGames.GameId
+         JOIN Items I ON G.Name = I.Name
+WHERE G.Name = 'Bali'
+ORDER BY Username, [Item Name]
+GO
+
+
+

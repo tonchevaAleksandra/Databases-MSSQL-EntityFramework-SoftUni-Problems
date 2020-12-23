@@ -8,9 +8,9 @@ CREATE TABLE NotificationEmails
     Body      nvarchar(max)
 )
 
-CREATE TRIGGER tr_AddToNotificationEmailOnLogsUpdate
+CREATE OR ALTER TRIGGER tr_AddToNotificationEmailOnLogsUpdate
     ON Logs
-    FOR UPDATE
+    FOR INSERT
     AS
     INSERT INTO NotificationEmails(Recipient, Subject, Body)
     SELECT i.AccountID,
@@ -19,4 +19,10 @@ CREATE TRIGGER tr_AddToNotificationEmailOnLogsUpdate
            CAST(i.OldSum AS nvarchar(20)) + ' to ' + CAST(i.NewSum AS nvarchar(20)) + '.'
     FROM inserted AS i
 
+    GO
+exec usp_TransferFunds 12, 15,1000
+
+SELECT * from Logs
+SELECT *
+FROM NotificationEmails;
 
