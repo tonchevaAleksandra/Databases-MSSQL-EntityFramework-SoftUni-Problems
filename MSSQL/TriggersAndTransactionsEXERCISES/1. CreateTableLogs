@@ -1,0 +1,20 @@
+use Bank
+
+CREATE TABLE Logs
+(
+	LogID INT PRIMARY KEY IDENTITY,
+	AccountID INT FOREIGN KEY REFERENCES Accounts(Id),
+	OldSum MONEY NOT NULL,
+	NewSum MONEY NOT NULL
+)
+
+CREATE TRIGGER tr_AddToLogsOnAccountUpdate
+    ON Accounts
+    FOR UPDATE
+    AS
+    INSERT INTO Logs(AccountId, OldSum, NewSum)
+    SELECT i.Id, d.Balance, i.Balance
+    FROM inserted AS i
+             JOIN deleted AS d ON i.Id = d.Id
+    WHERE i.Balance != d.Balance
+GO
