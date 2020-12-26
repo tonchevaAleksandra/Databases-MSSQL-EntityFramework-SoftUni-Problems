@@ -107,20 +107,82 @@ WHERE Name LIKE '%tr%'
 ORDER BY id, Name, Seats, Range
 
 
-SELECT f.Id as FlightId,
-       Sum(Price) as Price
-FROM Flights as f
-JOIN Tickets T ON f.Id = T.FlightId
+SELECT f.Id       AS FlightId,
+       SUM(Price) AS Price
+FROM Flights AS f
+         JOIN Tickets T ON f.Id = T.FlightId
 GROUP BY f.Id
-ORDER BY Price desc, f.Id
+ORDER BY Price DESC, f.Id
 
-SELECT p.FirstName,p.LastName, sum(t.Price) as Price
-FROM Passengers as p
-JOIN Tickets T ON p.Id = T.PassengerId
+SELECT p.FirstName, p.LastName, SUM(t.Price) AS Price
+FROM Passengers AS p
+         JOIN Tickets T ON p.Id = T.PassengerId
 GROUP BY p.FirstName, p.LastName
-ORDER BY Price desc, p.FirstName,p.LastName
+ORDER BY Price DESC, p.FirstName, p.LastName
+
+SELECT FirstName,
+       LastName,
+       (SELECT SUM(Price)
+        FROM Tickets AS t
+        WHERE p.Id = t.PassengerId
+       ) AS Price
+FROM Passengers AS p
+ORDER BY Price DESC, FirstName, LastName
 
 
+SELECT lt.Type, COUNT(*) AS MostUsedLuggage
+FROM Luggages AS l
+         JOIN LuggageTypes LT ON LT.Id = l.LuggageTypeId
+GROUP BY lt.Type
+ORDER BY MostUsedLuggage DESC, lt.Type
+
+
+SELECT CONCAT(p.FirstName, ' ', p.LastName) AS [Full Name], F.Origin, F.Destination
+FROM Passengers AS p
+         JOIN Tickets T ON p.Id = T.PassengerId
+         JOIN Flights F ON T.FlightId = F.Id
+ORDER BY [Full Name], F.Origin, F.Destination
+
+SELECT P.FirstName, P.LastName, P.Age
+FROM Passengers AS P
+         LEFT JOIN Tickets T ON P.Id = T.PassengerId
+WHERE T.PassengerId IS NULL
+ORDER BY P.Age DESC, P.FirstName, P.LastName
+
+
+SELECT p.PassportId, p.Address
+FROM Passengers AS p
+         LEFT JOIN Luggages L ON p.Id = L.PassengerId
+WHERE L.PassengerId IS NULL
+ORDER BY p.PassportId, p.Address
+
+SELECT p.FirstName AS [First Name],
+       p.LastName  AS [Last Name],
+       COUNT(*)    AS [Total Trips]
+FROM Passengers AS p
+         JOIN Tickets T ON p.Id = T.PassengerId
+GROUP BY p.FirstName, p.LastName
+ORDER BY [Total Trips] DESC, FirstName, LastName
+
+
+SELECT CONCAT(p.FirstName, ' ', p.LastName)   AS [Full Name],
+       P2.Name                                AS [Plane Name],
+       CONCAT(F.Origin, ' - ', F.Destination) AS Trip,
+       LT.Type                                AS [Luggage Type]
+FROM Passengers AS p
+         LEFT JOIN Tickets T ON p.Id = T.PassengerId
+         LEFT JOIN Flights F ON F.Id = T.FlightId
+         LEFT JOIN Planes P2 ON P2.Id = F.PlaneId
+         LEFT JOIN Luggages L ON p.Id = L.PassengerId
+         LEFT JOIN LuggageTypes LT ON L.LuggageTypeId = LT.Id
+WHERE T.PassengerId is not null and T.FlightId is NOT  null
+ORDER BY [Full Name],
+         [Plane Name],
+         F.Origin,
+         F.Destination,
+         [Luggage Type]
+
+GO
 
 
 
