@@ -1,25 +1,27 @@
 USE master
 
 
-DECLARE @COUNT INT=1;
-DECLARE @OUTPUT VARCHAR(MAX);
-WHILE (@COUNT <= 1000)
+DECLARE @prime INT=2;
+DECLARE @OUTPUT nVARCHAR(2000)='';
+WHILE (@prime <= 1000)
     BEGIN
-        IF (@COUNT = 2)
-            SET @OUTPUT = CONCAT(@OUTPUT,'&', @COUNT);
-        IF (@COUNT % 2 <> 0)
+        DECLARE @I INT=@prime - 1;
+        DECLARE @checker INT= 1;
+        WHILE (@I > 1)
             BEGIN
-                DECLARE @INT INT=3;
-                DECLARE @END INT= SQRT(@COUNT)
-                WHILE (@INT <= 1000)
-                    BEGIN
-                        IF (@COUNT % @END <> 0)
-                            SET @OUTPUT = CONCAT(@OUTPUT,'&', @COUNT);
-                        SET @INT+=2;
-                    END
+                IF (@prime % @I = 0)
+                    begin
+                    SET @checker = 0;
+                    end
+                SET @I-=1;
             END
-        SET @COUNT+=1;
+        IF (@checker = 1)
+            BEGIN
+                SET @OUTPUT += cast( @prime as nvarchar(3)) +'&';
+            END
+        SET @prime+=1;
     END
+set @OUTPUT= substring(@OUTPUT,1, len(@OUTPUT)-1);
 SELECT @OUTPUT
 
 
