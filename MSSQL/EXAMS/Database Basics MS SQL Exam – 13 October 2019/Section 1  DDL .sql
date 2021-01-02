@@ -137,7 +137,7 @@ ORDER BY Size DESC, u.Username;
 
 --Section 4. Programmability
 --11.   User Total Commits
-
+USE Bitbucket
 CREATE FUNCTION udf_UserTotalCommits(@username varchar(30))
     RETURNS int AS
 BEGIN
@@ -146,7 +146,20 @@ BEGIN
             WHERE ContributorId = (SELECT id FROM Bitbucket.dbo.Users WHERE Username LIKE @username))
 END
 
-SELECT udf_UserTotalCommits('UnderSinduxrein')
+SELECT dbo.udf_UserTotalCommits('UnderSinduxrein')
+
+--12.	 Find by Extensions
+
+CREATE PROC usp_FindByExtension(@extension varchar(10))
+AS
+BEGIN
+    SELECT id, name, CONCAT(size, 'KB') AS Size
+    FROM files
+    WHERE name LIKE '%' + @extension
+    ORDER BY id, name, Size
+END
+
+    EXEC usp_FindByExtension 'txt'
 
 
 
