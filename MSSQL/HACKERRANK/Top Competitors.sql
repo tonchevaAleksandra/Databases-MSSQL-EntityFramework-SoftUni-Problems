@@ -1,0 +1,99 @@
+USE master
+
+CREATE DATABASE hacker
+USE hacker
+
+CREATE TABLE HACKERS
+(
+    HACKER_ID INT PRIMARY KEY NOT NULL,
+    NAME      VARCHAR(30)     NOT NULL
+)
+
+
+CREATE TABLE DIFFICULTY
+(
+    DIFFICULTY_LEVEL INT PRIMARY KEY IDENTITY,
+    SCORE            INT
+)
+
+CREATE TABLE CHALLENGES
+(
+    CHALLENGE_ID     INT PRIMARY KEY NOT NULL,
+    HACKER_ID        INT             NOT NULL REFERENCES HACKERS (HACKER_ID),
+    DIFFICULTY_LEVEL INT             NOT NULL REFERENCES DIFFICULTY (DIFFICULTY_LEVEL)
+)
+
+CREATE TABLE SUBMISSIONS
+(
+    SUBMISSION_ID INT NOT NULL,
+    HACKER_ID     INT NOT NULL REFERENCES HACKERS (HACKER_ID),
+    CHALLENGE_ID  INT REFERENCES CHALLENGES (CHALLENGE_ID),
+    SCORE         INT
+)
+
+INSERT INTO HACKERS(HACKER_ID, NAME)
+VALUES (5580, 'Rose'),
+       (8439, 'Angela'),
+       (27205, 'Frank'),
+       (52243, 'Patrick'),
+       (52348, 'Lisa'),
+       (57645, 'Kimberly'),
+       (77726, 'Bonnie'),
+       (83082, 'Michael'),
+       (86870, 'Todd'),
+       (90411, 'Joe')
+
+GO
+INSERT INTO DIFFICULTY(SCORE)
+VALUES (20),
+       (30),
+       (40),
+       (60),
+       (80),
+       (100),
+       (120)
+GO
+
+INSERT INTO CHALLENGES(challenge_id, hacker_id, difficulty_level)
+VALUES (4810, 77726, 4),
+       (21089, 27205, 1),
+       (36566, 5580, 7),
+       (66730, 52243, 6),
+       (71055, 52243, 2)
+GO
+
+INSERT INTO SUBMISSIONS(submission_id, hacker_id, challenge_id, score)
+VALUES (68628, 77726, 36566, 30),
+       (65300, 77726, 21089, 10),
+       (40326, 52243, 36566, 77),
+       (8941, 27205, 4810, 4),
+       (83554, 77726, 66730, 30),
+       (43353, 52243, 66730, 0),
+       (55385, 52348, 71055, 20),
+       (39784, 27205, 71055, 23),
+       (94613, 86870, 71055, 30),
+       (45788, 52348, 36566, 0),
+       (93058, 86870, 36566, 30),
+       (7344, 8439, 4810, 36),
+       (523, 5580, 71055, 4),
+       (49105, 52348, 66730, 0),
+       (55877, 57645, 66730, 80),
+       (38355, 27205, 66730, 35),
+       (3924, 8439, 36566, 80),
+       (97397, 90411, 66730, 100),
+       (84162, 83082, 4810, 40),
+       (97431, 90411, 71055, 30)
+
+ SELECT h.HACKER_ID,h.NAME
+from SUBMISSIONS as s
+ JOIN CHALLENGES C ON C.CHALLENGE_ID = s.CHALLENGE_ID
+ JOIN DIFFICULTY D ON D.DIFFICULTY_LEVEL = C.DIFFICULTY_LEVEL
+ JOIN HACKERS H ON H.HACKER_ID = s.HACKER_ID
+WHERE s.SCORE=d.SCORE and c.DIFFICULTY_LEVEL=d.DIFFICULTY_LEVEL
+group by h.HACKER_ID, h.NAME
+HAVING count(s.HACKER_ID)>1
+ORDER BY count(s.HACKER_ID) desc, h.HACKER_ID
+
+
+
+
