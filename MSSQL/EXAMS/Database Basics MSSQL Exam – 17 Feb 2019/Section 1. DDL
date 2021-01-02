@@ -1,0 +1,99 @@
+USE master
+
+CREATE DATABASE School
+USE School
+
+CREATE TABLE Students
+(
+    Id         int PRIMARY KEY IDENTITY,
+    FirstName  nvarchar(30) NOT NULL,
+    MiddleName nvarchar(25),
+    LastName   nvarchar(30) NOT NULL,
+    Age        int CHECK (Age >= 5 AND Age <= 100),
+    Address    nvarchar(100),
+    Phone      nchar(10)
+
+)
+
+CREATE TABLE Subjects
+(
+    Id      int PRIMARY KEY IDENTITY,
+    Name    nvarchar(20) NOT NULL,
+    Lessons int          NOT NULL CHECK (Lessons > 0)
+
+)
+
+CREATE TABLE StudentsSubjects
+(
+    Id        int PRIMARY KEY IDENTITY,
+    StudentId int           NOT NULL REFERENCES Students (Id),
+    SubjectId int           NOT NULL REFERENCES Subjects (Id),
+    Grade     decimal(3, 2) NOT NULL CHECK (Grade >= 2.00 AND Grade <= 6.00)
+
+)
+
+CREATE TABLE Exams
+(
+    Id        int PRIMARY KEY IDENTITY,
+    Date      datetime,
+    SubjectId int NOT NULL REFERENCES Subjects (Id)
+
+)
+
+CREATE TABLE StudentsExams
+(
+    StudentId int           NOT NULL REFERENCES Students (Id),
+    ExamId    int           NOT NULL REFERENCES Exams (Id),
+    Grade     decimal(3, 2) NOT NULL CHECK (Grade >= 2.00 AND Grade <= 6.00)
+
+)
+
+CREATE TABLE Teachers
+(
+    Id        int PRIMARY KEY IDENTITY,
+    FirstName nvarchar(20) NOT NULL,
+    LastName  nvarchar(20) NOT NULL,
+    Address   nvarchar(20) NOT NULL,
+    Phone     nchar(10),
+    SubjectId int          NOT NULL REFERENCES Subjects (Id)
+
+)
+CREATE TABLE StudentsTeachers
+(
+    StudentId int NOT NULL REFERENCES Students (Id),
+    TeacherId int NOT NULL REFERENCES Teachers (Id)
+
+)
+
+--Section 2. DML
+--2. Insert
+INSERT INTO Teachers(FirstName, LastName, Address, Phone, SubjectId)
+VALUES ('Ruthanne', 'Bamb', '84948 Mesta Junction', '3105500146', 6),
+       ('Gerrard', 'Lowin', '370 Talisman Plaza', '3324874824', 2),
+       ('Merrile', 'Lambdin', '81 Dahle Plaza', '4373065154', 5),
+       ('Bert', 'Ivie', '2 Gateway Circle', '4409584510', 4)
+
+INSERT INTO Subjects(Name, Lessons)
+VALUES ('Geometry', 12),
+       ('Health', 10),
+       ('Drama', 7),
+       ('Sports', 9)
+
+--3. Update
+UPDATE StudentsSubjects
+SET Grade=6.00
+WHERE SubjectId IN (1, 2)
+  AND Grade >= 5.50
+
+--4. Delete
+DELETE StudentsTeachers
+WHERE TeacherId IN
+      (SELECT TeacherId
+       FROM Teachers
+       WHERE Phone LIKE '%72%')
+
+DELETE Teachers
+WHERE Phone like '%72%'
+
+use master
+
