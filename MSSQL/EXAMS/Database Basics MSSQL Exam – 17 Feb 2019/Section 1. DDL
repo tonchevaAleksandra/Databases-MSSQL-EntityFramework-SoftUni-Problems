@@ -206,15 +206,128 @@ ORDER BY r1.[Subject Name], r1.[Teacher Full Name], r1.Grade DESC
 
 --16. Average Grade per Subject
 
-SELECT
-       (SELECT name
-       FROM Subjects
-       WHERE Id = s.Id) AS Name,
-       AVG(ss.Grade) as AverageGrade
+SELECT (SELECT name
+        FROM Subjects
+        WHERE Id = s.Id) AS Name,
+       AVG(ss.Grade)     AS AverageGrade
 FROM Subjects AS s
          JOIN StudentsSubjects SS ON s.Id = SS.SubjectId
 GROUP BY s.Id
 ORDER BY s.Id
+
+--17. Exams Information
+SELECT Query1.Quarter,
+       Query1.SubjectName,
+       COUNT(Query1.StudentId) AS StudentsCount
+FROM (SELECT CASE
+                 WHEN DATEPART(MONTH, e.Date) BETWEEN 1 AND 3 THEN 'Q1'
+                 WHEN DATEPART(MONTH, e.Date) BETWEEN 4 AND 6 THEN 'Q2'
+                 WHEN DATEPART(MONTH, e.Date) BETWEEN 7 AND 9 THEN 'Q3'
+                 WHEN DATEPART(MONTH, e.Date) BETWEEN 10 AND 12 THEN 'Q4'
+                 ELSE 'TBA'
+                 END AS Quarter,
+             s.Name  AS SubjectName,
+             se.StudentId,
+             se.Grade
+      FROM Exams AS e
+               JOIN Subjects S ON e.SubjectId = S.Id
+               JOIN StudentsExams SE ON e.Id = SE.ExamId) AS Query1
+WHERE Query1.Grade >= 4.00
+GROUP BY Query1.Quarter, Query1.SubjectName
+ORDER BY Query1.Quarter
+
+--Section 4. Programmability
+--18. Exam Grades
+
+CREATE FUNCTION udf_ExamGradesToUpdate(@studentId int, @grade decimal(10, 2))
+    RETURNS nvarchar(max)
+AS
+BEGIN
+    IF (@grade > 6.00)
+        BEGIN
+            RETURN 'Grade cannot be above 6.00!'
+        END
+    IF (@studentId NOT IN (SELECT id FROM Students))
+        BEGIN
+            RETURN 'The student with provided id does not exist in the school!'
+        END
+
+    DECLARE @count int=
+        (SELECT COUNT(Grade)
+         FROM StudentsExams
+         WHERE StudentId = @studentId
+           AND Grade BETWEEN @grade AND @grade + 0.50
+        )
+
+    DECLARE @FirstName nvarchar(30) =
+        (SELECT FirstName
+         FROM Students
+         WHERE Id = @studentId)
+
+    RETURN
+            'You have to update ' + CAST(@count AS nvarchar(10)) + ' grades for the student ' + @FirstName
+
+END
+SELECT dbo.udf_ExamGradesToUpdate(12, 6.20)
+SELECT dbo.udf_ExamGradesToUpdate(12, 5.50)
+SELECT dbo.udf_ExamGradesToUpdate(121, 5.50)
+
+--19. Exclude from school
+CREATE PROC usp_ExcludeFromSchool(@StudentId int)
+AS
+BEGIN
+    IF (@StudentId NOT IN (SELECT Id FROM Students))
+        BEGIN
+            THROW 50001, 'This school has no student with the provided id!',1
+        END
+    DELETE StudentsExams
+    WHERE StudentId = @StudentId
+    DELETE StudentsSubjects
+    WHERE StudentId = @StudentId
+    DELETE StudentsTeachers
+    WHERE StudentId = @StudentId
+    DELETE Students
+    WHERE Id = @StudentId
+END
+
+    EXEC usp_ExcludeFromSchool 1
+SELECT COUNT(*)
+FROM Students
+    EXEC usp_ExcludeFromSchool 301
+
+--20. Deleted Student
+
+    CREATE TABLE ExcludedStudents
+    (
+        StudentId   int,
+        StudentName nvarchar(100)
+    )
+    CREATE TRIGGER tr_DeletedStudents
+        ON Students
+        FOR DELETE
+        AS
+    BEGIN
+        INSERT INTO ExcludedStudents(StudentId, StudentName)
+            (SELECT d.Id,
+                    CONCAT(d.FirstName, ' ', d.LastName)
+            FROM deleted AS d)
+    END
+
+DELETE FROM StudentsExams
+WHERE StudentId = 2
+
+DELETE FROM StudentsTeachers
+WHERE StudentId = 2
+
+DELETE FROM StudentsSubjects
+WHERE StudentId = 2
+
+DELETE FROM Students
+WHERE Id = 2
+
+SELECT * FROM ExcludedStudents
+
+
 
 
 
