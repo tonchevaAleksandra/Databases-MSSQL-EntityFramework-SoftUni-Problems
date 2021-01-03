@@ -146,8 +146,8 @@ WHERE j.Status NOT LIKE 'Finished'
 ORDER BY [Days going] DESC, c.ClientId
 
 --7.	Mechanic Performance
-SELECT CONCAT(m.FirstName, ' ', m.LastName) AS Mechanic,
-       AVG(DATEDIFF(DAY, j.IssueDate, j.FinishDate)) as [Average Days]
+SELECT CONCAT(m.FirstName, ' ', m.LastName)          AS Mechanic,
+       AVG(DATEDIFF(DAY, j.IssueDate, j.FinishDate)) AS [Average Days]
 FROM Mechanics AS m
          JOIN Jobs J ON m.MechanicId = J.MechanicId
 GROUP BY m.FirstName, m.LastName, m.MechanicId
@@ -155,14 +155,90 @@ ORDER BY m.MechanicId
 
 --8.	Available Mechanics
 SELECT mJA.Available
-from
-(SELECT concat(m.FirstName, ' ', m.LastName) as Available,
-        j.MechanicId
-from Mechanics as m
- left join Jobs J ON m.MechanicId = J.MechanicId
-where J.Status like 'Finished'
-GROUP BY m.FirstName, m.LastName, j.MechanicId) as mJA
+FROM (SELECT CONCAT(m.FirstName, ' ', m.LastName) AS Available,
+             j.MechanicId
+      FROM Mechanics AS m
+               LEFT JOIN Jobs J ON m.MechanicId = J.MechanicId
+      WHERE J.Status LIKE 'Finished'
+      GROUP BY m.FirstName, m.LastName, j.MechanicId) AS mJA
 ORDER BY mja.MechanicId
+
+--9.	Past Expenses
+SELECT j.JobId, SUM(p.Price) AS Total
+FROM Jobs AS j
+         JOIN PartsNeeded PN ON j.JobId = PN.JobId
+         JOIN Parts P ON PN.PartId = P.PartId
+WHERE j.Status LIKE 'Finished'
+GROUP BY j.JobId
+ORDER BY Total DESC, j.JobId
+
+--10.	Missing Parts
+--Not Working Code
+SELECT k.PartId, k.Description, k.Required, k.[In Stock], k.count AS Ordered
+FROM (SELECT p.PartId, p.Description, pn.Quantity AS Required, p.StockQty AS [In Stock], COUNT(o2.OrderId) AS count
+      FROM Jobs AS j
+               JOIN PartsNeeded PN ON j.JobId = PN.JobId
+               JOIN Parts P ON PN.PartId = P.PartId
+               JOIN OrderParts OP ON P.PartId = OP.PartId
+               JOIN Orders O2 ON j.JobId = O2.JobId AND OP.OrderId = O2.OrderId
+      WHERE j.Status NOT LIKE 'Finished'
+        AND pn.Quantity > p.StockQty
+        AND O2.Delivered = 0
+      GROUP BY p.PartId, p.Description, pn.Quantity, p.StockQty) AS k
+
+
+--Section 4. Programmability
+--11.	Place Order
+
+CREATE PROC usp_PlaceOrder(@jobId int, @partNumber varchar(50), @quantity int)
+AS
+BEGIN
+    BEGIN TRANSACTION
+        IF (@jobId IN (SELECT JobId FROM Jobs WHERE Status LIKE 'Finished'))
+            BEGIN
+                THROW 50011, 'This job is not active!',1
+            END
+        IF (@quantity <= 0)
+            BEGIN
+                THROW 50012, 'Part quantity must be more than zero!',1
+            END
+        IF (@jobId NOT IN (SELECT JobId FROM Jobs))
+            BEGIN
+                THROW 50013, 'Job not found!',1
+            END
+        IF (@partNumber NOT IN (SELECT SerialNumber FROM Parts))
+            BEGIN
+                THROW 50014, 'Part not found!',1
+            END
+        IF (@jobId IN (SELECT JobId FROM Orders) AND (SELECT IssueDate FROM Orders WHERE JobId = @jobId) IS NULL)
+            BEGIN
+                DECLARE @orderId int = (SELECT OrderId FROM Orders WHERE JobId = @jobId AND IssueDate IS NULL)
+                DECLARE @partId int= (SELECT PartId FROM Parts WHERE SerialNumber = @partNumber)
+                IF (@orderId IN (SELECT OrderId FROM OrderParts) AND @partId IN (SELECT PartId FROM OrderParts))
+                    BEGIN
+                        UPDATE OrderParts
+                        SET Quantity+=@quantity
+                        WHERE OrderId = @orderId
+                          AND PartId = @partId
+                    END
+                ELSE
+                    BEGIN
+                        INSERT INTO OrderParts(OrderId, PartId, Quantity)
+                        VALUES (@orderId, @partId, @quantity)
+                    END
+
+
+            END
+    COMMIT
+END
+
+
+
+
+
+
+
+
 
 
 
