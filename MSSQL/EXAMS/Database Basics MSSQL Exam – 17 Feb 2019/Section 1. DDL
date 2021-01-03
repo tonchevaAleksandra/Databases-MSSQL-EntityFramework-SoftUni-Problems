@@ -93,7 +93,129 @@ WHERE TeacherId IN
        WHERE Phone LIKE '%72%')
 
 DELETE Teachers
-WHERE Phone like '%72%'
+WHERE Phone LIKE '%72%'
 
-use master
+--5. Teen Students
+
+SELECT FirstName, LastName, Age
+FROM Students
+WHERE Age >= 12
+ORDER BY FirstName, LastName
+
+--6. Cool Addresses
+SELECT CONCAT(FirstName, ' ', MiddleName, ' ', LastName) AS [Full Name],
+       Address
+FROM Students
+WHERE Address LIKE '%road%'
+ORDER BY FirstName, LastName, Address
+
+--7. 42 Phones
+SELECT FirstName, Address, Phone
+FROM Students
+WHERE MiddleName IS NOT NULL
+  AND Phone LIKE '42%'
+ORDER BY FirstName
+
+--8. Students Teachers
+
+SELECT s.FirstName, s.LastName, COUNT(st.TeacherId) AS TeachersCount
+FROM Students AS s
+         JOIN StudentsTeachers ST ON s.Id = ST.StudentId
+GROUP BY s.FirstName, s.LastName
+
+--9. Subjects with Students
+
+SELECT CONCAT(t.FirstName, ' ', t.LastName)                 AS FullName,
+       CONCAT(s.Name, '-', CAST(s.Lessons AS NVARCHAR(30))) AS Subjects,
+       COUNT(st.StudentId)                                  AS Students
+FROM Teachers AS t
+         JOIN StudentsTeachers ST ON t.Id = ST.TeacherId
+         JOIN Subjects S ON S.Id = t.SubjectId
+GROUP BY t.FirstName, t.LastName, s.Name, s.Lessons
+ORDER BY COUNT(st.StudentId) DESC,
+         FullName,
+         Subjects
+
+--10. Students to Go
+
+SELECT CONCAT(FirstName, ' ', LastName) AS [Full Name]
+FROM Students
+WHERE Id NOT IN (SELECT StudentId FROM StudentsExams)
+ORDER BY [Full Name]
+
+--11. Busiest Teachers
+SELECT T.FirstName, T.LastName, COUNT(ST.StudentId) AS StudentsCount
+FROM Teachers AS T
+         JOIN StudentsTeachers ST ON T.Id = ST.TeacherId
+GROUP BY T.FirstName, T.LastName
+ORDER BY StudentsCount DESC, T.FirstName, T.LastName
+
+--12. Top Students
+SELECT TOP (10) S.FirstName, S.LastName, CAST(AVG(SE.Grade) AS decimal(3, 2)) AS Grade
+FROM StudentsExams AS SE
+         JOIN Students S ON SE.StudentId = S.Id
+GROUP BY s.FirstName, S.LastName
+ORDER BY Grade DESC, s.FirstName, s.LastName
+
+--13. Second Highest Grade
+SELECT R.FirstName, R.LastName, R.Grade
+FROM (SELECT S.FirstName,
+             S.LastName,
+             SS.Grade,
+             ROW_NUMBER() OVER
+                 (PARTITION BY S.FirstName,S.LastName
+                 ORDER BY SS.Grade DESC) AS [ROW]
+      FROM Students AS S
+               JOIN StudentsSubjects SS ON S.Id = SS.StudentId) AS R
+WHERE [ROW] = 2
+ORDER BY R.FirstName, R.LastName
+
+--14. Not So In The Studying
+
+SELECT CONCAT(FirstName, ' ',
+              ISNULL(MiddleName + ' ', ''), ' ', LastName)
+           AS [Full Name]
+FROM Students
+WHERE id NOT IN (SELECT StudentId FROM StudentsSubjects)
+ORDER BY [Full Name]
+
+--15. Top Student per Teacher
+SELECT r1.[Teacher Full Name],
+       r1.[Subject Name],
+       r1.[Student Full Name],
+       CAST(r1.Grade AS decimal(3, 2)) AS Grade
+FROM (SELECT r.[Teacher Full Name],
+             r.[Subject Name],
+             r.[Student Full Name],
+             Grade                                                                        AS [Grade],
+             ROW_NUMBER() OVER (PARTITION BY r.[Teacher Full Name] ORDER BY r.Grade DESC) AS Rank
+      FROM (SELECT CONCAT(t.FirstName, ' ', t.LastName)   AS [Teacher Full Name],
+                   s.Name                                 AS [Subject Name],
+                   AVG(ss.grade)                          AS Grade,
+                   CONCAT(s2.FirstName, ' ', s2.LastName) AS [Student Full Name]
+            FROM Teachers AS t
+                     JOIN Subjects S ON t.SubjectId = S.Id
+                     JOIN StudentsSubjects SS ON S.Id = SS.SubjectId
+                     JOIN Students S2 ON S2.Id = ss.StudentId
+                     JOIN StudentsTeachers ST ON t.Id = ST.TeacherId AND s2.Id = ST.StudentId
+            GROUP BY t.FirstName, t.LastName, s.Name, s2.FirstName, s2.LastName)
+               AS R)
+         AS R1
+WHERE R1.Rank = 1
+ORDER BY r1.[Subject Name], r1.[Teacher Full Name], r1.Grade DESC
+
+--16. Average Grade per Subject
+
+SELECT
+       (SELECT name
+       FROM Subjects
+       WHERE Id = s.Id) AS Name,
+       AVG(ss.Grade) as AverageGrade
+FROM Subjects AS s
+         JOIN StudentsSubjects SS ON s.Id = SS.SubjectId
+GROUP BY s.Id
+ORDER BY s.Id
+
+
+
 
