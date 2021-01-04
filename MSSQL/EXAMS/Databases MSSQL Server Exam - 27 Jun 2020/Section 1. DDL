@@ -190,18 +190,20 @@ FROM (SELECT p.PartId, p.Description, pn.Quantity AS Required, p.StockQty AS [In
 --Section 4. Programmability
 --11.	Place Order
 
-CREATE PROC usp_PlaceOrder(@jobId int, @partNumber varchar(50), @quantity int)
+CREATE OR
+ALTER PROC usp_PlaceOrder(@jobId int, @partNumber varchar(50), @quantity int)
 AS
 BEGIN
     BEGIN TRANSACTION
-        IF (@jobId IN (SELECT JobId FROM Jobs WHERE Status LIKE 'Finished'))
-            BEGIN
-                THROW 50011, 'This job is not active!',1
-            END
         IF (@quantity <= 0)
             BEGIN
                 THROW 50012, 'Part quantity must be more than zero!',1
             END
+        IF (@jobId IN (SELECT JobId FROM Jobs WHERE Status LIKE 'Finished'))
+            BEGIN
+                THROW 50011, 'This job is not active!',1
+            END
+
         IF (@jobId NOT IN (SELECT JobId FROM Jobs))
             BEGIN
                 THROW 50013, 'Job not found!',1
@@ -231,6 +233,37 @@ BEGIN
             END
     COMMIT
 END
+
+DECLARE @err_msg AS NVARCHAR(MAX);
+BEGIN TRY
+    EXEC usp_PlaceOrder 1, 'ZeroQuantity', 0
+END TRY
+BEGIN CATCH
+    SET @err_msg = ERROR_MESSAGE();
+    SELECT @err_msg
+END CATCH
+
+
+--12.	Cost Of Order
+
+    CREATE FUNCTION udf_GetCost(@jobId int)
+        RETURNS decimal(18, 2) AS
+    BEGIN
+        DECLARE @sum decimal(18, 2)= (SELECT SUM(P.Price)
+                                      FROM Orders AS O
+                                               JOIN OrderParts OP ON O.OrderId = OP.OrderId
+                                               JOIN Parts AS P ON OP.PartId = P.PartId
+                                      WHERE O.JobId = @jobId
+                                      GROUP BY O.JobId
+        )
+        IF (@sum IS NULL)
+            BEGIN
+                RETURN 0;
+            END
+        RETURN @sum;
+    END
+
+SELECT dbo.udf_GetCost(1)
 
 
 
