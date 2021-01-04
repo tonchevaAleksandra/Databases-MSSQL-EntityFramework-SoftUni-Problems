@@ -1,0 +1,175 @@
+USE master
+
+CREATE DATABASE TripService
+USE TripService
+
+CREATE TABLE Cities
+(
+    Id          int PRIMARY KEY IDENTITY,
+    Name        nvarchar(20) NOT NULL,
+    CountryCode char(2)      NOT NULL CHECK (LEN(CountryCode) = 2)
+
+)
+
+CREATE TABLE Hotels
+(
+    Id            int PRIMARY KEY IDENTITY,
+    Name          nvarchar(30) NOT NULL,
+    CityId        int          NOT NULL REFERENCES Cities (Id),
+    EmployeeCount int          NOT NULL,
+    BaseRate      decimal(18, 2)
+
+)
+
+CREATE TABLE Rooms
+(
+    Id      int PRIMARY KEY IDENTITY,
+    Price   decimal(18, 2) NOT NULL,
+    Type    nvarchar(20)   NOT NULL,
+    Beds    int            NOT NULL,
+    HotelId int            NOT NULL REFERENCES Hotels (Id)
+
+)
+CREATE TABLE Trips
+(
+    Id          INT PRIMARY KEY IDENTITY,
+    RoomId      INT      NOT NULL REFERENCES Rooms (Id),
+    BookDate    DATETIME NOT NULL,
+    ArrivalDate DATETIME NOT NULL,
+    ReturnDate  DATETIME NOT NULL,
+    CancelDate  DATETIME,
+
+    CONSTRAINT bookDate_ArrivalDate CHECK (BookDate < ArrivalDate),
+    CONSTRAINT arrivalDate_ReturnDate CHECK (ArrivalDate < ReturnDate)
+)
+
+CREATE TABLE Accounts
+(
+    Id         int PRIMARY KEY IDENTITY,
+    FirstName  nvarchar(50)         NOT NULL,
+    MiddleName nvarchar(20),
+    LastName   nvarchar(50)         NOT NULL,
+    CityId     int                  NOT NULL REFERENCES Cities (Id),
+    BirthDate  date                 NOT NULL,
+    Email      nvarchar(100) UNIQUE NOT NULL
+
+)
+
+CREATE TABLE AccountsTrips
+(
+    AccountId int NOT NULL REFERENCES Accounts (Id),
+    TripId    int NOT NULL REFERENCES Trips (Id),
+    Luggage   int NOT NULL CHECK (Luggage >= 0),
+    PRIMARY KEY (AccountId, TripId)
+
+)
+
+BACKUP DATABASE TripService TO DISK = 'F:\backup\SQL-TripService Database.bak'
+
+--Section 2. DML
+--2. Insert
+
+INSERT INTO Accounts(FirstName, MiddleName, LastName, CityId, BirthDate, Email)
+VALUES ('John', 'Smith', 'Smith', 34, '1975-07-21', 'j_smith@gmail.com'),
+       ('Gosho', NULL, 'Petrov', 11, '1978-05-16', 'g_petrov@gmail.com'),
+       ('Ivan', 'Petrovich', 'Pavlov', 59, '1849-09-26', 'i_pavlov@softuni.bg'),
+       ('Friedrich', 'Wilhelm', 'Nietzsche', 2, '1844-10-15', 'f_nietzsche@softuni.bg')
+
+INSERT INTO Trips(RoomId, BookDate, ArrivalDate, ReturnDate, CancelDate)
+VALUES (101, '2015-04-12', '2015-04-14', '2015-04-20', '2015-02-02'),
+       (102, '2015-07-07', '2015-07-15', '2015-07-22', '2015-04-29'),
+       (103, '2013-07-17', '2013-07-23', '2013-07-24', NULL),
+       (104, '2012-03-17', '2012-03-31', '2012-04-01', '2012-01-10'),
+       (109, '2017-08-07', '2017-08-28', '2017-08-29', NULL)
+
+--3. Update
+UPDATE Rooms
+SET Price*=1.14
+WHERE HotelId IN (5, 7, 9)
+
+--4. Delete
+DELETE AccountsTrips
+WHERE AccountId = 47
+
+--Section 3. Querying
+
+USE master
+RESTORE DATABASE TripService FROM DISK ='F:\backup\SQL-TripService Database.bak'
+
+--5. EEE-Mails
+USE TripService
+SELECT FirstName, LastName, FORMAT(BirthDate, 'MM-dd-yyyy') AS BirthDate, c.Name AS Hometown, s.Email
+FROM Accounts s
+         JOIN Cities C ON s.CityId = C.Id
+WHERE s.Email LIKE 'e%'
+ORDER BY Hometown
+
+--6. City Statistics
+SELECT c.Name AS City, COUNT(h.Id) AS Hotels
+FROM Cities AS c
+         JOIN Hotels H ON c.Id = H.CityId
+GROUP BY c.Name
+ORDER BY Hotels DESC, c.Name
+
+--7. Longest and Shortest Trips
+
+SELECT a.Id                                              AS AccountId,
+       CONCAT(a.FirstName, ' ', a.LastName)              AS FullName,
+       MAX(DATEDIFF(DAY, t2.ArrivalDate, t2.ReturnDate)) AS LongestTrip,
+       MIN(DATEDIFF(DAY, t2.ArrivalDate, t2.ReturnDate)) AS ShortestTrip
+FROM Accounts AS A
+         JOIN AccountsTrips T ON A.Id = T.AccountId
+         JOIN Trips T2 ON T.TripId = T2.Id
+WHERE A.MiddleName IS NULL
+  AND T2.CancelDate IS NULL
+GROUP BY A.Id, a.FirstName, a.LastName
+ORDER BY LongestTrip DESC, ShortestTrip
+
+--8. Metropolis
+
+SELECT c.Id,
+       c.Name        AS City,
+       C.CountryCode AS Country,
+       COUNT(A.Id)   AS Accounts
+FROM Cities AS C
+         JOIN Accounts A ON C.Id = A.CityId
+GROUP BY C.Id, c.Name, c.CountryCode
+ORDER BY Accounts DESC
+
+--9. Romantic Getaways
+
+SELECT A.Id,
+       A.Email,
+       c.Name       AS City,
+       COUNT(t2.Id) AS Trips
+FROM Accounts AS A
+         JOIN AccountsTrips T ON A.Id = T.AccountId
+         JOIN Trips T2 ON T.TripId = T2.Id
+         JOIN Rooms R2 ON R2.Id = T2.RoomId
+         JOIN Hotels H ON R2.HotelId = H.Id
+         JOIN Cities C ON C.Id = H.CityId
+WHERE h.CityId = A.CityId
+GROUP BY A.Id, A.Email, c.Name
+ORDER BY Trips DESC, Id
+
+--10. GDPR Violation
+SELECT t.Id,
+       CONCAT(A2.FirstName, ' ', A2.MiddleName, ' ', A2.LastName) AS [Full Name],
+       c.Name                                                     AS [From],
+       c2.Name                                                    AS [To],
+       CASE
+           WHEN T.CancelDate IS NOT NULL THEN 'Canceled'
+           ELSE CONCAT(DATEDIFF(DAY, t.ArrivalDate, t.ReturnDate), ' days')
+           END                                                    AS Duration
+FROM Trips AS T
+         JOIN AccountsTrips A ON T.Id = A.TripId
+         JOIN Accounts A2 ON A2.Id = A.AccountId
+         JOIN Cities C ON A2.CityId = C.Id
+         JOIN Rooms R2 ON T.RoomId = R2.Id
+         JOIN Hotels H ON R2.HotelId = H.Id
+         JOIN Cities C2 ON C2.Id = H.CityId
+ORDER BY [Full Name], Id
+
+
+
+
