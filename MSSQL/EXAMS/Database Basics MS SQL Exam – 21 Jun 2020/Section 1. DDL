@@ -170,6 +170,74 @@ FROM Trips AS T
          JOIN Cities C2 ON C2.Id = H.CityId
 ORDER BY [Full Name], Id
 
+--Section 4. Programmability
+--11. Available Room
 
+CREATE OR
+ALTER FUNCTION udf_GetAvailableRoom(@HotelId int, @Date date, @People int)
+    RETURNS nvarchar(max) AS
+BEGIN
+    DECLARE @roomId INT = (SELECT TOP (1) r.Id
+                           FROM Trips AS t
+                                    JOIN Rooms AS r ON t.RoomId = r.Id
+                                    JOIN Hotels AS h ON r.HotelId = h.Id
+                           WHERE h.Id = @HotelId
+                             AND @Date NOT BETWEEN t.ArrivalDate AND t.ReturnDate
+                             AND t.CancelDate IS NULL
+                             AND r.Beds >= @People
+                             AND YEAR(@Date) = YEAR(t.ArrivalDate)
+                           ORDER BY r.Price DESC)
+
+    IF (@roomId IS NULL)
+        RETURN 'No rooms available'
+
+    DECLARE @beds int=(SELECT beds FROM Rooms WHERE id = @roomId);
+    DECLARE @baseRate decimal(18, 2)= (SELECT BaseRate
+                                       FROM Hotels
+                                       WHERE id = (SELECT HotelId FROM Rooms WHERE id = @roomId));
+    DECLARE @roomPrice decimal(18, 2)=(SELECT Price FROM Rooms WHERE id = @roomId);
+    DECLARE @roomType nvarchar(20)=(SELECT Type FROM Rooms WHERE id = @roomId)
+    DECLARE @totalPrice decimal(18, 2)= (@baseRate + @roomPrice) * @People
+    DECLARE @output nvarchar(max)=CONCAT('Room ', @RoomId, ': ', @RoomType, ' (', @beds, ' beds', ') - $', @TotalPrice)
+
+    RETURN @output;
+
+
+END
+
+SELECT dbo.udf_GetAvailableRoom(112, '2011-12-17', 2)
+SELECT dbo.udf_GetAvailableRoom(94, '2015-07-26', 3)
+
+
+--12. Switch Room
+
+CREATE PROC usp_SwitchRoom(@TripId int, @TargetRoomId int)
+AS
+BEGIN
+    DECLARE @tripHotelId int =(SELECT h.id
+                               FROM Trips AS t
+                                        JOIN Rooms AS r ON t.RoomId = r.Id
+                                        JOIN Hotels AS h ON r.HotelId = h.Id
+        where t.id=@TripId);
+    DECLARE @RoomHotelId int= (SELECT  HotelId FROM rooms WHERE id = @TargetRoomId);
+    if(@tripHotelId<>@RoomHotelId)
+    begin
+        THROW 50001,'Target room is in another hotel!',1;
+    END
+    DECLARE @CountTripAccounts int=(SELECT count(AccountId) from AccountsTrips where TripId=@TripId);
+    declare @RoomBeds int=(SELECT Beds from Rooms where id=@TargetRoomId);
+    if(@CountTripAccounts>@RoomBeds)
+    begin
+        throw 50002,'Not enough beds in target room!',1;
+    END
+    update Trips
+    set RoomId=@TargetRoomId
+    where id=@TripId
+END
+
+EXEC usp_SwitchRoom 10, 11
+SELECT RoomId FROM Trips WHERE Id = 10
+EXEC usp_SwitchRoom 10, 7
+EXEC usp_SwitchRoom 10, 8
 
 
