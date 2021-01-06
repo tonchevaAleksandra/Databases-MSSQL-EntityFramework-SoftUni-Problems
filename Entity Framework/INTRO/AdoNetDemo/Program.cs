@@ -36,7 +36,7 @@ namespace AdoNetDemo
                     }
                 }
                 SqlCommand updateSalaryCommand = new SqlCommand("UPDATE Employees SET Salary=Salary*0.90 WHERE FirstName like 'N%'", sqlConnection);
-                int updatedRows =(int)updateSalaryCommand.ExecuteNonQuery();
+                int updatedRows = (int)updateSalaryCommand.ExecuteNonQuery();
                 Console.WriteLine($"Slary updated for {updatedRows} employee(e).");
 
                 var reader2 = sqlCommand.ExecuteReader();
@@ -50,6 +50,24 @@ namespace AdoNetDemo
                         Console.WriteLine(firstName + " " + lastName + " => " + salary);
                     }
                 }
+
+                Console.Write("Username: ");
+                string username = Console.ReadLine();
+                Console.Write("Password: ");
+                string pass = Console.ReadLine();
+
+                using SqlConnection sqlConnection1 = new SqlConnection("Server=.;Database=Service;Integrated Security=true");
+                sqlConnection1.Open();
+
+                SqlCommand sqlCommand1 = new SqlCommand("Select count(*) from [Users] Where Username='@Username' and Password='@Password';", sqlConnection1);
+                sqlCommand1.Parameters.AddWithValue("@Username", username);
+                sqlCommand1.Parameters.AddWithValue("QPassword", pass);
+
+                int usersCount = (int)sqlCommand1.ExecuteScalar();
+                if(usersCount>0)
+                    Console.WriteLine("Welcome to our secret data! :)");
+                else
+                    Console.WriteLine("Access forbidden! :(");
             }
         }
     }
