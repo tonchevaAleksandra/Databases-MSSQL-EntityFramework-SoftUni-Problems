@@ -80,6 +80,7 @@ namespace _1._Initial_Setup
                     PRIMARY KEY (MinionId, VillainId)
                 )";
 
+
                 SqlCommand createTablesCmd = new SqlCommand(queryText, sqlConnection);
 
                 try
