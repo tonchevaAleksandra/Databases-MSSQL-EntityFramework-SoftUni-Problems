@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdoNetDemo", "AdoNetDemo\Ad
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AdoNetEXERCISES", "AdoNetEXERCISES", "{37BED54A-D6E4-4A3E-B9E6-FE2F71003000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1. Initial Setup", "1. Initial Setup\1. Initial Setup.csproj", "{D80F1F43-5D56-4A17-949F-E662EFC3D42B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1. Initial Setup", "1. Initial Setup\1. Initial Setup.csproj", "{D80F1F43-5D56-4A17-949F-E662EFC3D42B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2. Villain Names", "2. Villain Names\2. Villain Names.csproj", "{D4DBF86C-666F-4B17-A4A9-CDCEF5D2BA5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2. Villain Names", "2. Villain Names\2. Villain Names.csproj", "{D4DBF86C-666F-4B17-A4A9-CDCEF5D2BA5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3. Minion Names", "3. Minion Names\3. Minion Names.csproj", "{20A6E737-4263-4DFD-A913-14D24E2F0E8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "3. Minion Names", "3. Minion Names\3. Minion Names.csproj", "{20A6E737-4263-4DFD-A913-14D24E2F0E8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4. Add Minion", "4. Add Minion\4. Add Minion.csproj", "{180B8261-FE9D-4E3D-9B1C-B582B25A01FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{20A6E737-4263-4DFD-A913-14D24E2F0E8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20A6E737-4263-4DFD-A913-14D24E2F0E8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20A6E737-4263-4DFD-A913-14D24E2F0E8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{180B8261-FE9D-4E3D-9B1C-B582B25A01FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{180B8261-FE9D-4E3D-9B1C-B582B25A01FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{180B8261-FE9D-4E3D-9B1C-B582B25A01FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{180B8261-FE9D-4E3D-9B1C-B582B25A01FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{D80F1F43-5D56-4A17-949F-E662EFC3D42B} = {37BED54A-D6E4-4A3E-B9E6-FE2F71003000}
 		{D4DBF86C-666F-4B17-A4A9-CDCEF5D2BA5D} = {37BED54A-D6E4-4A3E-B9E6-FE2F71003000}
 		{20A6E737-4263-4DFD-A913-14D24E2F0E8C} = {37BED54A-D6E4-4A3E-B9E6-FE2F71003000}
+		{180B8261-FE9D-4E3D-9B1C-B582B25A01FE} = {37BED54A-D6E4-4A3E-B9E6-FE2F71003000}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {29B24CA3-2E91-40A2-9FA7-2499F23C62CA}
