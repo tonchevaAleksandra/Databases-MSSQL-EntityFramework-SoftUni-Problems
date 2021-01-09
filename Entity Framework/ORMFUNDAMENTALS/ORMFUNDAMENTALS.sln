@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ORM LAB", "ORM LAB", "{21D599C6-E60F-46DC-A9AD-6FD998F4CF55}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ORMExercises", "ORMExercises", "{9A08F888-59BC-4896-88FB-65A942E86C0F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniORM", "MiniORM\MiniORM.csproj", "{6450DA60-F663-4C17-BE92-EBFE1DA403DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6450DA60-F663-4C17-BE92-EBFE1DA403DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6450DA60-F663-4C17-BE92-EBFE1DA403DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6450DA60-F663-4C17-BE92-EBFE1DA403DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6450DA60-F663-4C17-BE92-EBFE1DA403DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6450DA60-F663-4C17-BE92-EBFE1DA403DB} = {9A08F888-59BC-4896-88FB-65A942E86C0F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B4C4793-75C9-47A8-9EA0-517D224852AD}
+	EndGlobalSection
+EndGlobal
