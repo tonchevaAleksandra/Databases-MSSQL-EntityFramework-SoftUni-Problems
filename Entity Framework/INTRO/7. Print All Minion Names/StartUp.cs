@@ -41,7 +41,6 @@ namespace _7._Print_All_Minion_Names
                     }
                 }
             }
-
         }
     }
 }
