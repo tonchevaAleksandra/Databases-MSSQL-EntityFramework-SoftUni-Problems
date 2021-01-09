@@ -3,7 +3,7 @@ using System;
 
 namespace AdoNetDemo
 {
-    class Program
+    class StartUp
     {
         static void Main(string[] args)
         {
@@ -64,7 +64,7 @@ namespace AdoNetDemo
                 sqlCommand1.Parameters.AddWithValue("QPassword", pass);
 
                 int usersCount = (int)sqlCommand1.ExecuteScalar();
-                if(usersCount>0)
+                if (usersCount > 0)
                     Console.WriteLine("Welcome to our secret data! :)");
                 else
                     Console.WriteLine("Access forbidden! :(");
