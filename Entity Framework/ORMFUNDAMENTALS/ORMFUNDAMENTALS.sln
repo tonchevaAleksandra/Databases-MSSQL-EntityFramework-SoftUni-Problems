@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ORMExercises", "ORMExercise
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniORM", "MiniORM\MiniORM.csproj", "{6450DA60-F663-4C17-BE92-EBFE1DA403DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniORM.App", "MiniORM.App\MiniORM.App.csproj", "{5A9340FB-7098-4094-A2F0-7DD53979CD27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,12 +21,17 @@ Global
 		{6450DA60-F663-4C17-BE92-EBFE1DA403DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6450DA60-F663-4C17-BE92-EBFE1DA403DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6450DA60-F663-4C17-BE92-EBFE1DA403DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A9340FB-7098-4094-A2F0-7DD53979CD27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A9340FB-7098-4094-A2F0-7DD53979CD27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A9340FB-7098-4094-A2F0-7DD53979CD27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A9340FB-7098-4094-A2F0-7DD53979CD27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6450DA60-F663-4C17-BE92-EBFE1DA403DB} = {9A08F888-59BC-4896-88FB-65A942E86C0F}
+		{5A9340FB-7098-4094-A2F0-7DD53979CD27} = {9A08F888-59BC-4896-88FB-65A942E86C0F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B4C4793-75C9-47A8-9EA0-517D224852AD}

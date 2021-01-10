@@ -256,7 +256,7 @@ namespace MiniORM
             where TEntity : class
         {
             Type table = typeof(TEntity);
-            var columns = GetEntityColumnNames(table);
+            string[] columns = GetEntityColumnNames(table);
             string tableName = GetTableName(table);
 
             TEntity[] fetchedRows = this.connection.FetchResultSet<TEntity>(tableName, columns).ToArray();
