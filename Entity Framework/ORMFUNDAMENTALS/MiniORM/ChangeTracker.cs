@@ -100,7 +100,7 @@ namespace MiniORM
             PropertyInfo[] monitoredProperties = typeof(T)
                  .GetProperties()
                  .Where(pi => DbContext
-                 .AllowedSqltypes
+                 .AllowedSqlTypes
                  .Contains(pi.PropertyType))
                  .ToArray();
 
