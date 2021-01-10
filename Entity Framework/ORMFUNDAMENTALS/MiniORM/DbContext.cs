@@ -252,11 +252,28 @@ namespace MiniORM
             var dbSetInstance = new DbSet<TEntity>(entities);
             ReflectionHelper.ReplaceBackingField(this, dbSet.Name, dbSetInstance);
         }
+        private IEnumerable<TEntity> LoadTableEntities<TEntity>()
+            where TEntity : class
+        {
+            Type table = typeof(TEntity);
+            var columns = GetEntityColumnNames(table);
+            string tableName = GetTableName(table);
 
+            TEntity[] fetchedRows = this.connection.FetchResultSet<TEntity>(tableName, columns).ToArray();
+
+            return fetchedRows;
+
+        }
 
         private Dictionary<Type, PropertyInfo> DiscoverDbSets()
         {
-            throw new NotImplementedException();
+            Dictionary<Type, PropertyInfo> dbSets = this
+                 .GetType()
+                 .GetProperties()
+                 .Where(pi => pi.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>))
+                 .ToDictionary(pi => pi.PropertyType.GetGenericArguments().First(), pi => pi);
+
+            return dbSets;
         }
 
         private void Persist<TEntity>(DbSet<TEntity> dbSet)
@@ -283,9 +300,30 @@ namespace MiniORM
             }
         }
 
-        private string GetTableName(Type type)
+        private string GetTableName(Type tableType)
         {
-            throw new NotImplementedException();
+            string tableName = ((TableAttribute)Attribute.GetCustomAttribute(tableType, typeof(TableAttribute))).Name;
+
+            if (tableName == null)
+            {
+                tableName = this.dbSetProperties[tableType].Name;
+            }
+
+            return tableName;
+        }
+
+        private string[] GetEntityColumnNames(Type table)
+        {
+            string tableName = this.GetTableName(table);
+
+            IEnumerable<string> dbColumns = this.connection.FetchColumnNames(tableName);
+
+            string[] columns = table.GetProperties()
+                .Where(pi => dbColumns.Contains(pi.Name) && !pi.HasAttribute<NotMappedAttribute>() && AllowedSqlTypes.Contains(pi.PropertyType))
+                .Select(pi => pi.Name)
+                .ToArray();
+
+            return columns;
         }
     }
 }
