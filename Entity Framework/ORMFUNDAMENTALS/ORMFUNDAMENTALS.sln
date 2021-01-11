@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ORM LAB", "ORM LAB", "{21D599C6-E60F-46DC-A9AD-6FD998F4CF55}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ORMExercises", "ORMExercises", "{9A08F888-59BC-4896-88FB-65A942E86C0F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniORM", "MiniORM\MiniORM.csproj", "{6450DA60-F663-4C17-BE92-EBFE1DA403DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniORM.App", "MiniORM.App\MiniORM.App.csproj", "{5A9340FB-7098-4094-A2F0-7DD53979CD27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniORM.App", "MiniORM.App\MiniORM.App.csproj", "{5A9340FB-7098-4094-A2F0-7DD53979CD27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

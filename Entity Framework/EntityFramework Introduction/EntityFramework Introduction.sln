@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EFIntroLAB", "EFIntroLAB", "{D7E572B3-2B6F-4247-8D5F-A2E4C53601AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCoreTestDemo", "EFCoreTestDemo\EFCoreTestDemo.csproj", "{D11F9284-6D3F-4DE6-B407-9C041D46DEA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftUniDatabase EntityFrameworkCore Test", "SoftUniDatabase EntityFrameworkCore Test\SoftUniDatabase EntityFrameworkCore Test.csproj", "{4001DC2A-D4E7-4856-82A8-72326A1E08FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D11F9284-6D3F-4DE6-B407-9C041D46DEA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D11F9284-6D3F-4DE6-B407-9C041D46DEA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D11F9284-6D3F-4DE6-B407-9C041D46DEA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D11F9284-6D3F-4DE6-B407-9C041D46DEA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4001DC2A-D4E7-4856-82A8-72326A1E08FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4001DC2A-D4E7-4856-82A8-72326A1E08FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4001DC2A-D4E7-4856-82A8-72326A1E08FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4001DC2A-D4E7-4856-82A8-72326A1E08FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D11F9284-6D3F-4DE6-B407-9C041D46DEA3} = {D7E572B3-2B6F-4247-8D5F-A2E4C53601AD}
+		{4001DC2A-D4E7-4856-82A8-72326A1E08FA} = {D7E572B3-2B6F-4247-8D5F-A2E4C53601AD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B708400-B642-40E6-8617-EF95E222E9D6}
+	EndGlobalSection
+EndGlobal
