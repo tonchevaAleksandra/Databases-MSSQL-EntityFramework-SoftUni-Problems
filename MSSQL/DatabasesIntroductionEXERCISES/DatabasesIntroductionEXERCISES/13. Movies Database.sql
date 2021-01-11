@@ -64,9 +64,9 @@ INSERT INTO Movies(Title, DirectorId,CopyrightYear,
 		('The Godfather',2,'1972','02:55',
 		1,5,9.2, NULL),
 		('Schindlers List',3,'1993','03:15',
-		3,6,8.9, NULL),
+		3,1,8.9, NULL),
 		('The Lord of the Rings',
 		4,'2003','03:21',
-		4,7,8.9, NULL),
+		4,2,8.9, NULL),
 		('Pulp Fiction',5,'1994','02:34',
-		2,8,8.9, NULL)
+		2,3,8.9, NULL)
