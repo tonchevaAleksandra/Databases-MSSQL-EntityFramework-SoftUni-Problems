@@ -302,7 +302,7 @@ namespace MiniORM
 
         private string GetTableName(Type tableType)
         {
-            string tableName = ((TableAttribute)Attribute.GetCustomAttribute(tableType, typeof(TableAttribute))).Name;
+            string tableName = ((TableAttribute)Attribute.GetCustomAttribute(tableType, typeof(TableAttribute)))?.Name;
 
             if (tableName == null)
             {
