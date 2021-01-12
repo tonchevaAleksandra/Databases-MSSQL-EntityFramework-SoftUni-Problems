@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EFIntroLAB", "EFIntroLAB", "{D7E572B3-2B6F-4247-8D5F-A2E4C53601AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCoreTestDemo", "EFCoreTestDemo\EFCoreTestDemo.csproj", "{D11F9284-6D3F-4DE6-B407-9C041D46DEA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCoreTestDemo", "EFCoreTestDemo\EFCoreTestDemo.csproj", "{D11F9284-6D3F-4DE6-B407-9C041D46DEA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftUniDatabase EntityFrameworkCore Test", "SoftUniDatabase EntityFrameworkCore Test\SoftUniDatabase EntityFrameworkCore Test.csproj", "{4001DC2A-D4E7-4856-82A8-72326A1E08FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftUni", "SoftUniDatabase EntityFrameworkCore Test\SoftUni.csproj", "{4001DC2A-D4E7-4856-82A8-72326A1E08FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
