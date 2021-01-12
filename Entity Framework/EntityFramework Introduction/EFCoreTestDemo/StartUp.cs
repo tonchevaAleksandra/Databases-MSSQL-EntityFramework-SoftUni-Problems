@@ -23,7 +23,7 @@ namespace EFCoreTestDemo
             //    FirstName="Aleksandra",
             //    LastName="Toncheva"
             //};
-           
+
             db.SaveChanges();
             employees = new List<Employee>();
             //--------------------------------
@@ -37,7 +37,7 @@ namespace EFCoreTestDemo
                 LastName = "SomeName",
                 DepartmentId = 1,
                 IsEmployed = true
-            }); 
+            });
             //--------------------------------
             db.Employees
                 .Where(e => e.FirstName.StartsWith("C"));
@@ -52,7 +52,7 @@ namespace EFCoreTestDemo
                 .Where(d => d.Id > 3)
                 .Where(d => d.Employees.Count() > 0)
                 .Select(d => d.Name)// always use Select statement !!!
-                //.Skip(()=>1)=> this is betterq but works only in EF 6
+                                    //.Skip(()=>1)=> this is betterq but works only in EF 6
                 .Take(2)
                 .ToList(); //=> this will invoke the database (ToList(),ToArray(),Todictionary(), Max(), Min(), Any(), All(), First(), FirstOrDefault(), Single(), SingleOrDefault(), Count();
 
@@ -79,9 +79,31 @@ namespace EFCoreTestDemo
             //var employee1 = db.Employees.Find(11);
             //employee1.FirstName = "Steve";
             //employee1.LastName = "Jobs";
+
+            var result1 = db.Departments
+                .Select(d => new
+                {
+                    d.Name,
+                    Employee = d.Employees.Select(e => e.FirstName)
+
+                })
+                .ToList();
             db1.SaveChanges();
+
+            db1.Departments
+                .GroupJoin(db.Employees,
+                d => d.Id,
+                e => e.DepartmentId,
+                (d, e) => new
+                {
+                    Name = d.Name,
+                    Employee = e.Select(e => e.FirstName + " " + e.LastName)
+                })
+                .ToList();
+
+
         }
 
-        
+
     }
 }
