@@ -14,7 +14,58 @@ namespace SoftUni
         static void Main(string[] args)
         {
             var context = new SoftUniContext();
-            Console.WriteLine(IncreaseSalaries(context));
+            Console.WriteLine(DeleteProjectById(context));
+        }
+
+        //Problem 14
+        public static string DeleteProjectById(SoftUniContext context)
+        {
+            StringBuilder sb = new StringBuilder();
+            var employeesProjectsToDelete = context.EmployeesProjects
+                .Where(ep => ep.ProjectId == 2);
+
+            var project = context.Projects
+                .Where(p => p.ProjectId == 2)
+                .Single();
+
+            foreach (var ep in employeesProjectsToDelete)
+            {
+                context.EmployeesProjects.Remove(ep);
+            }
+
+            context.Projects.Remove(project);
+
+            context.SaveChanges();
+
+            context.Projects
+                .Take(10)
+                .Select(p => p.Name)
+                .ToList()
+                .ForEach(p => sb.AppendLine(p));
+
+            return sb.ToString().Trim();
+        }
+
+        //Problem 13
+        public static string GetEmployeesByFirstNameStartingWithSa(SoftUniContext context)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            context.Employees
+                .Where(e => e.FirstName.ToLower().StartsWith("sa"))
+                .Select(e => new
+                {
+                    e.FirstName,
+                    e.LastName,
+                    e.JobTitle,
+                    e.Salary
+                })
+                .OrderBy(e => e.FirstName)
+                .ThenBy(e => e.LastName)
+                .ToList()
+                .ForEach(e => sb.AppendLine($"{e.FirstName} {e.LastName} - {e.JobTitle} - (${e.Salary:f2})"));
+
+            return sb.ToString().Trim();
         }
 
         //Problem 12
