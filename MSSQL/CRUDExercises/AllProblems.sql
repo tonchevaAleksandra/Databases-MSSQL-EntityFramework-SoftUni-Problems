@@ -21,7 +21,7 @@ SELECT *
 FROM Employees
 WHERE JobTitle = 'Sales Representative';
 
-SELECT *
+SELECT FirstName, LastName, JobTitle
 FROM Employees
 WHERE Salary BETWEEN 20000 AND 30000
 
@@ -50,6 +50,10 @@ SELECT *
 FROM Employees
 ORDER BY Salary DESC ,FirstName,LastName DESC ,MiddleName;
 
+CREATE VIEW V_EmployeesSalaries AS
+SELECT FirstName, LastName, Salary
+    FROM Employees
+    
 CREATE VIEW V_EmployeeNameJobTitle AS
 SELECT FirstName + ' ' + ISNULL (MiddleName,'')
            + ' ' + LastName AS 'Full Name', JobTitle
