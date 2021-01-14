@@ -84,6 +84,10 @@ FROM Employees
 
 USE Geography
 
+SELECT PeakName
+    FROM Peaks
+    ORDER BY PeakName
+    
 SELECT *
 FROM Continents
 
