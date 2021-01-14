@@ -1,4 +1,4 @@
-USE SoftUni
+USE SoftUni1
 
 SELECT TOP (10) ProjectID,
                 Name,
@@ -6,7 +6,7 @@ SELECT TOP (10) ProjectID,
                 StartDate,
                 EndDate,
                 DATEPART(WEEK, StartDate)
-FROM SoftUni.dbo.Projects;
+FROM SoftUni1.dbo.Projects;
 
 SELECT *,
        PERCENTILE_CONT(0.5)
@@ -131,7 +131,7 @@ SELECT RAND(4)
 /*/////////////
   */
 
-USE SoftUni
+USE SoftUni1
 
 SELECT StartDate,
        EndDate,

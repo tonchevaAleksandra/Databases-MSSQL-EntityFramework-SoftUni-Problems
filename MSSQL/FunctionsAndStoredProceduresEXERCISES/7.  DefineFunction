@@ -1,4 +1,4 @@
-USE SoftUni
+USE SoftUni1
 
 CREATE FUNCTION ufn_IsWordComprised(@setOfLetters varchar(max), @word varchar(max))
     RETURNS bit AS

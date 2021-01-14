@@ -1,4 +1,4 @@
-USE SoftUni
+USE SoftUni1
 
 CREATE PROC usp_EmployeesBySalaryLevel (@SalaryLevel varchar(7))
 AS

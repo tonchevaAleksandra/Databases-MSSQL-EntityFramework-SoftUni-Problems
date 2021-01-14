@@ -1,4 +1,4 @@
-USE SoftUni
+USE SoftUni1
 
 CREATE PROC usp_GetEmployeesSalaryAboveNumber(@Salary decimal(18, 4))
 AS

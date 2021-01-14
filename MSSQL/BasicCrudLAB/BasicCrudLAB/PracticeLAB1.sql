@@ -3,19 +3,19 @@ SELECT TOP (1) *
 FROM Geography.dbo.Peaks
 ORDER BY Elevation DESC
 
-USE SoftUni
+USE SoftUni1
 
 INSERT INTO Towns (Name)
 VALUES ('Plovdiv')
 
 INSERT INTO Projects(name, description, startdate, enddate)
 SELECT '[New] ' + Name, Description, GETDATE() AS StartDate
-FROM SoftUni.dbo.Projects
+FROM SoftUni1.dbo.Projects
 WHERE Name LIKE 'C%'
 
 SELECT FirstName +' ' + LastName AS  FullName, Salary
 INTO  Names
-FROM SoftUni.dbo.Employees;
+FROM SoftUni1.dbo.Employees;
 
 CREATE SEQUENCE seq_MyNumbers
 AS int

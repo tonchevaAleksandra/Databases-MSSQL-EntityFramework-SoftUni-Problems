@@ -24,7 +24,7 @@ SELECT CASE @Year2
            END
 
 
-USE SoftUni
+USE SoftUni1
 
 DECLARE @Year int= 1999;
 

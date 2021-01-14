@@ -1,4 +1,4 @@
-USE SoftUni
+USE SoftUni1
 
 CREATE OR
 ALTER FUNCTION ufn_GetSalaryLevel(@Salary decimal(19,4))

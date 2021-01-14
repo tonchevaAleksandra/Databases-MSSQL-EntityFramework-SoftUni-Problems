@@ -1,4 +1,4 @@
-USE SoftUni
+USE SoftUni1
 
 CREATE FUNCTION udf_EmployrrListByDepartment(@DepName nvarchar(20))
     RETURNS @result TABLE

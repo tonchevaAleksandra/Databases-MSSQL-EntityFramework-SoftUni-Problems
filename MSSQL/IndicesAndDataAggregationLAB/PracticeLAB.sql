@@ -5,7 +5,7 @@ FROM FirstIndex;
 
 DBCC DROPCLEANBUFFERS
 
-USE softuni
+USE SoftUni1
 
 SELECT DepartmentID, MIN(Salary)
 FROM Employees

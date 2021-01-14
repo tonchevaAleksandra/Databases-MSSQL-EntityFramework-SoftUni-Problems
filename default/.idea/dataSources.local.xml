@@ -31,9 +31,22 @@
               <name qname="Gringotts" />
               <name qname="Incomes" />
               <name qname="Bank" />
+              <name qname="Service" />
+              <name qname="Airport" />
+              <name qname="hacker" />
+              <name qname="OLIVANDER" />
+              <name qname="Bitbucket" />
+              <name qname="School" />
+              <name qname="WMS" />
+              <name qname="TripService" />
               <node kind="schema" qname="dbo" />
             </node>
-            <node kind="database" qname="PerformanceDB" />
+            <node kind="database">
+              <name qname="PerformanceDB" />
+              <name qname="MinionsDB" />
+              <name qname="MiniORM" />
+              <name qname="SoftUni1" />
+            </node>
           </node>
         </introspection-scope>
         <substitutions use-mini-cat="false" />

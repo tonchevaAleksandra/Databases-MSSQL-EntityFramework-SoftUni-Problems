@@ -1,4 +1,4 @@
-USE SoftUni
+USE SoftUni1
 
 SELECT DepartmentID,
        AVG(IIF(DepartmentID = 1, Salary + 5000, Salary)) AS AverageSalary

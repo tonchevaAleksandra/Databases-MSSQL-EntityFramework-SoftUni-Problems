@@ -1,4 +1,4 @@
-USE SoftUni
+USE SoftUni1
 GO
 
 CREATE PROC dbo.usp_SelectEmployeesBySeniority

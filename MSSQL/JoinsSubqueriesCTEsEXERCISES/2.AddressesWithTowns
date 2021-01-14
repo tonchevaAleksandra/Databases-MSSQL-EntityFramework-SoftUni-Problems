@@ -1,4 +1,4 @@
-USE SoftUni
+USE SoftUni1
 
 SELECT top(50) e.FirstName, e.LastName,t.Name as 'Town',a.AddressText
 FROM Employees as e

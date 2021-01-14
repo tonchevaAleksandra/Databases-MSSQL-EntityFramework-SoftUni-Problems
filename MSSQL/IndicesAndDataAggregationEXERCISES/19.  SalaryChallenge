@@ -1,4 +1,4 @@
-USE SoftUni
+USE SoftUni1
 
 
 SELECT TOP (10) E.FirstName, E.LastName, E.DepartmentID

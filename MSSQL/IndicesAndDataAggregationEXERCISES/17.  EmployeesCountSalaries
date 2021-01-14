@@ -1,4 +1,4 @@
-use SoftUni
+use SoftUni1
 
 
 SELECT count(Salary) as Count

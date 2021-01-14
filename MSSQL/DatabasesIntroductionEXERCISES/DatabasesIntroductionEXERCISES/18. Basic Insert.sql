@@ -1,4 +1,4 @@
-USE SoftUni
+USE SoftUni1
 
 INSERT INTO Towns([Name])
 	VALUES

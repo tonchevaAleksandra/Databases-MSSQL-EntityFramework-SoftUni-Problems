@@ -9,7 +9,7 @@ GO
 CREATE DATABASE SoftUni
 GO
 
-USE SoftUni
+USE SoftUni1
 GO
 
 CREATE TABLE Towns(

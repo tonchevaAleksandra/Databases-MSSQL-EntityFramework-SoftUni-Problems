@@ -1,4 +1,4 @@
-USE SoftUni
+USE SoftUni1
 
 CREATE FUNCTION udf_ProjectDurationWeeks(@StartDate DATETIME,
                                          @EndDate DATETIME)

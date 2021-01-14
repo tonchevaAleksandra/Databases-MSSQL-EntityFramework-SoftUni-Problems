@@ -1,4 +1,4 @@
-USE SoftUni
+USE SoftUni1
 
 SELECT TownId, [Name], LEN(Name), SUBSTRING(Name, 1, 3)
 FROM Towns

@@ -37,7 +37,7 @@ WHERE id = @ToAccountID
     COMMIT
 GO
 
-USE SoftUni
+USE SoftUni1
 
 CREATE OR ALTER TRIGGER tr_TownsUpdate
     ON towns

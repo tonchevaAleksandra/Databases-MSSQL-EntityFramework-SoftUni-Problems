@@ -1,4 +1,4 @@
-use SoftUni
+use SoftUni1
 
 SELECT FirstName,LastName
 FROM Employees
