@@ -100,7 +100,7 @@ SELECT *FROM Currencies
 
 SELECT CountryName,CurrencyCode,
        CASE
-       when CurrencyCode LIKE 'Eur' THEN 'Euro'
+       when CurrencyCode='Eur' THEN 'Euro'
 ELSE 'Not Euro'
          END  AS 'currency'
 FROM Countries
