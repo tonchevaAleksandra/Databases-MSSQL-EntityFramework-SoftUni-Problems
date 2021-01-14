@@ -102,7 +102,7 @@ SELECT CountryName,CurrencyCode,
        CASE
        when CurrencyCode='Eur' THEN 'Euro'
 ELSE 'Not Euro'
-         END  AS 'currency'
+         END  AS 'Currency'
 FROM Countries
 ORDER BY CountryName
 
