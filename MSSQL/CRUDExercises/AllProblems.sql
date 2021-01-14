@@ -98,7 +98,7 @@ ORDER BY Population DESC , CountryName;
 
 SELECT *FROM Currencies
 
-SELECT CountryName,CurrencyCode,
+SELECT CountryName,CountryCode,
        CASE
        when CurrencyCode='Eur' THEN 'Euro'
 ELSE 'Not Euro'
