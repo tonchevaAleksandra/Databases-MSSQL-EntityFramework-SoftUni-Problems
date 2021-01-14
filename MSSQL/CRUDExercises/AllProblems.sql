@@ -74,9 +74,9 @@ ORDER BY HireDate DESC
 SELECT *
 FROM Departments;
 
-
+--21
 UPDATE Employees
-SET Salary =Salary*0.12
+SET Salary *=1.12
 WHERE DepartmentID IN (1,2,4,11)
 
 SELECT Salary
