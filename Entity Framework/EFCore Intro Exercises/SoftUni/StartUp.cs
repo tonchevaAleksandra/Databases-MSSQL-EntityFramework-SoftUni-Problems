@@ -14,7 +14,38 @@ namespace SoftUni
         static void Main(string[] args)
         {
             var context = new SoftUniContext();
-            Console.WriteLine(GetLatestProjects(context));
+            Console.WriteLine(IncreaseSalaries(context));
+        }
+
+        //Problem 12
+        public static string IncreaseSalaries(SoftUniContext context)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            context.Employees
+                 .Where(e => new[] { "Engineering", "Tool Design", "Marketing", "Information Services" }
+                        .Contains(e.Department.Name))
+                 .ToList()
+                 .ForEach(e => e.Salary *= 1.12M);
+
+            context.SaveChanges();
+
+            context.Employees
+                 .Where(e => new[] { "Engineering", "Tool Design", "Marketing", "Information Services" }
+                          .Contains(e.Department.Name))
+                 .Select(e => new
+                 {
+                     e.FirstName,
+                     e.LastName,
+                     e.Salary
+                 })
+                 .OrderBy(e => e.FirstName)
+                 .ThenBy(e => e.LastName)
+                 .ToList()
+                 .ForEach(e => sb.AppendLine($"{e.FirstName} {e.LastName} (${e.Salary:f2})"));
+
+            return sb.ToString().Trim();
+
         }
 
         //Problem 11
@@ -22,7 +53,7 @@ namespace SoftUni
         {
             StringBuilder sb = new StringBuilder();
 
-            var projects = context.Projects   
+            var projects = context.Projects
                 .OrderByDescending(p => p.StartDate)
                 .Take(10)
                 .Select(p => new
@@ -139,7 +170,7 @@ namespace SoftUni
             }
 
             return sb.ToString().Trim();
-                
+
         }
 
         //Problem 07
