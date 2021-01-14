@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeFirstLAB", "CodeFirstLAB", "{328B422C-6798-4955-B41C-7F621F27E5F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Practice", "Practice\Practice.csproj", "{8C409CEC-57C0-47D5-9F1E-0B307D28913F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C409CEC-57C0-47D5-9F1E-0B307D28913F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C409CEC-57C0-47D5-9F1E-0B307D28913F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C409CEC-57C0-47D5-9F1E-0B307D28913F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C409CEC-57C0-47D5-9F1E-0B307D28913F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8C409CEC-57C0-47D5-9F1E-0B307D28913F} = {328B422C-6798-4955-B41C-7F621F27E5F9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {501E09D9-4D72-42D5-BC01-A3ED315B9B6D}
+	EndGlobalSection
+EndGlobal

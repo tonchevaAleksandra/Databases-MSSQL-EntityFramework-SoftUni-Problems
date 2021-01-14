@@ -14,7 +14,7 @@ namespace SoftUni
         static void Main(string[] args)
         {
             var context = new SoftUniContext();
-            Console.WriteLine(RemoveTown(context));
+            Console.WriteLine(/*RemoveTown(context)*/);
         }
 
         //Problem 15
