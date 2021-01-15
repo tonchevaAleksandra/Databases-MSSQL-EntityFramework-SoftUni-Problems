@@ -1,1 +1,1 @@
-# Microsoft-SQL-SoftUni-Problems
+# Microsoft-SQL Server && EntityFramework Core-SoftUni-Problems
