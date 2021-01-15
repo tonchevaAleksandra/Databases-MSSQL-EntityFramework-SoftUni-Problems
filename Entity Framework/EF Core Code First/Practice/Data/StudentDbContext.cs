@@ -78,6 +78,10 @@ namespace Practice.Data
                 .WithMany(c => c.Students)
                 .HasForeignKey(sc => sc.CourseId);
 
+
+            //modelBuilder.Entity<Town>()
+            //    .HasData(new
+            //    { Name = "Plovdiv" });
         }
     }
 }
