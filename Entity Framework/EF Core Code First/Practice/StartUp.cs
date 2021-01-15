@@ -47,25 +47,25 @@ namespace Practice
 
 
 
-            db.StudentsCourses.Add(new StudentInCourse
-            {
-                Student = new Student
-                {
-                    FirstName = "Georgi",
-                    LastName = "Delchev",
-                    RegistrationDate = DateTime.UtcNow,
-                    Town = new Town
-                    {
-                        Name = "Stara Zagora"
-                    }
-                },
-                Course = new Course
-                {
-                    Name = "C# OOP",
-                    Description = "Interfaces, Delegates"
-                }
-            });
-            db.SaveChanges();
+            //db.StudentsCourses.Add(new StudentInCourse
+            //{
+            //    Student = new Student
+            //    {
+            //        FirstName = "Georgi",
+            //        LastName = "Delchev",
+            //        RegistrationDate = DateTime.UtcNow,
+            //        Town = new Town
+            //        {
+            //            Name = "Stara Zagora"
+            //        }
+            //    },
+            //    Course = new Course
+            //    {
+            //        Name = "C# OOP",
+            //        Description = "Interfaces, Delegates"
+            //    }
+            //});
+            //db.SaveChanges();
 
 
             db.Students.ToList().ForEach(e => Console.WriteLine($"{e.FirstName} {e.LastName} {e.RegistrationDate} {e.Type} {e.TownId}"));
