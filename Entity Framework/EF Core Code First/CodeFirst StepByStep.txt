@@ -1,0 +1,12 @@
+1. Add Models - /Student/
+2. Put Primary Key - ID
+3. Add Columns + their annotations /MaxLength, Required etc./
+4. Add DbContext + DbSet for every Model
+5. Add Methods in DBContext -  OnConfuguring (ConnectionString) + OnModelCreating (Models)
+6. Relationship - ForeignKey TownId + Property Town Town - for easy quering
++ Collection in other Model 
+6.5 For Relation  Many-to-Many = 2 One-to-Many + 
+  .HasKey(sc=> new {sc.FirstKeyId, sc.SecondKeyID})
+7. Add-Migration {MigrationName} in Package Manager Console
+8. Invoke in StartUp.cs => db.Database.Migrate();
+9. Queries :)

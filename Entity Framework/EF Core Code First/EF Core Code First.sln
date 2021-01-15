@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeFirstLAB", "CodeFirstLAB", "{328B422C-6798-4955-B41C-7F621F27E5F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Practice", "Practice\Practice.csproj", "{8C409CEC-57C0-47D5-9F1E-0B307D28913F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Practice", "Practice\Practice.csproj", "{8C409CEC-57C0-47D5-9F1E-0B307D28913F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2A5A0C82-D2E1-4974-A77F-9B8283998A71}"
+	ProjectSection(SolutionItems) = preProject
+		CodeFirst StepByStep.txt = CodeFirst StepByStep.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

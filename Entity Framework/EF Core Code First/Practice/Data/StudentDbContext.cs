@@ -18,6 +18,8 @@ namespace Practice.Data
 
         public DbSet<StudentInCourse> StudentsCourses { get; set; }
 
+        public DbSet<Homework> Homeworks { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

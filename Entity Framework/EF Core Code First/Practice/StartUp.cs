@@ -67,10 +67,44 @@ namespace Practice
             //});
             //db.SaveChanges();
 
+            //db.Homeworks.Add(new Homework
+            //{
+            //    Content = "Some content for this course",
+            //    Score = 5.50,
+            //    StudentId = 1,
+            //    CourseId = 2,
+
+            //}) ;
+
+            //CoursesInformation(db); - Exception occured
 
             db.Students.ToList().ForEach(e => Console.WriteLine($"{e.FirstName} {e.LastName} {e.RegistrationDate} {e.Type} {e.TownId}"));
 
 
+        }
+
+        private static void CoursesInformation(StudentDbContext db)
+        {
+            var courses = db.Courses
+                 .Select(c => new
+                 {
+                     c.Name,
+                     TotalStudents = c.Students
+                     .Where(st => st.Course.Homeworks.Average(h => h.Score) > 2)
+                     .Count(),
+                     Students = c
+                     .Students
+                     .Select(st => new
+                     {
+                         FullName = st.Student.FirstName + " " + st.Student.LastName,
+                         Score = st.Student.Homeworks.Average(h => h.Score)
+                     })
+                     .ToList()
+                 })
+                 .ToList();
+
+
+            Console.WriteLine(courses.Count());
         }
     }
 }
