@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 using P03_FootballBetting.Data.Configurations;
 using P03_FootballBetting.Data.Models;
-using System.Reflection;
+
 
 namespace P03_FootballBetting.Data
 {
@@ -46,6 +47,13 @@ namespace P03_FootballBetting.Data
             modelBuilder.ApplyConfiguration(new TeamConfiguration());
             modelBuilder.ApplyConfiguration(new ColorConfiguration());
             modelBuilder.ApplyConfiguration(new TownConfiguration());
+            modelBuilder.ApplyConfiguration(new CountryConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerConfiguration());
+            modelBuilder.ApplyConfiguration(new PositionConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerStatisticConfiguration());
+            modelBuilder.ApplyConfiguration(new GameConfiguration());
+            modelBuilder.ApplyConfiguration(new BetConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
     }
 

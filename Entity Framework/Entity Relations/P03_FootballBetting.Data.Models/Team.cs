@@ -27,6 +27,6 @@ namespace P03_FootballBetting.Data.Models
 
         public virtual ICollection<Game> AwayGames { get; set; } = new HashSet<Game>();
 
-        public virtual ICollection<Player> Olayers { get; set; } = new HashSet<Player>();
+        public virtual ICollection<Player> Players { get; set; } = new HashSet<Player>();
     }
 }
