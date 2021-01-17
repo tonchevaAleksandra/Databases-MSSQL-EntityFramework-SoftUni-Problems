@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="cef3f75a-fcdf-4f5f-85f6-be5b168e04d5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../Entity Framework/EntityFramework Introduction/SoftUni-Database.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Entity Framework/EntityFramework Introduction/EFCoreTestDemo/StartUp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Entity Framework/EntityFramework Introduction/EFCoreTestDemo/StartUp.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Entity Framework/EntityFramework Introduction/EntityFramework Introduction.sln" beforeDir="false" afterPath="$PROJECT_DIR$/../Entity Framework/EntityFramework Introduction/EntityFramework Introduction.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BasicCrudLAB/BasicCrudLAB/Practice.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BasicCrudLAB/BasicCrudLAB/Practice.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BasicCrudLAB/BasicCrudLAB/PracticeLAB1.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BasicCrudLAB/BasicCrudLAB/PracticeLAB1.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BasicCrudLAB/BasicCrudLAB/SoftUni-Database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BasicCrudLAB/BasicCrudLAB/SoftUni-Database.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/1.FindNamesOfAllEmployeesByFirstName" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/1.FindNamesOfAllEmployeesByFirstName" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/10.RankEmployeesBySalary" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/10.RankEmployeesBySalary" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/11.FindAllEmployeesWithRan2" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/11.FindAllEmployeesWithRan2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/2.FindNamesOfAllEmployeesByLastName.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/2.FindNamesOfAllEmployeesByLastName.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/3.FindFirstNamesOfAllEmployees.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/3.FindFirstNamesOfAllEmployees.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/4.FindAllEmployeesExceptEngeneers.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/4.FindAllEmployeesExceptEngeneers.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/5.FindTownsWithNameLength.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/5.FindTownsWithNameLength.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/6.FindTownsStartingWith" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/6.FindTownsStartingWith" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/7.FindTownsNotStartingWith" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/7.FindTownsNotStartingWith" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/8.CreateViewEmployeesHiredAfter2000Year" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/8.CreateViewEmployeesHiredAfter2000Year" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/9.LengthOfLastName" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsEXERCISES/9.LengthOfLastName" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsLAB/PracticeLAB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/BuiltInFunctionsLAB/PracticeLAB.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/CRUDExercises/AllProblems.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/CRUDExercises/AllProblems.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/DatabasesIntroductionEXERCISES/DatabasesIntroductionEXERCISES/16. Create SoftUni Database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/DatabasesIntroductionEXERCISES/DatabasesIntroductionEXERCISES/16. Create SoftUni Database.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/DatabasesIntroductionEXERCISES/DatabasesIntroductionEXERCISES/17. Backup Database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/DatabasesIntroductionEXERCISES/DatabasesIntroductionEXERCISES/17. Backup Database.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/DatabasesIntroductionEXERCISES/DatabasesIntroductionEXERCISES/18. Basic Insert.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/DatabasesIntroductionEXERCISES/DatabasesIntroductionEXERCISES/18. Basic Insert.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/EXAMS/Database Basics MS SQL Exam – 21 Jun 2020/Section 1. DDL" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/EXAMS/Database Basics MS SQL Exam – 21 Jun 2020/Section 1. DDL" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/1. EmployeesWithSalaryAbove35000" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/1. EmployeesWithSalaryAbove35000" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/2.  EmployeesWithSalaryAboveNumber" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/2.  EmployeesWithSalaryAboveNumber" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/3.  TownNamesStartingWith" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/3.  TownNamesStartingWith" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/4.  EmployeesFromTown" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/4.  EmployeesFromTown" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/5.  SalaryLevelFunction" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/5.  SalaryLevelFunction" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/6.  EmployeesBySalaryLevel" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/6.  EmployeesBySalaryLevel" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/7.  DefineFunction" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/7.  DefineFunction" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/8.  DeleteEmployeesAndDepartments" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresEXERCISES/8.  DeleteEmployeesAndDepartments" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/CreateFunction.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/CreateFunction.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/FunctionEmployeeList.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/FunctionEmployeeList.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/GetSalaryLevelFunction.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/GetSalaryLevelFunction.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/PracticeLAB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/PracticeLAB.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/StoredProcedures.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/FunctionsAndStoredProceduresLAB/StoredProcedures.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/13.  DepartmentsTotalSalaries" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/13.  DepartmentsTotalSalaries" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/14.  EmployeesMinimumSalaries" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/14.  EmployeesMinimumSalaries" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/15.  EmployeesAverageSalaries" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/15.  EmployeesAverageSalaries" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/16.  EmployeesMaximumSalaries" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/16.  EmployeesMaximumSalaries" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/17.  EmployeesCountSalaries" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/17.  EmployeesCountSalaries" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/18.  3rdHighestSalary" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/18.  3rdHighestSalary" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/19.  SalaryChallenge" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationEXERCISES/19.  SalaryChallenge" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationLAB/PracticeLAB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/IndicesAndDataAggregationLAB/PracticeLAB.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/1.EmployeeAddress" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/1.EmployeeAddress" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/10.EmployeeSummary" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/10.EmployeeSummary" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/11.MinAverageSalary" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/11.MinAverageSalary" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/2.AddressesWithTowns" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/2.AddressesWithTowns" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/3.SalesEmployee" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/3.SalesEmployee" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/4.EmployeeDepartments" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/4.EmployeeDepartments" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/5.EmployeesWithoutProject" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/5.EmployeesWithoutProject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/6.EmployeesHiredAfter" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/6.EmployeesHiredAfter" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/7.EmployeesWithProject" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/7.EmployeesWithProject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/8.Employee24" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/8.Employee24" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/9.EmployeeManager" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsEXERCISES/9.EmployeeManager" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsLAB/PracticeLAB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/JoinsSubqueriesCTEsLAB/PracticeLAB.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/TriggersAndTransactionsEXERCISES/8. EmployeesWithThreeProjects" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/TriggersAndTransactionsEXERCISES/8. EmployeesWithThreeProjects" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/TriggersAndTransactionsEXERCISES/9. DeleteEmployees" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/TriggersAndTransactionsEXERCISES/9. DeleteEmployees" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MSSQL/TriggersAndTransactionsLAB/PracticeLAB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../MSSQL/TriggersAndTransactionsLAB/PracticeLAB.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae/storage_v2/_src_/database/Bank.XHofAA/schema/dbo.sYMBAA.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae/storage_v2/_src_/database/Bank.XHofAA/schema/dbo.sYMBAA.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae/storage_v2/_src_/database/Demo.A3IgAA/schema/dbo.sYMBAA.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae/storage_v2/_src_/database/Demo.A3IgAA/schema/dbo.sYMBAA.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae/storage_v2/_src_/database/Diablo.icP-eQ/schema/dbo.sYMBAA.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae/storage_v2/_src_/database/Diablo.icP-eQ/schema/dbo.sYMBAA.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae/storage_v2/_src_/database/Geography.XJfcwA/schema/dbo.sYMBAA.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae/storage_v2/_src_/database/Geography.XJfcwA/schema/dbo.sYMBAA.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/27ab1bd8-e2f0-4478-812f-6aa54946caae/storage_v2/_src_/database/SoftUni.Roji6Q/schema/dbo.sYMBAA.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/default.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/default.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1lEsVmbgiAoZw4qzAqquHLmyOBm" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="sqlserver" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="database.data.extractors.current.export.id" value="Comma-separated (CSV)_id" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Entity Framework/EntityFramework Introduction" />
+    <property name="settings.editor.selected.configurable" value="database.main2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\Documents\aleks\SOURCE\Microsoft-SQL-SoftUni-Problems\Entity Framework\EntityFramework Introduction" />
+      <recent name="F:\Documents\aleks\SOURCE\Microsoft-SQL-SoftUni-Problems\Entity Framework\ORMFUNDAMENTALS\MiniORM" />
+      <recent name="F:\Documents\aleks\SOURCE\Microsoft-SQL-SoftUni-Problems\MSSQL\JoinsSubqueriesCTEsAndIndicesLAB" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Section1 DDL.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+      <script-file value="$PROJECT_DIR$/../MSSQL/EXAMS/Database Basics MS SQL Exam – 20 Oct 2019/Section1 DDL.sql" />
+      <script-mode>FILE</script-mode>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Database Script.Section1 DDL.sql" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>

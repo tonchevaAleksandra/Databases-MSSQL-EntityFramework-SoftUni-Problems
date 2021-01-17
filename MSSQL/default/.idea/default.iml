@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="DBE_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$/../Entity Framework/EntityFramework Introduction" />
+    <content url="file://$MODULE_DIR$/../Entity Framework/INTRO" />
+    <content url="file://$MODULE_DIR$/../Entity Framework/ORMFUNDAMENTALS" />
+    <content url="file://$MODULE_DIR$/../MSSQL" />
+    <content url="file://$MODULE_DIR$/../MSSQL/BasicCrudLAB/BasicCrudLAB" />
+    <content url="file://$MODULE_DIR$/../MSSQL/CRUDExercises" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
