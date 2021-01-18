@@ -22,7 +22,11 @@ namespace P01_StudentSystem.Data.Configurations
                 .IsRequired(true)
                 .IsUnicode(false);
 
-
+            resource
+                .HasOne(r => r.Course)
+                .WithMany(c => c.Resources)
+                .HasForeignKey(r => r.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
