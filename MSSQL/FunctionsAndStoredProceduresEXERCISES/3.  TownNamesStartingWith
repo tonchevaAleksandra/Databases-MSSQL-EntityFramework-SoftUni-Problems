@@ -1,11 +1,10 @@
 USE SoftUni1
 
-CREATE OR
-ALTER PROC usp_GetTownsStartingWith(@StartingString NVARCHAR(MAX))
+CREATE PROC usp_GetTownsStartingWith(@StartingString NVARCHAR(MAX))
 AS
-SELECT Name AS Town
-FROM Towns
-WHERE Name LIKE @StartingString + '%';
+SELECT t.Name AS Town
+FROM Towns as t
+WHERE t.Name LIKE @StartingString + '%';
 GO
 
 EXEC usp_GetTownsStartingWith 'b'
