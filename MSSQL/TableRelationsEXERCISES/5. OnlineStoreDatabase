@@ -38,7 +38,7 @@ CREATE TABLE Orders
 CREATE TABLE OrderItems
 (
     OrderID int FOREIGN KEY REFERENCES Orders(OrderID),
-    ItemId  int FOREIGN KEY REFERENCES Items (ItemID),
+    ItemID  int FOREIGN KEY REFERENCES Items (ItemID),
      PRIMARY KEY (OrderID, ItemID)
     
 )
