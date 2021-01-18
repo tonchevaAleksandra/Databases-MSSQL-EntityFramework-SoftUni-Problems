@@ -4,9 +4,9 @@ CREATE TABLE Teachers
 (
     TeacherID     int PRIMARY KEY IDENTITY (101,1),
     Name          nvarchar(20) NOT NULL,
-    NameManagerID int FOREIGN KEY REFERENCES Teachers (TeacherID)
+    ManagerID int FOREIGN KEY REFERENCES Teachers (TeacherID)
 )
-INSERT INTO Teachers (Name, NameManagerID)
+INSERT INTO Teachers (Name, ManagerID)
 VALUES ('John', NULL),
        ('Maya', 106),
        ('Silvia', 106),
