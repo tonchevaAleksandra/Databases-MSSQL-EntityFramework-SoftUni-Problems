@@ -1,7 +1,7 @@
 USE SoftUni1
 
 
-SELECT DepartmentID, FORMAT(SUM(Salary), 'F2') as TotalSalary
+SELECT DepartmentID, SUM(Salary) as TotalSalary
 FROM Employees
 GROUP BY DepartmentID
 ORDER BY DepartmentID
