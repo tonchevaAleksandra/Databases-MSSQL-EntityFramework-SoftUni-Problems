@@ -1,29 +1,23 @@
 USE Bank
 
-CREATE PROC usp_WithdrawMoney(@AccountId int, @MoneyAmount money)
-AS
-    BEGIN TRANSACTION
-    IF @MoneyAmount <= 0
-        BEGIN
-            THROW 50005,'Amount should be positive',1;
-        END
-    IF (SELECT COUNT(*)
-        FROM Accounts
-        WHERE Id = @AccountId) != 1
-        BEGIN
-            THROW 50006,'Invalid AccountID',1;
-        END
-    IF (SELECT Balance
-        FROM Accounts
-        WHERE Id = @AccountId) < @MoneyAmount
-        BEGIN
-            THROW 50007,'Not sufficient amount in that account',1
-        END
+CREATE PROC usp_WithdrawMoney (@AccountId INT, @MoneyAmount MONEY) AS
+BEGIN
+	BEGIN TRAN
+		IF (@MoneyAmount > 0)
+		BEGIN
+			UPDATE Accounts
+			SET Balance -= @MoneyAmount
+			WHERE Id = @AccountId
 
-UPDATE Accounts
-SET Balance= Balance - @MoneyAmount
-WHERE Id = @MoneyAmount
-    COMMIT
+			IF @@ROWCOUNT != 1
+			BEGIN
+				ROLLBACK
+				RAISERROR('Invalid account!', 16, 1)
+				RETURN
+			END
+		END
+	COMMIT
+END
 GO
 
 exec usp_WithdrawMoney 1,10
