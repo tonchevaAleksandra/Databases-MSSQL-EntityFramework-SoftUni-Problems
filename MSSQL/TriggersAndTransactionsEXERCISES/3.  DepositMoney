@@ -9,7 +9,7 @@ AS
         END
     IF (SELECT COUNT(*)
         FROM Accounts
-        WHERE Id = @AccountId) != 1
+        WHERE Id = @AccountId) < 1
         BEGIN
             THROW 50006,'Invalid AccountID',1;
         END
