@@ -3,9 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EF Advanced Querying LAB", "EF Advanced Querying LAB", "{3552A9CB-6B09-4109-9242-6FC8C47C5259}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCoolCarSystem", "MyCoolCarSystem\MyCoolCarSystem.csproj", "{FE854183-F276-428B-A095-30ABAEDC909C}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE854183-F276-428B-A095-30ABAEDC909C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE854183-F276-428B-A095-30ABAEDC909C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE854183-F276-428B-A095-30ABAEDC909C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE854183-F276-428B-A095-30ABAEDC909C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FE854183-F276-428B-A095-30ABAEDC909C} = {3552A9CB-6B09-4109-9242-6FC8C47C5259}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {37101780-8298-41BF-9991-3A82F630E3B4}
