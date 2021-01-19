@@ -1,68 +1,87 @@
 USE Diablo
 
-DECLARE @UserId int= (SELECT id
-                      FROM Users
-                      WHERE Username = 'Stamat');
-DECLARE @GameId int= (SELECT id
-                      FROM Games
-                      WHERE Name = 'Safflower');
-DECLARE @UserGamesId int= (SELECT id
-                           FROM UsersGames
-                           WHERE GameId = @GameId
-                             AND UserId = @UserId);
-DECLARE @UserGameLevel int=(SELECT Level
-                            FROM UsersGames
-                            WHERE Id = @UserGamesId);
-DECLARE @ItemStartLevel int= 11;
-DECLARE @ItemEndLevel int=12;
-DECLARE @UserCash money= (SELECT Cash
+DECLARE @userName NVARCHAR(max) = 'Stamat'
+DECLARE @gameName NVARCHAR(max) = 'Safflower'
+DECLARE @userID INT = (
+                        SELECT Id 
+                          FROM Users 
+                         WHERE Username = @userName
+                      )
+DECLARE @gameID INT = (
+                        SELECT Id 
+                          FROM Games 
+                         WHERE Name = @gameName
+                      )
+DECLARE @userMoney MONEY = (
+                        SELECT Cash 
                           FROM UsersGames
-                          WHERE id = @UserGamesId);
-DECLARE @ItemsPrice money= (SELECT SUM(Price)
-                            FROM Items
-                            WHERE MinLevel BETWEEN @ItemStartLevel AND @ItemEndLevel);
-
-IF (@UserCash >= @ItemsPrice)
+                         WHERE UserId = @userID AND GameId = @gameID
+                      )
+DECLARE @itemsTotalPrice MONEY
+DECLARE @userGameID int = (
+                        SELECT Id 
+                          FROM UsersGames 
+                         WHERE UserId = @userID AND GameId = @gameID
+                      )
+ 
+BEGIN TRANSACTION
+      SET @itemsTotalPrice = (SELECT SUM(Price) 
+     FROM Items 
+    WHERE MinLevel BETWEEN 11 AND 12)
+ 
+    IF(@userMoney - @itemsTotalPrice >= 0)
     BEGIN
-        BEGIN TRANSACTION
-            UPDATE UsersGames
-            SET Cash-=@ItemsPrice
-            WHERE Id = @UserGamesId;
-
-            INSERT INTO UserGameItems
-            SELECT i.Id, @GameId
-            FROM Items AS i
-            WHERE i.MinLevel BETWEEN @ItemStartLevel AND @ItemEndLevel
+        INSERT INTO UserGameItems
+        SELECT i.Id, @userGameID FROM Items AS i
+        WHERE i.Id IN (
+                        SELECT Id 
+                          FROM Items 
+                         WHERE MinLevel BETWEEN 11 AND 12
+                      )
+ 
+        UPDATE UsersGames
+        SET Cash -= @itemsTotalPrice
+        WHERE GameId = @gameID AND UserId = @userID
         COMMIT
     END
-
-SET @ItemStartLevel = 19;
-SET @ItemEndLevel = 21;
-SET @UserCash = (SELECT Cash
-                 FROM UsersGames
-                 WHERE id = @UserGamesId);
-SET @ItemsPrice = (SELECT SUM(Price)
-                   FROM Items
-                   WHERE MinLevel BETWEEN @ItemStartLevel AND @ItemEndLevel);
-
-IF (@UserCash >= @ItemsPrice)
+    ELSE
     BEGIN
-        BEGIN TRANSACTION
-            UPDATE UsersGames
-            SET Cash-=@ItemsPrice
-            WHERE Id = @UserGamesId;
-
-            INSERT INTO UserGameItems
-            SELECT i.Id, @UserGamesId
-            FROM Items AS i
-            WHERE MinLevel BETWEEN @ItemStartLevel AND @ItemEndLevel;
+        ROLLBACK
+    END
+ 
+SET @userMoney = (
+                    SELECT Cash 
+                      FROM UsersGames 
+                     WHERE UserId = @userID AND GameId = @gameID
+                 )
+BEGIN TRANSACTION
+    SET @itemsTotalPrice = (SELECT SUM(Price) FROM Items WHERE MinLevel BETWEEN 19 AND 21)
+ 
+    IF(@userMoney - @itemsTotalPrice >= 0)
+    BEGIN
+        INSERT INTO UserGameItems
+        SELECT i.Id, @userGameID FROM Items AS i
+        WHERE i.Id IN (
+                        SELECT Id 
+                          FROM Items 
+                         WHERE MinLevel BETWEEN 19 AND 21
+                      )
+ 
+        UPDATE UsersGames
+        SET Cash -= @itemsTotalPrice
+        WHERE GameId = @gameID AND UserId = @userID
         COMMIT
     END
-
-SELECT Name
-FROM Items
-JOIN UserGameItems UGI ON Items.Id = UGI.ItemId
-JOIN UsersGames UG ON UG.Id = UGI.UserGameId
-JOIN Users U ON UG.UserId = U.Id
-WHERE u.Username='Stamat' and ug.id=@UserGamesId
-ORDER BY Name;
+    ELSE
+    BEGIN
+        ROLLBACK
+    END
+ 
+  SELECT Name AS [Item Name]
+    FROM Items
+   WHERE Id IN (
+                SELECT ItemId 
+                  FROM UserGameItems 
+                 WHERE UserGameId = @userGameID
+               )
+ORDER BY [Item Name]
