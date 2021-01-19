@@ -7,7 +7,7 @@ CREATE TABLE Cities
 (
     Id          int PRIMARY KEY IDENTITY,
     Name        nvarchar(20) NOT NULL,
-    CountryCode char(2)      NOT NULL CHECK (LEN(CountryCode) = 2)
+    CountryCode char(2)      NOT NULL 
 
 )
 
@@ -51,7 +51,7 @@ CREATE TABLE Accounts
     LastName   nvarchar(50)         NOT NULL,
     CityId     int                  NOT NULL REFERENCES Cities (Id),
     BirthDate  date                 NOT NULL,
-    Email      nvarchar(100) UNIQUE NOT NULL
+    Email      varchar(100) UNIQUE NOT NULL
 
 )
 
@@ -63,7 +63,6 @@ CREATE TABLE AccountsTrips
     PRIMARY KEY (AccountId, TripId)
 
 )
-
 BACKUP DATABASE TripService TO DISK = 'F:\backup\SQL-TripService Database.bak'
 
 --Section 2. DML
@@ -127,7 +126,7 @@ ORDER BY LongestTrip DESC, ShortestTrip
 
 --8. Metropolis
 
-SELECT c.Id,
+SELECT TOP(10) c.Id,
        c.Name        AS City,
        C.CountryCode AS Country,
        COUNT(A.Id)   AS Accounts
