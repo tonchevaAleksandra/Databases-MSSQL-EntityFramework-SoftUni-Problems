@@ -153,7 +153,7 @@ ORDER BY Trips DESC, Id
 
 --10. GDPR Violation
 SELECT t.Id,
-       CONCAT(A2.FirstName, ' ', A2.MiddleName, ' ', A2.LastName) AS [Full Name],
+       A2.FirstName +' ' + ISNULL( A2.MiddleName + ' ','') + A2.LastName AS [Full Name],
        c.Name                                                     AS [From],
        c2.Name                                                    AS [To],
        CASE
