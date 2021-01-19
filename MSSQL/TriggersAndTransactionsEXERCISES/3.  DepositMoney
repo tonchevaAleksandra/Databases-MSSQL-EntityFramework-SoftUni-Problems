@@ -3,7 +3,7 @@ USE Bank
 CREATE PROC usp_DepositMoney(@AccountId int, @MoneyAmount money)
 AS
     BEGIN TRANSACTION
-    IF (@MoneyAmount <= 0)
+    IF (@MoneyAmount < 0)
         BEGIN
             THROW 50005,'Amount should be positive',1;
         END
