@@ -25,7 +25,23 @@
             //Problem 03
             //Console.WriteLine(GetGoldenBooks(db));
 
-            Console.WriteLine(GetBooksByPrice(db));
+            //Problem 04
+            //Console.WriteLine(GetBooksByPrice(db));
+
+            //Problem 05
+            int year = int.Parse(Console.ReadLine());
+            Console.WriteLine(GetBooksNotReleasedIn(db, year));
+        }
+
+        public static string GetBooksNotReleasedIn(BookShopContext context, int year)
+        {
+            var books = context.Books
+                .Where(b => b.ReleaseDate.Value.Year != year)
+                .OrderBy(b => b.BookId)
+                .Select(b => b.Title)
+                .ToList();
+
+            return string.Join(Environment.NewLine, books);
         }
 
         //Problem 04
@@ -74,7 +90,7 @@
                 .OrderBy(b => b)
                 .ToList();
 
-           
+
             return String.Join(Environment.NewLine, books);
         }
     }
