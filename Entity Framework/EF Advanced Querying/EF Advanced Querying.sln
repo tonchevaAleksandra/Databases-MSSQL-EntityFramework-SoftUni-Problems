@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EF Advanced Querying LAB", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCoolCarSystem", "MyCoolCarSystem\MyCoolCarSystem.csproj", "{FE854183-F276-428B-A095-30ABAEDC909C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EF Advanced Querying EXERCISES", "EF Advanced Querying EXERCISES", "{1F87B4D8-89D2-4791-A334-0F2CEC4F98A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

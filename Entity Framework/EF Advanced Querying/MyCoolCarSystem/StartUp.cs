@@ -8,8 +8,7 @@ using MyCoolCarSystem.Data;
 using MyCoolCarSystem.Data.Models;
 using MyCoolCarSystem.Data.Queries;
 using MyCoolCarSystem.Results;
-using Z.EntityFramework.Plus;
-using Microsoft.EntityFrameworkCore.Proxies;
+
 
 namespace MyCoolCarSystem
 {
@@ -128,11 +127,11 @@ namespace MyCoolCarSystem
           //  db.SaveChanges(); - even without Savechanges 
 
             var cars2 = db.Cars
-                .Where(c => c.Price > 15000)
-                .Delete(); // using Z.EntityFramework.Plus  optimize the delete query
+                .Where(c => c.Price > 15000);
+            /* .Delete();*/ // using Z.EntityFramework.Plus  optimize the delete query
 
-            var cars3 = db.Cars.Where(c => c.Price < 20000)
-                .Update(c => new Car { Price = c.Price * 1.2M });
+            var cars3 = db.Cars.Where(c => c.Price < 20000);
+                //.Update(c => new Car { Price = c.Price * 1.2M });
 
         }
 
