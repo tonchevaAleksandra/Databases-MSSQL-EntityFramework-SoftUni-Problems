@@ -6,7 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 using MyCoolCarSystem.Data;
 using MyCoolCarSystem.Data.Models;
-using MyCoolCarSystem.Data.Results;
+using MyCoolCarSystem.Data.Queries;
+using MyCoolCarSystem.Results;
+using Z.EntityFramework.Plus;
+using Microsoft.EntityFrameworkCore.Proxies;
 
 namespace MyCoolCarSystem
 {
@@ -54,18 +57,83 @@ namespace MyCoolCarSystem
               })
               .ToList();
 
-            var query = EF.CompileQuery<CarDbContext, IEnumerable<ResultModel>>(
-                db => db.Cars
-               .Where(c => c.Price > price)
-               .Select(c => new ResultModel
-               {
-                   FullName = c.Model.Make.Name
-               }));
+            //var query = EF.CompileQuery<CarDbContext, IEnumerable<ResultModel>>(
+            //    db => db.Cars
+            //   .Where(c => c.Price > price)
+            //   .Select(c => new ResultModel
+            //   {
+            //       FullName = c.Model.Make.Name
+            //   }));
 
-            var result = query(db);
+            //var result = query(db);
+
+            CarQueries.ToResult(db, price);
+
+            using var data = new CarDbContext();
+
+            var car = db.Cars.FirstOrDefault();
+            data.Attach(car);
+            car.Price += 100;
+
+            data.Entry(car).State = EntityState.Detached;
+            data.SaveChanges();
+
+            var newCar = new Car { Id = 2 };
+            data.Attach(newCar); //with this block we don't make query to searche the object in the database but with Attach and Savachanges we can set the value of the object with this primary key
+            newCar.Price = 15000;
+            data.SaveChanges();
+
+            //var entry = data.Entry(newCar);
+            //entry.State = EntityState.Added;
+            //data.SaveChanges();// EXCEPTION  we cannot set explicit value of an existing object 
+
+            //db.SaveChanges();
 
 
-            db.SaveChanges();
+        }
+        private static void LazyLoading(CarDbContext db)
+        {
+            //using Microsoft.EntityFrameworkCore.Proxies;
+            // all refence navigation properties in Models should be virtual to use LazyLoading - WTF
+            //in DbContaxt OnConfiguring we have to enable LazyLoading =>  .UseLazyLoadingProxies()
+
+            var car = db.Cars
+               .Include(c => c.Model)
+               .FirstOrDefault(c => c.Id == 1);
+
+            Console.WriteLine(car.Model.Name);
+        }
+        private static void EagerLoading(CarDbContext db)
+        {
+            var car = db.Cars
+                .Include(c => c.Model)
+                .FirstOrDefault(c => c.Id == 1);
+
+            Console.WriteLine(car.Model.Name);
+        }
+        private static void ExplicitLoading(CarDbContext db)
+        {
+            var car = db.Cars.FirstOrDefault(c => c.Id == 1);
+            db.Entry(car)
+                .Reference(c => c.Model)
+                .Load();
+
+            Console.WriteLine(car.Model.Name);
+        }
+        private static void DeletingAndUpdatingCars(CarDbContext db)
+        {
+            var cars = db.Cars.Where(c => c.Price > 15000).ToList();
+            db.RemoveRange(cars);
+            // this make query for every car
+          //  db.SaveChanges(); - even without Savechanges 
+
+            var cars2 = db.Cars
+                .Where(c => c.Price > 15000)
+                .Delete(); // using Z.EntityFramework.Plus  optimize the delete query
+
+            var cars3 = db.Cars.Where(c => c.Price < 20000)
+                .Update(c => new Car { Price = c.Price * 1.2M });
+
         }
 
         private static void SetValueToSecretPropertyInCar(CarDbContext db)

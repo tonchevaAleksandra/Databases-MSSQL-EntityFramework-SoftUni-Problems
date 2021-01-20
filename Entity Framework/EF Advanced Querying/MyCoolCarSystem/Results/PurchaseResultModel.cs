@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace MyCoolCarSystem.Data.Results
+namespace MyCoolCarSystem.Results
 {
     public class PurchaseResultModel
     {

@@ -40,7 +40,9 @@ namespace MyCoolCarSystem.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(DataConfiguration.ConnectionString);
+                optionsBuilder
+                    //.UseLazyLoadingProxies()
+                    .UseSqlServer(DataConfiguration.ConnectionString);
             }
             base.OnConfiguring(optionsBuilder);
         }

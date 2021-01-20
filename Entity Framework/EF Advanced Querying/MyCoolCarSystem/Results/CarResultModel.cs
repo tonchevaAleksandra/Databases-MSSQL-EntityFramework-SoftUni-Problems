@@ -1,5 +1,5 @@
 ﻿
-namespace MyCoolCarSystem.Data.Results
+namespace MyCoolCarSystem.Results
 {
    public class CarResultModel
     {
