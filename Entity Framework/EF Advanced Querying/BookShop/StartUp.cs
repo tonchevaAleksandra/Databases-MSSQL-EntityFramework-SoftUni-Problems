@@ -22,8 +22,34 @@
             //string output = GetBooksByAgeRestriction(db, input);
             //Console.WriteLine(output);
 
-            Console.WriteLine(GetGoldenBooks(db));
+            //Problem 03
+            //Console.WriteLine(GetGoldenBooks(db));
+
+            Console.WriteLine(GetBooksByPrice(db));
         }
+
+        //Problem 04
+        public static string GetBooksByPrice(BookShopContext context)
+        {
+            var books = context.Books
+                .Where(b => b.Price > 40)
+                .OrderByDescending(b => b.Price)
+                .Select(b => new
+                {
+                    b.Title,
+                    b.Price
+                })
+                .ToList();
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in books)
+            {
+                sb.AppendLine($"{item.Title} - ${item.Price:f2}");
+            }
+
+            return sb.ToString().Trim();
+        }
+
         //Problem 03
         public static string GetGoldenBooks(BookShopContext context)
         {
@@ -35,6 +61,7 @@
 
             return String.Join(Environment.NewLine, books);
         }
+
         //Problem 02
         public static string GetBooksByAgeRestriction(BookShopContext context, string command)
         {
