@@ -16,7 +16,7 @@
         public static void Main()
         {
             using var db = new BookShopContext();
-            //DbInitializer.ResetDatabase(db);
+            DbInitializer.ResetDatabase(db);
 
             //Proble 02
             //string input = Console.ReadLine();
@@ -68,7 +68,25 @@
             //Console.WriteLine(GetMostRecentBooks(db));
 
             //Problem 15
-            IncreasePrices(db);
+            //IncreasePrices(db);
+
+            //Problem 16
+            //Console.WriteLine(RemoveBooks(db));
+        }
+
+        //Problem 16
+        public static int RemoveBooks(BookShopContext context)
+        {
+            var categoryBooks = context.BooksCategories
+                .Where(bc => bc.Book.Copies < 4200);
+            context.BooksCategories.RemoveRange(categoryBooks);
+            context.SaveChanges();
+            var books = context.Books
+                .Where(b => b.Copies < 4200);
+            int count = books.Count();
+            context.Books.RemoveRange(books);
+            context.SaveChanges();
+            return count;
         }
         //Problem 15
         public static void IncreasePrices(BookShopContext context)
