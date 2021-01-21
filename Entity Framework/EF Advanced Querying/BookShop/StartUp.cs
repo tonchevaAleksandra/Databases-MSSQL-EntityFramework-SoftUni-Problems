@@ -7,6 +7,7 @@
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
 
@@ -32,10 +33,58 @@
             //int year = int.Parse(Console.ReadLine());
             //Console.WriteLine(GetBooksNotReleasedIn(db, year));
 
+            //Problem 06
+            //string input = Console.ReadLine();
 
+            //Console.WriteLine(GetBooksByCategory(db,input));
+
+            //Problem 07
+            //string date = Console.ReadLine();
+            //Console.WriteLine(GetBooksReleasedBefore(db, date));
+
+            //Problem 08
             string input = Console.ReadLine();
+            Console.WriteLine(GetAuthorNamesEndingIn(db, input));
+        }
 
-            Console.WriteLine(GetBooksByCategory(db,input));
+        //Problem 08
+        public static string GetAuthorNamesEndingIn(BookShopContext context, string input)
+        {
+            List<string> authors = context.Authors
+                .Where(a => a.FirstName.EndsWith(input))
+                .Select(a => a.FirstName + " " + a.LastName)
+                .OrderBy(a => a)
+                .ToList();
+
+            return string.Join(Environment.NewLine, authors);
+
+        }
+
+        //Problem 07
+        public static string GetBooksReleasedBefore(BookShopContext context, string date)
+        {
+
+            DateTime dateTime = DateTime.ParseExact(date, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            var books = context.Books
+                .Where(b => b.ReleaseDate < dateTime)
+                .OrderByDescending(b => b.ReleaseDate)
+                .Select(b => new
+                {
+                    b.Title,
+                    b.EditionType,
+                    b.Price
+                })
+                .ToList();
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var item in books)
+            {
+                sb.AppendLine($"{item.Title} - {item.EditionType} - ${item.Price:f2}");
+            }
+
+            return sb.ToString().Trim();
+
         }
 
         //Problem 06
@@ -43,7 +92,7 @@
         {
             List<string> categories = input
                 .Split(" ", StringSplitOptions.RemoveEmptyEntries)
-                .Select(c=>c.ToLower())
+                .Select(c => c.ToLower())
                 .ToList();
 
             List<string> bookTitles = new List<string>();
