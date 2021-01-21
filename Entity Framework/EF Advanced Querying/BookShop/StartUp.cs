@@ -51,8 +51,20 @@
             //Console.WriteLine(GetBookTitlesContaining(db, input));
 
             //Problem 10
-            string input = Console.ReadLine().ToLower();
-            Console.WriteLine(GetBooksByAuthor(db,input));
+            //string input = Console.ReadLine().ToLower();
+            //Console.WriteLine(GetBooksByAuthor(db,input));
+
+            //Problem 11
+            int n = int.Parse(Console.ReadLine());
+            Console.WriteLine(CountBooks(db, n));
+        }
+
+        //Problem 11
+        public static int CountBooks(BookShopContext context, int lengthCheck)
+        {
+            return context.Books
+                .Where(b => b.Title.Length > lengthCheck)
+                .Count();
         }
 
         //Problem 10
