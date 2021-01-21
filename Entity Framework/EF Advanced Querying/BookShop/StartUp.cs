@@ -55,8 +55,33 @@
             //Console.WriteLine(GetBooksByAuthor(db,input));
 
             //Problem 11
-            int n = int.Parse(Console.ReadLine());
-            Console.WriteLine(CountBooks(db, n));
+            //int n = int.Parse(Console.ReadLine());
+            //Console.WriteLine(CountBooks(db, n));
+
+            //Problem 12
+            Console.WriteLine(CountCopiesByAuthor(db));
+        }
+
+        //Problem 12
+        public static string CountCopiesByAuthor(BookShopContext context)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            var authorCopies = context.Authors
+                .Select(a => new
+                {
+                    FullName = a.FirstName + " " + a.LastName,
+                    Count = a.Books.Sum(b => b.Copies)
+                })
+                .OrderByDescending(a=>a.Count)
+                .ToList();
+
+            foreach (var item in authorCopies)
+            {
+                sb.AppendLine(item.FullName + " - " + item.Count);
+            }
+
+            return sb.ToString().Trim();
         }
 
         //Problem 11
