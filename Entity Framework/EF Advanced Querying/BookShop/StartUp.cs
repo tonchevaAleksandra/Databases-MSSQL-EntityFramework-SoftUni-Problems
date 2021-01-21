@@ -62,8 +62,41 @@
             //Console.WriteLine(CountCopiesByAuthor(db));
 
             //Problem 13
-            Console.WriteLine(GetTotalProfitByCategory(db));
+            //Console.WriteLine(GetTotalProfitByCategory(db));
 
+            //Problem 14
+            Console.WriteLine(GetMostRecentBooks(db));
+        }
+
+        //Problem 14
+        public static string GetMostRecentBooks(BookShopContext context)
+        {
+            var recentBooksByCategory = context.Categories
+                .Select(c => new
+                {
+                    c.Name,
+                    MostRecents = c.CategoryBooks.OrderByDescending(cb => cb.Book.ReleaseDate).Take(3).Select(b => new
+                    {
+                        b.Book.Title,
+                       Year = b.Book.ReleaseDate.Value.Year
+                    })
+                })
+                .OrderBy(c=>c.Name)
+                .ToList();
+
+            StringBuilder sb = new StringBuilder();
+           
+            foreach (var category in recentBooksByCategory)
+            {
+                sb.AppendLine($"--{category.Name}");
+
+                foreach (var book in category.MostRecents)
+                {
+                    sb.AppendLine($"{book.Title} ({book.Year})");
+                }
+            }
+
+            return sb.ToString().Trim();
         }
 
         //Problem 13
