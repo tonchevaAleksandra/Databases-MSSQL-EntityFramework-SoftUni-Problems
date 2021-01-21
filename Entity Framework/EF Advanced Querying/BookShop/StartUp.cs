@@ -43,8 +43,24 @@
             //Console.WriteLine(GetBooksReleasedBefore(db, date));
 
             //Problem 08
-            string input = Console.ReadLine();
-            Console.WriteLine(GetAuthorNamesEndingIn(db, input));
+            //string input = Console.ReadLine();
+            //Console.WriteLine(GetAuthorNamesEndingIn(db, input));
+
+            //Problem 09
+            string input = Console.ReadLine().ToLower();
+            Console.WriteLine(GetBookTitlesContaining(db, input));
+        }
+        //Problem 09
+        public static string GetBookTitlesContaining(BookShopContext context, string input)
+        {
+
+            List<string> books = context.Books
+                .Where(b => b.Title.ToLower().Contains(input))
+                .OrderBy(b => b.Title)
+                .Select(b => b.Title)
+                .ToList();
+
+            return String.Join(Environment.NewLine, books);
         }
 
         //Problem 08
