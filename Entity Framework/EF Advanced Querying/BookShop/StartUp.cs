@@ -29,10 +29,40 @@
             //Console.WriteLine(GetBooksByPrice(db));
 
             //Problem 05
-            int year = int.Parse(Console.ReadLine());
-            Console.WriteLine(GetBooksNotReleasedIn(db, year));
+            //int year = int.Parse(Console.ReadLine());
+            //Console.WriteLine(GetBooksNotReleasedIn(db, year));
+
+
+            string input = Console.ReadLine();
+
+            Console.WriteLine(GetBooksByCategory(db,input));
         }
 
+        //Problem 06
+        public static string GetBooksByCategory(BookShopContext context, string input)
+        {
+            List<string> categories = input
+                .Split(" ", StringSplitOptions.RemoveEmptyEntries)
+                .Select(c=>c.ToLower())
+                .ToList();
+
+            List<string> bookTitles = new List<string>();
+
+            foreach (var category in categories)
+            {
+
+                List<string> currentCategoryBooks = context.
+                    Books
+                    .Where(b => b.BookCategories.Any(bc => bc.Category.Name.ToLower() == category))
+                    .Select(b => b.Title)
+                    .ToList();
+                bookTitles.AddRange(currentCategoryBooks);
+            }
+
+            return string.Join(Environment.NewLine, bookTitles.OrderBy(b => b));
+        }
+
+        //Problem 05
         public static string GetBooksNotReleasedIn(BookShopContext context, int year)
         {
             var books = context.Books
