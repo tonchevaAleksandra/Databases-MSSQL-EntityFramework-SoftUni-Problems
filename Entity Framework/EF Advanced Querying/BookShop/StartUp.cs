@@ -65,7 +65,24 @@
             //Console.WriteLine(GetTotalProfitByCategory(db));
 
             //Problem 14
-            Console.WriteLine(GetMostRecentBooks(db));
+            //Console.WriteLine(GetMostRecentBooks(db));
+
+            //Problem 15
+            IncreasePrices(db);
+        }
+        //Problem 15
+        public static void IncreasePrices(BookShopContext context)
+        {
+            var bookstoUpdate = context.Books
+                .Where(b => b.ReleaseDate.Value.Year < 2010);
+
+            foreach (var book in bookstoUpdate)
+            {
+                book.Price += 5;
+            }
+
+            context.SaveChanges();
+
         }
 
         //Problem 14
@@ -75,17 +92,20 @@
                 .Select(c => new
                 {
                     c.Name,
-                    MostRecents = c.CategoryBooks.OrderByDescending(cb => cb.Book.ReleaseDate).Take(3).Select(b => new
+                    MostRecents = c.CategoryBooks
+                    .OrderByDescending(cb => cb.Book.ReleaseDate)
+                    .Take(3)
+                    .Select(b => new
                     {
                         b.Book.Title,
-                       Year = b.Book.ReleaseDate.Value.Year
+                        Year = b.Book.ReleaseDate.Value.Year
                     })
                 })
-                .OrderBy(c=>c.Name)
+                .OrderBy(c => c.Name)
                 .ToList();
 
             StringBuilder sb = new StringBuilder();
-           
+
             foreach (var category in recentBooksByCategory)
             {
                 sb.AppendLine($"--{category.Name}");
@@ -124,7 +144,7 @@
             }
 
             return sb.ToString().Trim();
-                
+
         }
 
         //Problem 12
@@ -138,7 +158,7 @@
                     FullName = a.FirstName + " " + a.LastName,
                     Count = a.Books.Sum(b => b.Copies)
                 })
-                .OrderByDescending(a=>a.Count)
+                .OrderByDescending(a => a.Count)
                 .ToList();
 
             foreach (var item in authorCopies)
