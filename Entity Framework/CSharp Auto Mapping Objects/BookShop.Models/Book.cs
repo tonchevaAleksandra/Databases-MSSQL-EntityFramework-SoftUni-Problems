@@ -31,7 +31,7 @@ namespace BookShop.Models
 
         public int AuthorId { get; set; }
         public Author Author { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public ICollection<BookCategory> BookCategories { get; set; } = new HashSet<BookCategory>();
     }
 }

@@ -10,6 +10,9 @@ namespace BookShop.Data.ViewModels
         public decimal Price { get; set; }
 
         public string Description { get; set; }
-        // public string Author { get; set; }
+         public string AuthorFirstName { get; set; }
+
+        public string AuthorLastName { get; set; }
+        public string BookCategories { get; set; }
     }
 }

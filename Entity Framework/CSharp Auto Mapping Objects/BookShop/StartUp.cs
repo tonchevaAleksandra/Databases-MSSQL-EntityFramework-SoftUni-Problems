@@ -13,20 +13,21 @@
     using System.Text;
     using Newtonsoft.Json;
     using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     public class StartUp
     {
         public static void Main()
         {
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Book, BookDTO>();
-            });
+            //Mapper.Initialize(cfg =>
+            //{
+            //    cfg.CreateMap<Book, BookDTO>()
+            //    .ForMember(dest => dest.Author, opt => opt.MapFrom(src => $"{src.Author.FirstName} {src.Author.LastName}"));
+            //}); //AutoMapper version 8.0
 
-            using var db = new BookShopContext();
             //DbInitializer.ResetDatabase(db);
 
-            var book = db.Books.First();
-            var bookDto = Mapper.Map<BookDTO>(book);
+            //var book = db.Books.First();
+            //var bookDto = Mapper.Map<BookDTO>(book);
             //var books = db.Books
             //    .Select(b=>new BookDTO()
             //    {
@@ -45,282 +46,58 @@
             //    Author = $"{book.Author.FirstName} {book.Author.LastName}"
             //};
 
-            string result = JsonConvert.SerializeObject(bookDto, Formatting.Indented);
-            Console.WriteLine(result); 
+            //string result = JsonConvert.SerializeObject(bookDto, Formatting.Indented);
+            //Console.WriteLine(result); 
 
+
+            //var author = db.Authors.Select(x => new AuthorDTO
+            //{
+            //    FirstName = x.FirstName,
+            //    LastName = x.LastName,
+            //    Books = x.Books.Count()
+            //})
+            //    .FirstOrDefault();
+
+            //Print(author);
+
+            using var db = new BookShopContext();
+            //DbInitializer.ResetDatabase(db);
+
+            var config = new MapperConfiguration(cfg =>
+             {
+                 cfg.CreateMap<Author, AuthorDTO>()
+                 .ForMember(x=>x.Books,opt=>opt.MapFrom(a=>string.Join(", ", a.Books.Select(b=>b.Title))));
+
+
+                 cfg.CreateMap<Book, BookDTO>()
+                 //.ForMember(x=>x.Author, opt=>opt.MapFrom(b=>string.Concat(b.Author.FirstName, " ", b.Author.LastName)))
+                 .ForMember(x=>x.BookCategories, opt=>opt.MapFrom(b=>string.Join(", ", b.BookCategories.Select(c=>c.Category.Name))));
+                 cfg.CreateMap<Category, CategoryDTO>();
+             });
+            IMapper mapper = config.CreateMapper();
+
+            //Console.OutputEncoding = Encoding.Unicode;
+
+            var author = db.Authors.FirstOrDefault();
+            var authorModel = db.Authors
+                .ProjectTo<AuthorDTO>(config);
+            Print(authorModel);
+
+            var bookModel = db.Books/*.Where(x => x.BookId == 1)*/
+                .ProjectTo<BookDTO>(config)/*.FirstOrDefault()*/;
+            Print(bookModel);
+
+            var categoryModel = db.Categories.Where(x => x.CategoryId == 3)
+                .ProjectTo<CategoryDTO>(config).FirstOrDefault();
+            Print(categoryModel);
 
         }
 
-        //Problem 16
-        public static int RemoveBooks(BookShopContext context)
+        private static void Print(object authors)
         {
-            var categoryBooks = context.BooksCategories
-                .Where(bc => bc.Book.Copies < 4200);
-            context.BooksCategories.RemoveRange(categoryBooks);
-            context.SaveChanges();
-            var books = context.Books
-                .Where(b => b.Copies < 4200);
-            int count = books.Count();
-            context.Books.RemoveRange(books);
-            context.SaveChanges();
-            return count;
-        }
-        //Problem 15
-        public static void IncreasePrices(BookShopContext context)
-        {
-            var bookstoUpdate = context.Books
-                .Where(b => b.ReleaseDate.Value.Year < 2010);
-
-            foreach (var book in bookstoUpdate)
-            {
-                book.Price += 5;
-            }
-
-            context.SaveChanges();
-
+            Console.WriteLine(JsonConvert.SerializeObject(authors, Formatting.Indented));
         }
 
-        //Problem 14
-        public static string GetMostRecentBooks(BookShopContext context)
-        {
-            var recentBooksByCategory = context.Categories
-                .Select(c => new
-                {
-                    c.Name,
-                    MostRecents = c.CategoryBooks
-                    .OrderByDescending(cb => cb.Book.ReleaseDate)
-                    .Take(3)
-                    .Select(b => new
-                    {
-                        b.Book.Title,
-                        Year = b.Book.ReleaseDate.Value.Year
-                    })
-                })
-                .OrderBy(c => c.Name)
-                .ToList();
 
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var category in recentBooksByCategory)
-            {
-                sb.AppendLine($"--{category.Name}");
-
-                foreach (var book in category.MostRecents)
-                {
-                    sb.AppendLine($"{book.Title} ({book.Year})");
-                }
-            }
-
-            return sb.ToString().Trim();
-        }
-
-        //Problem 13
-        public static string GetTotalProfitByCategory(BookShopContext context)
-        {
-            var categories = context.Categories
-                .Select(c => new
-                {
-                    c.Name,
-                    TotalProfit = c.CategoryBooks
-                    .Select(cb => new
-                    {
-                        BookProfit = cb.Book.Copies * cb.Book.Price
-                    })
-                    .Sum(c => c.BookProfit)
-                })
-                .OrderByDescending(c => c.TotalProfit)
-                .ThenBy(c => c.Name)
-                .ToList();
-
-            StringBuilder sb = new StringBuilder();
-            foreach (var item in categories)
-            {
-                sb.AppendLine($"{item.Name} ${item.TotalProfit:f2}");
-            }
-
-            return sb.ToString().Trim();
-
-        }
-
-        //Problem 12
-        public static string CountCopiesByAuthor(BookShopContext context)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            var authorCopies = context.Authors
-                .Select(a => new
-                {
-                    FullName = a.FirstName + " " + a.LastName,
-                    Count = a.Books.Sum(b => b.Copies)
-                })
-                .OrderByDescending(a => a.Count)
-                .ToList();
-
-            foreach (var item in authorCopies)
-            {
-                sb.AppendLine(item.FullName + " - " + item.Count);
-            }
-
-            return sb.ToString().Trim();
-        }
-
-        //Problem 11
-        public static int CountBooks(BookShopContext context, int lengthCheck)
-        {
-            return context.Books
-                .Where(b => b.Title.Length > lengthCheck)
-                .Count();
-        }
-
-        //Problem 10
-        public static string GetBooksByAuthor(BookShopContext context, string input)
-        {
-            List<string> books = context.Books
-                .Where(b => b.Author.LastName.ToLower().StartsWith(input))
-                .OrderBy(b => b.BookId)
-                .Select(b => b.Title + " (" + b.Author.FirstName + " " + b.Author.LastName + ")")
-                .ToList();
-
-            return string.Join(Environment.NewLine, books);
-        }
-
-        //Problem 09
-        public static string GetBookTitlesContaining(BookShopContext context, string input)
-        {
-
-            List<string> books = context.Books
-                .Where(b => b.Title.ToLower().Contains(input))
-                .OrderBy(b => b.Title)
-                .Select(b => b.Title)
-                .ToList();
-
-            return String.Join(Environment.NewLine, books);
-        }
-
-        //Problem 08
-        public static string GetAuthorNamesEndingIn(BookShopContext context, string input)
-        {
-            List<string> authors = context.Authors
-                .Where(a => a.FirstName.EndsWith(input))
-                .Select(a => a.FirstName + " " + a.LastName)
-                .OrderBy(a => a)
-                .ToList();
-
-            return string.Join(Environment.NewLine, authors);
-
-        }
-
-        //Problem 07
-        public static string GetBooksReleasedBefore(BookShopContext context, string date)
-        {
-
-            DateTime dateTime = DateTime.ParseExact(date, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            var books = context.Books
-                .Where(b => b.ReleaseDate < dateTime)
-                .OrderByDescending(b => b.ReleaseDate)
-                .Select(b => new
-                {
-                    b.Title,
-                    b.EditionType,
-                    b.Price
-                })
-                .ToList();
-
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var item in books)
-            {
-                sb.AppendLine($"{item.Title} - {item.EditionType} - ${item.Price:f2}");
-            }
-
-            return sb.ToString().Trim();
-
-        }
-
-        //Problem 06
-        public static string GetBooksByCategory(BookShopContext context, string input)
-        {
-            List<string> categories = input
-                .Split(" ", StringSplitOptions.RemoveEmptyEntries)
-                .Select(c => c.ToLower())
-                .ToList();
-
-            List<string> bookTitles = new List<string>();
-
-            foreach (var category in categories)
-            {
-
-                List<string> currentCategoryBooks = context.
-                    Books
-                    .Where(b => b.BookCategories.Any(bc => bc.Category.Name.ToLower() == category))
-                    .Select(b => b.Title)
-                    .ToList();
-                bookTitles.AddRange(currentCategoryBooks);
-            }
-
-            return string.Join(Environment.NewLine, bookTitles.OrderBy(b => b));
-        }
-
-        //Problem 05
-        public static string GetBooksNotReleasedIn(BookShopContext context, int year)
-        {
-            var books = context.Books
-                .Where(b => b.ReleaseDate.Value.Year != year)
-                .OrderBy(b => b.BookId)
-                .Select(b => b.Title)
-                .ToList();
-
-            return string.Join(Environment.NewLine, books);
-        }
-
-        //Problem 04
-        public static string GetBooksByPrice(BookShopContext context)
-        {
-            var books = context.Books
-                .Where(b => b.Price > 40)
-                .OrderByDescending(b => b.Price)
-                .Select(b => new
-                {
-                    b.Title,
-                    b.Price
-                })
-                .ToList();
-
-            StringBuilder sb = new StringBuilder();
-            foreach (var item in books)
-            {
-                sb.AppendLine($"{item.Title} - ${item.Price:f2}");
-            }
-
-            return sb.ToString().Trim();
-        }
-
-        //Problem 03
-        public static string GetGoldenBooks(BookShopContext context)
-        {
-            List<string> books = context.Books
-                .Where(b => b.EditionType == EditionType.Gold && b.Copies < 5000)
-                .OrderBy(b => b.BookId)
-                .Select(b => b.Title)
-                .ToList();
-
-            return String.Join(Environment.NewLine, books);
-        }
-
-        //Problem 02
-        public static string GetBooksByAgeRestriction(BookShopContext context, string command)
-        {
-            var books = context.Books
-                .AsEnumerable()
-                .Where(b => b.AgeRestriction
-                     .ToString()
-                     .ToLower() == command.ToLower())
-                .Select(b => b.Title)
-                .OrderBy(b => b)
-                .ToList();
-
-
-            return String.Join(Environment.NewLine, books);
-        }
     }
 }
