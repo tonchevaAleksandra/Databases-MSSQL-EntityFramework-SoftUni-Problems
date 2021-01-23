@@ -14,6 +14,8 @@
     using Newtonsoft.Json;
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
+    using BookShop.Data.Profiles;
+
     public class StartUp
     {
         public static void Main()
@@ -65,19 +67,51 @@
 
             var config = new MapperConfiguration(cfg =>
              {
-                 cfg.CreateMap<Author, AuthorDTO>()
-                 .ForMember(x=>x.Books,opt=>opt.MapFrom(a=>string.Join(", ", a.Books.Select(b=>b.Title))));
-
+                 //cfg.CreateMap<Author, AuthorDTO>()
+                 //.ForMember(x => x.Books, opt => opt.MapFrom(a => string.Join(", ", a.Books.Select(b => b.Title))))
+                 //.ReverseMap();
+                 cfg.AddProfile(new AuthorToViewModelProfile());
 
                  cfg.CreateMap<Book, BookDTO>()
                  //.ForMember(x=>x.Author, opt=>opt.MapFrom(b=>string.Concat(b.Author.FirstName, " ", b.Author.LastName)))
-                 .ForMember(x=>x.BookCategories, opt=>opt.MapFrom(b=>string.Join(", ", b.BookCategories.Select(c=>c.Category.Name))));
+                 .ForMember(x => x.BookCategories, opt => opt.MapFrom(b => string.Join(", ", b.BookCategories.Select(c => c.Category.Name))))
+                 .ReverseMap();
                  cfg.CreateMap<Category, CategoryDTO>();
              });
             IMapper mapper = config.CreateMapper();
 
-            //Console.OutputEncoding = Encoding.Unicode;
 
+            var inputModel = new BookDTO { Title = "Windows on the world", Price = 14M, AuthorFirstName = "Frederic", AuthorLastName = "Beigbeder", Description="Some description about the book" };
+            var bookInput = mapper.Map<Book>(inputModel);
+
+            
+           
+            Print(bookInput);//{
+                             //            "BookId": 0,
+                             //  "Title": "Windows on the world",
+                             //  "Description": null,
+                             //  "EditionType": 0,
+                             //  "Price": 14.0,
+                             //  "Copies": 0,
+                             //  "ReleaseDate": null,
+                             //  "AgeRestriction": 0,
+                             //  "AuthorId": 0,
+                             //  "Author": {
+                             //                "AuthorId": 0,
+                             //    "FirstName": "Frederic",
+                             //    "LastName": "Beigbeder",
+                             //    "Books": []
+                             //  },
+                             //  "BookCategories": []
+                             //}
+
+            var authorInput = new AuthorDTO { FirstName = "Frederic", LastName = "Beigbeder"};
+            var authorToMap = mapper.Map<Author>(authorInput);
+            //db.Authors.Add(authorToMap);
+            //db.SaveChanges();
+            Print(authorToMap);
+
+            Console.WriteLine("-----------------");
             var author = db.Authors.FirstOrDefault();
             var authorModel = db.Authors
                 .ProjectTo<AuthorDTO>(config);
