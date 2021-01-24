@@ -11,20 +11,20 @@
         <input type="text" class="form-control" id="customer" placeholder="Customer..." name="customer">
     </div>
     <div class="form-group">
-        <label for="employee">Employee Id</label>
+        <label for="employee">Employee</label>
         <select id="employee" class="form-control" name="EmployeeId">
             @foreach (var employee in Model.Employees)
             {
-                <option value="@employee">@employee</option>
+                <option value="@employee.EmployeeId">@employee.EmployeeName</option>
             }
         </select>
     </div>
     <div class="form-group">
-        <label for="item">Item Id</label>
+        <label for="item">Item</label>
         <select id="item" class="form-control" name="ItemId">
             @foreach (var item in Model.Items)
             {
-                <option value="@item">@item</option>
+                <option value="@item.ItemId">@item.ItemName</option>
             }
         </select>
     </div>
@@ -34,6 +34,6 @@
     </div>
     <hr class="bg-secondary half-width" />
     <div class="button-holder d-flex justify-content-center">
-        <button type="submit" class="btn ">Create</button>
+        <button type="submit" class="btn btn-success">Create</button>
     </div>
 </form>

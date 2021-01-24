@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSahrp Auto Mapping Objects LAB", "CSahrp Auto Mapping Objects LAB", "{2A700DD0-98D1-4C9E-B2B3-3D75D26104FA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharp Auto Mapping Objects LAB", "CSharp Auto Mapping Objects LAB", "{2A700DD0-98D1-4C9E-B2B3-3D75D26104FA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookShop", "BookShop\BookShop.csproj", "{1CAFBB34-F1A9-485F-A38B-CE666E73900B}"
 EndProject
@@ -12,6 +12,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookShop.Initializer", "BookShop.Initializer\BookShop.Initializer.csproj", "{6B2FFED7-B861-4368-8B30-4D286EE10287}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookShop.Models", "BookShop.Models\BookShop.Models.csproj", "{6DCDB69D-B850-44B1-B5CE-B89AD67AFB39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharp Auto Mapping Objects EXERCISES", "CSharp Auto Mapping Objects EXERCISES", "{7E38DB0C-3113-42AA-8A18-C1AA01C15386}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastFood.Core", "FastFood.Core\FastFood.Core.csproj", "{477013B4-1062-4C06-88C5-F0EEEF84CBE1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastFood.Data", "FastFood.Data\FastFood.Data.csproj", "{625DBAB5-453C-4EB2-8233-8C32BB4749C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastFood.Models", "FastFood.Models\FastFood.Models.csproj", "{72C5C769-F82E-4C02-B6D1-72B9C709A61B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +43,18 @@ Global
 		{6DCDB69D-B850-44B1-B5CE-B89AD67AFB39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DCDB69D-B850-44B1-B5CE-B89AD67AFB39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DCDB69D-B850-44B1-B5CE-B89AD67AFB39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{477013B4-1062-4C06-88C5-F0EEEF84CBE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{477013B4-1062-4C06-88C5-F0EEEF84CBE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{477013B4-1062-4C06-88C5-F0EEEF84CBE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{477013B4-1062-4C06-88C5-F0EEEF84CBE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{625DBAB5-453C-4EB2-8233-8C32BB4749C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{625DBAB5-453C-4EB2-8233-8C32BB4749C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{625DBAB5-453C-4EB2-8233-8C32BB4749C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{625DBAB5-453C-4EB2-8233-8C32BB4749C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72C5C769-F82E-4C02-B6D1-72B9C709A61B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C5C769-F82E-4C02-B6D1-72B9C709A61B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C5C769-F82E-4C02-B6D1-72B9C709A61B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C5C769-F82E-4C02-B6D1-72B9C709A61B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +64,9 @@ Global
 		{05D84E69-81CE-4594-B336-37C54B8EFB1A} = {2A700DD0-98D1-4C9E-B2B3-3D75D26104FA}
 		{6B2FFED7-B861-4368-8B30-4D286EE10287} = {2A700DD0-98D1-4C9E-B2B3-3D75D26104FA}
 		{6DCDB69D-B850-44B1-B5CE-B89AD67AFB39} = {2A700DD0-98D1-4C9E-B2B3-3D75D26104FA}
+		{477013B4-1062-4C06-88C5-F0EEEF84CBE1} = {7E38DB0C-3113-42AA-8A18-C1AA01C15386}
+		{625DBAB5-453C-4EB2-8233-8C32BB4749C8} = {7E38DB0C-3113-42AA-8A18-C1AA01C15386}
+		{72C5C769-F82E-4C02-B6D1-72B9C709A61B} = {7E38DB0C-3113-42AA-8A18-C1AA01C15386}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32D915B6-4E1A-4CA3-8ACF-686BA6C24990}
