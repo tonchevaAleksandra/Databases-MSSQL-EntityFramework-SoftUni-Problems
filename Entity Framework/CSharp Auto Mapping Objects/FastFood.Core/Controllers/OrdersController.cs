@@ -1,6 +1,7 @@
 ﻿namespace FastFood.Core.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
@@ -52,7 +53,11 @@
 
         public IActionResult All()
         {
-            throw new NotImplementedException();
+            List<OrderAllViewModel> orders = this.context.Orders
+                 .ProjectTo<OrderAllViewModel>(this.mapper.ConfigurationProvider)
+                 .ToList();
+
+            return this.View(orders);
         }
     }
 }

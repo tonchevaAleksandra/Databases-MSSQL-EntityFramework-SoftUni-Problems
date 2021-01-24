@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - FastFood</title>
+    <title>@ViewData["Title"] - Chez Aleksandra</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -26,16 +26,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Fast Food</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Chez Aleksandra</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Positions" asp-action="Create">Position</a></li>
-                    <li><a asp-area="" asp-controller="Employees" asp-action="Register">Employee</a></li>
-                    <li><a asp-area="" asp-controller="Categories" asp-action="Create">Category</a></li>
-                    <li><a asp-area="" asp-controller="Items" asp-action="Create">Item</a></li>
-                    <li><a asp-area="" asp-controller="Orders" asp-action="Create">Order</a></li>
+                    <li><a asp-area="" asp-controller="Positions" asp-action="All">Positions</a></li>
+                    <li><a asp-area="" asp-controller="Employees" asp-action="All">Employees</a></li>
+                    <li><a asp-area="" asp-controller="Categories" asp-action="All">Categories</a></li>
+                    <li><a asp-area="" asp-controller="Items" asp-action="All">Items</a></li>
+                    <li><a asp-area="" asp-controller="Orders" asp-action="All">Orders</a></li>
                 </ul>
             </div>
         </div>
@@ -47,7 +47,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.UtcNow.Year - FastFood</p>
+            <p>&copy; @DateTime.UtcNow.Year - Chez Aleksandra</p>
         </footer>
     </div>
 

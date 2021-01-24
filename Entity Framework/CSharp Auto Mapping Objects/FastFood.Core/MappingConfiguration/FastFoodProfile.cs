@@ -8,6 +8,7 @@
     using FastFood.Models;
     using FastFood.Models.Enums;
     using System;
+    using System.Globalization;
     using ViewModels.Positions;
 
     public class FastFoodProfile : Profile
@@ -64,7 +65,10 @@
                 .ForMember(x => x.ItemId, y => y.MapFrom(s => s.ItemId))
                 .ForMember(x=>x.Quantity, y=>y.MapFrom(s=>s.Quantity));
 
-            
+            this.CreateMap<Order, OrderAllViewModel>()
+                .ForMember(x => x.Employee, y => y.MapFrom(s => s.Employee.Name))
+                .ForMember(x => x.DateTime, y => y.MapFrom(s => s.DateTime.ToString("D", CultureInfo.InvariantCulture)))
+                .ForMember(x=>x.OrderId, y=>y.MapFrom(s=>s.Id));
 
         }
     }
