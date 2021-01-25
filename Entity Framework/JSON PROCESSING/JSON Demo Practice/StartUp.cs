@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CsvHelper;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -31,11 +32,20 @@ namespace JSON_Demo_Practice
         public string Summary { get; set; } = "Hot summer day";
 
     }
+
     class Forecasts
     {
-        public Tuple<int, string>/*(int IntValue, string StringValue)*/ AdditionalData { get; set; } 
+        public Tuple<int, string>/*(int IntValue, string StringValue)*/ AdditionalData { get; set; }
 
         public List<WeatherForecast> WeatherForecasts { get; set; }
+    }
+    public class Car
+    {
+        public int Year { get; set; }
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
     }
     public class StartUp
     {
@@ -56,7 +66,25 @@ namespace JSON_Demo_Practice
 
             //UsingLinqOnJson();
 
-            string xml= @"<?xml version='1.0' standalone='no'?> 
+            //UsingXml();
+
+
+            using CsvReader reader = new CsvReader(new StreamReader("Cars.csv"), CultureInfo.InvariantCulture);
+            var cars = reader.GetRecords<Car>().ToList();
+
+            var cars1 = new List<Car>
+            {
+                new Car{Year=2020, Make="Audi", Model="Allroad", Price=1265644.52M, Description="ghrigr"},
+                new Car{Year=2019, Make="Audi", Model="A7", Price=516665.51M, Description="jgoigerbi"}
+            };
+            using CsvWriter csvWriter = new CsvWriter(new StreamWriter("MyCars.csv"), CultureInfo.InvariantCulture);
+            csvWriter.WriteRecords(cars1);
+
+        }
+
+        private static void UsingXml()
+        {
+            string xml = @"<?xml version='1.0' standalone='no'?> 
                                  <root> 
                                     <person id='1'> 
                                         <name>Alan</name> 
@@ -69,6 +97,7 @@ namespace JSON_Demo_Practice
                                 </root>";
 
             XmlDocument doc = new XmlDocument();
+            //JsonConvert.DeserializeXmlNode();
             doc.LoadXml(xml);
             string jsonText = JsonConvert.SerializeXmlNode(doc, Formatting.Indented);
             Console.WriteLine(jsonText);
