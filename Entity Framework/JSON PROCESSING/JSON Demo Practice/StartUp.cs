@@ -9,6 +9,9 @@ using System.Linq;
 using System.Text.Json;
 
 using System.Text.Json.Serialization;
+using System.Xml;
+using Formatting = Newtonsoft.Json.Formatting;
+
 namespace JSON_Demo_Practice
 {
     class WeatherForecast
@@ -51,10 +54,32 @@ namespace JSON_Demo_Practice
             //};
             //UsingJsonSettings();
 
+            //UsingLinqOnJson();
+
+            string xml= @"<?xml version='1.0' standalone='no'?> 
+                                 <root> 
+                                    <person id='1'> 
+                                        <name>Alan</name> 
+                                        <url>www.google.com</url> 
+                                    </person> 
+                                    <person id='2'> 
+                                        <name>Louis</name> 
+                                        <url>www.yahoo.com</url> 
+                                    </person> 
+                                </root>";
+
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+            string jsonText = JsonConvert.SerializeXmlNode(doc, Formatting.Indented);
+            Console.WriteLine(jsonText);
+        }
+
+        private static void UsingLinqOnJson()
+        {
             var json = File.ReadAllText("weather1.json");
             JObject jObject = JObject.Parse(json);
             //Console.WriteLine(jObject["connectionString"].Children()[0]);
-            foreach (var item in jObject["connectionString"].Where(x=>x["ConnectionString"].ToString().Contains("Server")))
+            foreach (var item in jObject["connectionString"].Where(x => x["ConnectionString"].ToString().Contains("Server")))
             {
                 Console.WriteLine(item);
             }
