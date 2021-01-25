@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Json Processing LAB", "Json Processing LAB", "{D78C361B-ABD8-4C07-B158-411D97F50891}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSON Demo Practice", "JSON Demo Practice\JSON Demo Practice.csproj", "{FC028387-95E6-4F0A-BB23-6914254038CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC028387-95E6-4F0A-BB23-6914254038CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC028387-95E6-4F0A-BB23-6914254038CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC028387-95E6-4F0A-BB23-6914254038CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC028387-95E6-4F0A-BB23-6914254038CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FC028387-95E6-4F0A-BB23-6914254038CC} = {D78C361B-ABD8-4C07-B158-411D97F50891}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD46F122-C8E3-49E3-953E-C1104E392CF6}
+	EndGlobalSection
+EndGlobal
