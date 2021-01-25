@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Json Processing LAB", "Json Processing LAB", "{D78C361B-ABD8-4C07-B158-411D97F50891}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSON Demo Practice", "JSON Demo Practice\JSON Demo Practice.csproj", "{FC028387-95E6-4F0A-BB23-6914254038CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSON Demo Practice", "JSON Demo Practice\JSON Demo Practice.csproj", "{FC028387-95E6-4F0A-BB23-6914254038CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Json Processing EXERCISES", "Json Processing EXERCISES", "{3FD8B8C5-42DE-4F8D-A04A-5B9A25137765}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProductShopDatabase", "ProductShopDatabase", "{006D6148-4EDF-49DB-B4DC-C1EC531EB16E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductShop", "ProductShop\ProductShop.csproj", "{0CA9DFEA-A16D-4FA9-B525-21715D00B09D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +23,18 @@ Global
 		{FC028387-95E6-4F0A-BB23-6914254038CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC028387-95E6-4F0A-BB23-6914254038CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC028387-95E6-4F0A-BB23-6914254038CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CA9DFEA-A16D-4FA9-B525-21715D00B09D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA9DFEA-A16D-4FA9-B525-21715D00B09D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA9DFEA-A16D-4FA9-B525-21715D00B09D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CA9DFEA-A16D-4FA9-B525-21715D00B09D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FC028387-95E6-4F0A-BB23-6914254038CC} = {D78C361B-ABD8-4C07-B158-411D97F50891}
+		{006D6148-4EDF-49DB-B4DC-C1EC531EB16E} = {3FD8B8C5-42DE-4F8D-A04A-5B9A25137765}
+		{0CA9DFEA-A16D-4FA9-B525-21715D00B09D} = {006D6148-4EDF-49DB-B4DC-C1EC531EB16E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD46F122-C8E3-49E3-953E-C1104E392CF6}
