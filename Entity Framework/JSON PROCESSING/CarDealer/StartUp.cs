@@ -28,6 +28,31 @@ namespace CarDealer
                 Directory.CreateDirectory(ResultsDirectoryPath);
             }
         }
+        private static void ImportPartCars(CarDealerContext context)
+        {
+            int carsCount = context
+                .Cars
+                .Count();
+            int partsCount = context.Parts.Count();
+
+            var partCars = new List<PartCar>();
+
+            for (int i = 1; i <= carsCount; i++)
+            {
+                var partCar = new PartCar();
+
+                partCar.CarId = i;
+
+                partCar.PartId = new Random().Next(1, partsCount);
+
+                partCars.Add(partCar);
+            }
+
+            context.PartCars.AddRange(partCars);
+
+            context.SaveChanges();
+            Console.WriteLine($"Successfully added {partCars.Count()} partCars!");
+        }
         public static void Main(string[] args)
         {
             CarDealerContext db = new CarDealerContext();
@@ -70,11 +95,45 @@ namespace CarDealer
             //File.WriteAllText(ResultsDirectoryPath + "/toyota-cars.json", json);
 
             //Problem 08
+            //EnsureDirectoryExists();
+            //string json = GetLocalSuppliers(db);
+            //File.WriteAllText(ResultsDirectoryPath + "/local-suppliers.json", json);
+
+
+            //--Import Parts
+            //ImportPartCars(db);
+
+
+            //Problem 09
             EnsureDirectoryExists();
-            string json = GetLocalSuppliers(db);
-            File.WriteAllText(ResultsDirectoryPath + "/local-suppliers.json", json);
+            string json = GetCarsWithTheirListOfParts(db);
+            File.WriteAllText(ResultsDirectoryPath + "/cars-and-parts.json", json);
+        }
 
+        //Problem 09
+        public static string GetCarsWithTheirListOfParts(CarDealerContext context)
+        {
+            var cars = context.Cars
+                .Select(c => new
+                {
+                    car = new
+                    {
+                        Make = c.Make,
+                        Model = c.Model,
+                        TravelledDistance = c.TravelledDistance
+                    },
+                    parts = c.PartCars.Select(pc => new
+                    {
+                        name = pc.Part.Name,
+                        price = pc.Part.Price.ToString("f2")
+                    })
+                    .ToList()
+                })
+                .ToList();
 
+            string result = JsonConvert.SerializeObject(cars, Formatting.Indented);
+
+            return result;
         }
 
         //Problem 08
@@ -179,8 +238,8 @@ namespace CarDealer
         {
             List<Part> parts = JsonConvert.DeserializeObject<List<Part>>(inputJson);
             var suppliers = context.Suppliers.Select(s => s.Id);
-
-            context.Parts.AddRange(parts.Where(p => suppliers.Any(s => s == p.SupplierId)));
+            parts = parts.Where(p => suppliers.Any(s => s == p.SupplierId)).ToList();
+            context.Parts.AddRange(parts);
             context.SaveChanges();
 
             return $"Successfully imported {parts.Count}.";
