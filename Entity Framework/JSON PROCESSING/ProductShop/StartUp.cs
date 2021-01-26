@@ -5,13 +5,14 @@ using System.Linq;
 using AutoMapper;
 using Newtonsoft.Json;
 using ProductShop.Data;
+using ProductShop.DTO.ProductModels;
 using ProductShop.Models;
 
 namespace ProductShop
 {
     public class StartUp
     {
-
+        private static string ResultsDirectoryPath = "../../../Datasets/Results";
         public static void Main(string[] args)
         {
             ProductShopContext db = new ProductShopContext();
@@ -35,10 +36,48 @@ namespace ProductShop
             //Console.WriteLine(result);
 
             //Problem 04
-            string inputJson = File.ReadAllText("../../../Datasets/categories-products.json");
-            string result = ImportCategoryProducts(db, inputJson);
-            Console.WriteLine(result);
+            //string inputJson = File.ReadAllText("../../../Datasets/categories-products.json");
+            //string result = ImportCategoryProducts(db, inputJson);
+            //Console.WriteLine(result);
 
+            //Problem 05
+           string json=GetProductsInRange(db);
+            if (!Directory.Exists(ResultsDirectoryPath))
+            {
+                Directory.CreateDirectory(ResultsDirectoryPath);
+            }
+            File.WriteAllText(ResultsDirectoryPath + "/products-in-range.json", json);
+
+        }
+
+        //Problem 05
+        public static string GetProductsInRange(ProductShopContext context)
+        {
+            //var products = context.Products
+            //   .Where(p => p.Price >= 500M && p.Price <= 1000M)
+            //   .OrderBy(p => p.Price)
+            //   .Select(p => new ListProductsInRangeDTO
+            //   {
+            //       Name = p.Name,
+            //       Price = p.Price.ToString("f2"),
+            //       SellerFullName = p.Seller.FirstName + " " + p.Seller.LastName
+            //   })
+            //   .ToList();
+
+            var products = context.Products
+                .Where(p => p.Price >= 500M && p.Price <= 1000M)
+                .OrderBy(p => p.Price)
+                .Select(p => new
+                {
+                    name = p.Name,
+                    price = p.Price.ToString("f2"),
+                    seller = p.Seller.FirstName + " " + p.Seller.LastName
+                })
+                .ToList();
+
+            var result = JsonConvert.SerializeObject(products, Formatting.Indented);
+
+            return result;
         }
 
         //Problem 04
@@ -58,7 +97,7 @@ namespace ProductShop
         {
 
             List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(inputJson)
-                .Where(x=>x.Name!=null)
+                .Where(x => x.Name != null)
                 .ToList();
 
             context.Categories.AddRange(categories);
