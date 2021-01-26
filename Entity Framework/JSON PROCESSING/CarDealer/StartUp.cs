@@ -64,11 +64,35 @@ namespace CarDealer
             //File.WriteAllText(ResultsDirectoryPath + "/ordered-customers.json", json);
 
             //Problem 07
+            //EnsureDirectoryExists();
+            //string json = GetCarsFromMakeToyota(db);
+
+            //File.WriteAllText(ResultsDirectoryPath + "/toyota-cars.json", json);
+
+            //Problem 08
             EnsureDirectoryExists();
-            string json = GetCarsFromMakeToyota(db);
+            string json = GetLocalSuppliers(db);
+            File.WriteAllText(ResultsDirectoryPath + "/local-suppliers.json", json);
 
-            File.WriteAllText(ResultsDirectoryPath + "/toyota-cars.json", json);
 
+        }
+
+        //Problem 08
+        public static string GetLocalSuppliers(CarDealerContext context)
+        {
+            var suppliers = context.Suppliers
+                .Where(s => s.IsImporter == false)
+                .Select(s => new
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    PartsCount = s.Parts.Count
+                })
+                .ToList();
+
+            string result = JsonConvert.SerializeObject(suppliers, Formatting.Indented);
+
+            return result;
         }
 
         //Problem 07
