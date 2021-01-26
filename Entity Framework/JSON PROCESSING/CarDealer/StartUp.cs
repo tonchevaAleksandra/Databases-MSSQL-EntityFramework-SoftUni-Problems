@@ -38,10 +38,25 @@ namespace CarDealer
             //Console.WriteLine(result);
 
             //Problem 02
-            string inputJson = File.ReadAllText("../../../Datasets/parts.json");
-            string result = ImportParts(db, inputJson);
+            //string inputJson = File.ReadAllText("../../../Datasets/parts.json");
+            //string result = ImportParts(db, inputJson);
+            //Console.WriteLine(result);
+
+            //Problem 03
+            string inputJson = File.ReadAllText("../../../Datasets/cars.json");
+            string result = ImportCars(db, inputJson);
             Console.WriteLine(result);
 
+        }
+
+        //Problem 03
+        public static string ImportCars(CarDealerContext context, string inputJson)
+        {
+            List<Car> cars = JsonConvert.DeserializeObject<List<Car>>(inputJson);
+            context.Cars.AddRange(cars);
+            context.SaveChanges();
+
+            return $"Successfully imported {cars.Count}.";
         }
 
         //Problem 02
