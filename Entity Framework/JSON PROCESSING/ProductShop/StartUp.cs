@@ -30,9 +30,27 @@ namespace ProductShop
             //Console.WriteLine(result);
 
             //Problem 03
-            string inputJson = File.ReadAllText("../../../Datasets/categories.json");
-            string result = ImportCategories(db, inputJson);
+            //string inputJson = File.ReadAllText("../../../Datasets/categories.json");
+            //string result = ImportCategories(db, inputJson);
+            //Console.WriteLine(result);
+
+            //Problem 04
+            string inputJson = File.ReadAllText("../../../Datasets/categories-products.json");
+            string result = ImportCategoryProducts(db, inputJson);
             Console.WriteLine(result);
+
+        }
+
+        //Problem 04
+        public static string ImportCategoryProducts(ProductShopContext context, string inputJson)
+        {
+            List<CategoryProduct> categoryProducts = JsonConvert.DeserializeObject<List<CategoryProduct>>(inputJson);
+
+            context.CategoryProducts.AddRange(categoryProducts);
+            context.SaveChanges();
+
+            return $"Successfully imported {categoryProducts.Count}";
+
         }
 
         //Problem 03
