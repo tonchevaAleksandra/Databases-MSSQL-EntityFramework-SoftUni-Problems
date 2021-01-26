@@ -41,13 +41,65 @@ namespace ProductShop
             //Console.WriteLine(result);
 
             //Problem 05
-           string json=GetProductsInRange(db);
-            if (!Directory.Exists(ResultsDirectoryPath))
-            {
-                Directory.CreateDirectory(ResultsDirectoryPath);
-            }
-            File.WriteAllText(ResultsDirectoryPath + "/products-in-range.json", json);
+            //string json=GetProductsInRange(db);
+            //EnsureDirectoryExists();
+            // File.WriteAllText(ResultsDirectoryPath + "/products-in-range.json", json);
 
+            //Problem 06
+            //var json=GetSoldProducts(db);
+            // EnsureDirectoryExists();
+            // File.WriteAllText(ResultsDirectoryPath + "/users-sold-products.json", json);
+
+            //Problem 07
+            var json = GetCategoriesByProductsCount(db);
+            EnsureDirectoryExists();
+            File.WriteAllText(ResultsDirectoryPath + "/categories-by-products.json", json);
+
+        }
+
+        //Problem 07
+        public static string GetCategoriesByProductsCount(ProductShopContext context)
+        {
+            var categories = context.Categories
+                .OrderByDescending(c => c.CategoryProducts.Count)
+                .Select(c => new
+                {
+                    category = c.Name,
+                    productsCount = c.CategoryProducts.Count,
+                    averagePrice = c.CategoryProducts.Average(cp => cp.Product.Price).ToString("f2"),
+                    totalRevenue = c.CategoryProducts.Sum(cp => cp.Product.Price).ToString("f2")
+                })
+                .ToList();
+
+            var result = JsonConvert.SerializeObject(categories, Formatting.Indented);
+
+            return result;
+        }
+
+        //Problem 06
+        public static string GetSoldProducts(ProductShopContext context)
+        {
+            var users = context.Users
+                .Where(u => u.ProductsSold.Count > 0)
+                .OrderBy(u => u.LastName)
+                .ThenBy(u => u.FirstName)
+                .Select(u => new
+                {
+                    firstName = u.FirstName,
+                    lastName = u.LastName,
+                    soldProducts = u.ProductsSold.Select(ps => new
+                    {
+                        name = ps.Name,
+                        price = ps.Price,
+                        buyerFirstName = ps.Buyer.FirstName,
+                        buyerLastName = ps.Buyer.LastName
+                    })
+                })
+                .ToList();
+
+            var result = JsonConvert.SerializeObject(users, Formatting.Indented);
+
+            return result;
         }
 
         //Problem 05
@@ -126,6 +178,14 @@ namespace ProductShop
             context.SaveChanges();
 
             return $"Successfully imported {count}";
+        }
+
+        private static void EnsureDirectoryExists()
+        {
+            if (!Directory.Exists(ResultsDirectoryPath))
+            {
+                Directory.CreateDirectory(ResultsDirectoryPath);
+            }
         }
 
         private static void ResetDatabase(ProductShopContext db)
