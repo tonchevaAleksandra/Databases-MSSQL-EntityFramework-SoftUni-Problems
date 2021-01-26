@@ -56,9 +56,9 @@ namespace ProductShop
             //File.WriteAllText(ResultsDirectoryPath + "/categories-by-products.json", json);
 
             //Problem 08
-            var json = GetUsersWithProducts(db);
-            EnsureDirectoryExists();
-            File.WriteAllText(ResultsDirectoryPath + "/users-and-products.json", json);
+            //var json = GetUsersWithProducts(db);
+            //EnsureDirectoryExists();
+            //File.WriteAllText(ResultsDirectoryPath + "/users-and-products.json", json);
 
         }
         //Problem 08

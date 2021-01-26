@@ -12,7 +12,7 @@ namespace CarDealer.Data
         {
         }
 
-        protected CarDealerContext()
+        public CarDealerContext()
         {
         }
 
