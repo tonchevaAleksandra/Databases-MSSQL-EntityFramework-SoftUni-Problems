@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using AutoMapper;
@@ -53,9 +54,67 @@ namespace CarDealer
             //Console.WriteLine(result);
 
             //Problem 05
-            string inputJson = File.ReadAllText("../../../Datasets/sales.json");
-            string result = ImportSales(db, inputJson);
-            Console.WriteLine(result);
+            //string inputJson = File.ReadAllText("../../../Datasets/sales.json");
+            //string result = ImportSales(db, inputJson);
+            //Console.WriteLine(result);
+
+            //Problem 06
+            //EnsureDirectoryExists();
+            //string json = GetOrderedCustomers(db);
+            //File.WriteAllText(ResultsDirectoryPath + "/ordered-customers.json", json);
+
+            //Problem 07
+            EnsureDirectoryExists();
+            string json = GetCarsFromMakeToyota(db);
+
+            File.WriteAllText(ResultsDirectoryPath + "/toyota-cars.json", json);
+
+        }
+
+        //Problem 07
+        public static string GetCarsFromMakeToyota(CarDealerContext context)
+        {
+
+            var cars = context.Cars
+                .Where(c => c.Make == "Toyota")
+                .OrderBy(c => c.Model)
+                .ThenByDescending(c => c.TravelledDistance)
+                .Select(c => new
+                {
+                    Id = c.Id,
+                    Make = c.Make,
+                    Model = c.Model,
+                    TravelledDistance = c.TravelledDistance,
+                })
+                .ToList();
+
+            string result = JsonConvert.SerializeObject(cars, new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented,
+                Culture = CultureInfo.InvariantCulture,
+               
+            });
+
+            return result;
+        }
+
+        //Problem 06
+        public static string GetOrderedCustomers(CarDealerContext context)
+        {
+            var customers = context.Customers
+                .OrderBy(c => c.BirthDate)
+                .ThenBy(c => c.IsYoungDriver)
+                .Select(c => new
+                {
+                    Name = c.Name,
+                    BirthDate = c.BirthDate.ToString("dd/MM/yyyy"),
+                    IsYoungDriver = c.IsYoungDriver
+                })
+                .ToList();
+
+            string result = JsonConvert.SerializeObject(customers, Formatting.Indented);
+
+            return result;
 
         }
 
@@ -97,7 +156,7 @@ namespace CarDealer
             List<Part> parts = JsonConvert.DeserializeObject<List<Part>>(inputJson);
             var suppliers = context.Suppliers.Select(s => s.Id);
 
-            context.Parts.AddRange(parts.Where(p=>suppliers.Any(s=>s==p.SupplierId)));
+            context.Parts.AddRange(parts.Where(p => suppliers.Any(s => s == p.SupplierId)));
             context.SaveChanges();
 
             return $"Successfully imported {parts.Count}.";
