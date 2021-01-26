@@ -39,11 +39,9 @@ namespace ProductShop
         public static string ImportCategories(ProductShopContext context, string inputJson)
         {
 
-            List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(inputJson, new JsonSerializerSettings()
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                DefaultValueHandling = DefaultValueHandling.Ignore
-            });
+            List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(inputJson)
+                .Where(x=>x.Name!=null)
+                .ToList();
 
             context.Categories.AddRange(categories);
             context.SaveChanges();
