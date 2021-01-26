@@ -105,10 +105,37 @@ namespace CarDealer
 
 
             //Problem 09
+            //EnsureDirectoryExists();
+            //string json = GetCarsWithTheirListOfParts(db);
+            //File.WriteAllText(ResultsDirectoryPath + "/cars-and-parts.json", json);
+
+            //Problem 10
             EnsureDirectoryExists();
-            string json = GetCarsWithTheirListOfParts(db);
-            File.WriteAllText(ResultsDirectoryPath + "/cars-and-parts.json", json);
+            string json = GetTotalSalesByCustomer(db);
+            File.WriteAllText(ResultsDirectoryPath + "/customers-total-sales.json", json);
+
         }
+        //Problem 10
+        public static string GetTotalSalesByCustomer(CarDealerContext context)
+        {
+            var customers = context.Customers
+                .Where(c => c.Sales.Count > 0)
+                .Select(c => new
+                {
+                    fullname = c.Name,
+                    boughtCars = c.Sales.Count,
+                    spentMoney = c.Sales.Select(s=>s.Car.PartCars.Sum(pc=>pc.Part.Price))
+                })
+                .OrderByDescending(c => c.spentMoney)
+                .ThenByDescending(c => c.boughtCars)
+                .ToList();
+
+            string result = JsonConvert.SerializeObject(customers, Formatting.Indented);
+
+            return result;
+
+        }
+
 
         //Problem 09
         public static string GetCarsWithTheirListOfParts(CarDealerContext context)
@@ -124,8 +151,8 @@ namespace CarDealer
                     },
                     parts = c.PartCars.Select(pc => new
                     {
-                        name = pc.Part.Name,
-                        price = pc.Part.Price.ToString("f2")
+                        Name = pc.Part.Name,
+                        Price = pc.Part.Price.ToString("f2")
                     })
                     .ToList()
                 })
