@@ -51,10 +51,55 @@ namespace ProductShop
             // File.WriteAllText(ResultsDirectoryPath + "/users-sold-products.json", json);
 
             //Problem 07
-            var json = GetCategoriesByProductsCount(db);
-            EnsureDirectoryExists();
-            File.WriteAllText(ResultsDirectoryPath + "/categories-by-products.json", json);
+            //var json = GetCategoriesByProductsCount(db);
+            //EnsureDirectoryExists();
+            //File.WriteAllText(ResultsDirectoryPath + "/categories-by-products.json", json);
 
+            //Problem 08
+            var json = GetUsersWithProducts(db);
+            EnsureDirectoryExists();
+            File.WriteAllText(ResultsDirectoryPath + "/users-and-products.json", json);
+
+        }
+        //Problem 08
+        public static string GetUsersWithProducts(ProductShopContext context)
+        {
+
+            var users = context.Users
+                .Where(u => u.ProductsSold.Any(p => p.Buyer != null))
+                .Select(u => new
+                {
+                    lastName = u.LastName,
+                    age = u.Age,
+                    soldProducts = new
+                    {
+                        count = u.ProductsSold.Count(p => p.Buyer != null),
+                        products = u.ProductsSold
+                        .Where(p => p.Buyer != null)
+                        .Select(p => new
+                        {
+                            name = p.Name,
+                            price = p.Price
+                        })
+                        .ToList()
+                    }
+                })
+                .OrderByDescending(u => u.soldProducts.count)
+                .ToList();
+
+            var resultObj = new
+            {
+                usersCount = users.Count,
+                users = users
+            };
+
+            var result = JsonConvert.SerializeObject(resultObj, new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            return result;
         }
 
         //Problem 07
