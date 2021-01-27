@@ -4,7 +4,9 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using CarDealer.Data;
+using CarDealer.DTO.CustomerDTOs;
 using CarDealer.Models;
 using Newtonsoft.Json;
 
@@ -52,6 +54,14 @@ namespace CarDealer
 
             context.SaveChanges();
             Console.WriteLine($"Successfully added {partCars.Count()} partCars!");
+        }
+        private static void InitializeMapper()
+        {
+
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile<CarDealerProfile>();
+            });
         }
         public static void Main(string[] args)
         {
@@ -110,6 +120,7 @@ namespace CarDealer
             //File.WriteAllText(ResultsDirectoryPath + "/cars-and-parts.json", json);
 
             //Problem 10
+            InitializeMapper();
             EnsureDirectoryExists();
             string json = GetTotalSalesByCustomer(db);
             File.WriteAllText(ResultsDirectoryPath + "/customers-total-sales.json", json);
@@ -118,17 +129,14 @@ namespace CarDealer
         //Problem 10
         public static string GetTotalSalesByCustomer(CarDealerContext context)
         {
-            var customers = context.Customers
-                .Where(c => c.Sales.Count > 0)
-                .Select(c => new
-                {
-                    fullname = c.Name,
-                    boughtCars = c.Sales.Count,
-                    spentMoney = c.Sales.Select(s=>s.Car.PartCars.Sum(pc=>pc.Part.Price))
-                })
-                .OrderByDescending(c => c.spentMoney)
-                .ThenByDescending(c => c.boughtCars)
-                .ToList();
+
+            var customers = context
+                    .Customers
+                    .ProjectTo<CustomerTotalSalesDTO>()
+                    .Where(c => c.CarsBought >= 1)
+                    .OrderByDescending(c => c.SpentMoney)
+                    .ThenByDescending(c => c.CarsBought)
+                    .ToList();
 
             string result = JsonConvert.SerializeObject(customers, Formatting.Indented);
 
@@ -202,7 +210,7 @@ namespace CarDealer
             {
                 Formatting = Formatting.Indented,
                 Culture = CultureInfo.InvariantCulture,
-               
+
             });
 
             return result;
@@ -284,6 +292,7 @@ namespace CarDealer
             return $"Successfully imported {suppliers.Count}.";
 
         }
+
 
     }
 }
