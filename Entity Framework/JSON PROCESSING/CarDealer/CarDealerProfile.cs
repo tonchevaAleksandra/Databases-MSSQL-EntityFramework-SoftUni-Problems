@@ -5,6 +5,7 @@ using System.Text;
 using AutoMapper;
 using CarDealer.DTO;
 using CarDealer.DTO.CustomerDTOs;
+using CarDealer.DTO.SalesDTOs;
 using CarDealer.Models;
 
 namespace CarDealer
@@ -24,7 +25,12 @@ namespace CarDealer
                                                                     .Sum(pc =>pc.Price))
                                                       .Sum()));
 
+            //this.CreateMap<Sale, SaleCarDTO>()
+            //    .ForMember(s => s.Make, y => y.MapFrom(s => s.Car.Make))
+            //    .ForMember(s => s.Model, y => y.MapFrom(s => s.Car.Model))
+            //    .ForMember(s => s.TravelledDistance, y => y.MapFrom(s => s.Car.TravelledDistance));
 
+          
 
         }
     }

@@ -7,6 +7,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using CarDealer.Data;
 using CarDealer.DTO.CustomerDTOs;
+using CarDealer.DTO.SalesDTOs;
 using CarDealer.Models;
 using Newtonsoft.Json;
 
@@ -120,12 +121,44 @@ namespace CarDealer
             //File.WriteAllText(ResultsDirectoryPath + "/cars-and-parts.json", json);
 
             //Problem 10
-            InitializeMapper();
+            //InitializeMapper();
+            //EnsureDirectoryExists();
+            //string json = GetTotalSalesByCustomer(db);
+            //File.WriteAllText(ResultsDirectoryPath + "/customers-total-sales.json", json);
+
+            //Problem 11
             EnsureDirectoryExists();
-            string json = GetTotalSalesByCustomer(db);
-            File.WriteAllText(ResultsDirectoryPath + "/customers-total-sales.json", json);
+            string json = GetSalesWithAppliedDiscount(db);
+            File.WriteAllText(ResultsDirectoryPath + "/sales-discounts.json", json);
 
         }
+
+        //Problem 11
+        public static string GetSalesWithAppliedDiscount(CarDealerContext context)
+        {
+            var sales = context.Sales
+                .Select(s => new CustomerSaleDTO
+                {
+                    Car = new SaleCarDTO
+                    {
+                        Make = s.Car.Make,
+                        Model = s.Car.Model,
+                        TravelledDistance = s.Car.TravelledDistance
+                    },
+                    CustomerName = s.Customer.Name,
+                    Discount = s.Discount.ToString("f2"),
+                    Price = s.Car.PartCars.Sum(pc => pc.Part.Price).ToString("f2"),
+                    PriceWithDiscount = (s.Car.PartCars.Sum(pc => pc.Part.Price) -
+                                            s.Car.PartCars.Sum(pc => pc.Part.Price) * s.Discount / 100).ToString("f2")
+
+                })
+                .ToList();
+
+            string result = JsonConvert.SerializeObject(sales, Formatting.Indented);
+
+            return result;
+        }
+
         //Problem 10
         public static string GetTotalSalesByCustomer(CarDealerContext context)
         {
