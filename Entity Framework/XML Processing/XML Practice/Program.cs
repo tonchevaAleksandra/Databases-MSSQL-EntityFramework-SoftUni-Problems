@@ -1,11 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Xml;
+using System.Linq;
+using System.Text;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace XML_Practice
 {
+    [XmlType("doc")]
+    public class Article
+    {
+        [XmlElement("title")]
+        public string Title { get; set; }
+
+        [XmlElement("abstract")]
+        public string Description { get; set; }
+
+        [XmlIgnore]
+        public string url { get; set; }
+    }
     class Program
     {
         static void Main(string[] args)
@@ -19,30 +34,47 @@ namespace XML_Practice
             //Console.WriteLine(xmlDocument.Root.Elements()
             //    .FirstOrDefault(x=>x.Element("color").Value=="Blue").Element("year").Value);
 
+            //Console.OutputEncoding = Encoding.UTF8;
 
-            XDocument xdocument = XDocument.Load("bgwiki-20210120-abstract.xml");
-            var articles = xdocument.Root.Elements()
-                .Where(x => x.Element("title").Value.Contains("Николай"))
-                .OrderBy(x => x.Element("title").Value)
-                .Select(x => new
-                {
-                    Title = x.Element("title").Value,
-                    Description = x.Element("abstract").Value,
-                    Url = x.Element("url").Value
-                });
 
-            foreach (var article in articles)
+
+            //foreach (var article in xdocument.Root.Elements())
+            //{
+            //    article.SetAttributeValue("lang", "bg");
+            //    article.SetElementValue("links",null);
+            //    //article.Element("title").SetAttributeValue("lang", "bg");
+            //}
+            //xdocument.Save("bgwiki_updated.xml");
+            ;
+            //XmlSerializer xmlSerializer = new XmlSerializer(typeof(doc[]), new XmlRootAttribute("feed"));
+            //var docs = (doc[])xmlSerializer.Deserialize(File.OpenRead("bgwiki_updated.xml"));
+
+            //XDocument xdocument = XDocument.Load("bgwiki_updated.xml");
+            //var articles = docs
+            //    .Where(x => x.title.Contains("Николай"))
+            //    .OrderBy(x => x.title);
+
+            //foreach (var article in articles)
+            //{
+            //    Console.WriteLine(article.title);
+            //}
+
+            List<Article> docs = new List<Article>
             {
-                Console.WriteLine(article.Title);
-            }
+                new Article {Title = "България", Description = "държава...", url = "http://wikipedia"},
+                new Article {Title = "Софтуни", Description = "Образователен център...", url = "http://wikipedia"},
+            };
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Article>), new XmlRootAttribute("feed"));
+            xmlSerializer.Serialize(File.OpenWrite("myDocs.xml"), docs);
         }
     }
 
-    class Plane
-    {
-        public int Year { get; set; }
-        public string Make { get; set; }
-        public string Model { get; set; }
-        public string Color { get; set; }
-    }
+    //class Plane
+    //{
+    //    public int Year { get; set; }
+    //    public string Make { get; set; }
+    //    public string Model { get; set; }
+    //    public string Color { get; set; }
+    //}
 }
