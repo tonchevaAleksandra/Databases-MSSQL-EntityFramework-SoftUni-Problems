@@ -52,13 +52,39 @@ namespace CarDealer
             //Console.WriteLine(result);
 
             //TODO Problem 06
-            string result = GetCarsWithDistance(db);
-            File.WriteAllText(ResultDirPath + "cars.xml", result);
+            //string result = GetCarsWithDistance(db);
+            //File.WriteAllText(ResultDirPath + "cars.xml", result);
+
+            //TODO Problem 07
+            string result = GetCarsFromMakeBmw(db);
+            File.WriteAllText(ResultDirPath + "bmw-cars.xml", result);
 
             //TODO Problem 08
             //string result = GetLocalSuppliers(db);
             //File.WriteAllText(ResultDirPath + "local-suppliers.xml",result);
 
+        }
+
+        //TODO Problem 07
+        public static string GetCarsFromMakeBmw(CarDealerContext context)
+        {
+            var cars = context
+                .Cars
+                .Where(c => c.Make == "BMW")
+                .OrderBy(c => c.Model)
+                .ThenByDescending(c => c.TravelledDistance)
+                .ProjectTo<ExportCarsBMWDTO>()
+                .ToArray();
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ExportCarsBMWDTO[]), new XmlRootAttribute("cars"));
+
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add("", "");
+
+            StringBuilder sb = new StringBuilder();
+            xmlSerializer.Serialize(new StringWriter(sb), cars, namespaces);
+
+            return sb.ToString().Trim();
         }
 
         //TODO Problem 06
