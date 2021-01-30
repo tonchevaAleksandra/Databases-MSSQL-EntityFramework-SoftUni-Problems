@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -6,6 +7,7 @@ using AutoMapper;
 using CarDealer.Data;
 using CarDealer.Dtos.Import;
 using CarDealer.Models;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Query;
 
 namespace CarDealer
@@ -21,22 +23,34 @@ namespace CarDealer
             //ResetDatabase(db);
 
             //TODO Problem 01
-            string inputXml = File.ReadAllText(DatasetsDirPath + "suppliers.xml");
-            string result = ImportSuppliers(db, inputXml);
-            Console.WriteLine(result);
+            //string inputXml = File.ReadAllText(DatasetsDirPath + "suppliers.xml");
+            //string result = ImportSuppliers(db, inputXml);
+            //Console.WriteLine(result);
 
             //TODO Problem 02
-            //string inputXml = File.ReadAllText("parts.xml");
-            //string result = ImportParts(db, inputXml);
-            //Console.WriteLine(result);
+            string inputXml = File.ReadAllText(DatasetsDirPath + "parts.xml");
+            string result = ImportParts(db, inputXml);
+            Console.WriteLine(result);
         }
 
         //TODO Problem 02
-        //public static string ImportParts(CarDealerContext context, string inputXml)
-        //{
+        public static string ImportParts(CarDealerContext context, string inputXml)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ImportPartsDTO[]), new XmlRootAttribute("Parts"));
 
+            ImportPartsDTO[] partsDtos = ((ImportPartsDTO[])xmlSerializer
+                .Deserialize(new StringReader(inputXml)))
+                .Where(p => context.Suppliers.Any(s => s.Id == p.SupplierId))
+                .ToArray();
 
-        //}
+            Part[] parts = Mapper.Map<Part[]>(partsDtos);
+
+            context.Parts.AddRange(parts);
+            context.SaveChanges();
+
+            return $"Successfully imported {parts.Length}";
+
+        }
 
         //TODO Problem 01
         public static string ImportSuppliers(CarDealerContext context, string inputXml)
