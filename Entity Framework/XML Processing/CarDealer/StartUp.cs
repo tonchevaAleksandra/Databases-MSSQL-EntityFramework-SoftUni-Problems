@@ -52,12 +52,36 @@ namespace CarDealer
             //Console.WriteLine(result);
 
             //TODO Problem 06
-
+            string result = GetCarsWithDistance(db);
+            File.WriteAllText(ResultDirPath + "cars.xml", result);
 
             //TODO Problem 08
-            string result = GetLocalSuppliers(db);
-            File.WriteAllText(ResultDirPath + "local-suppliers.xml",result);
+            //string result = GetLocalSuppliers(db);
+            //File.WriteAllText(ResultDirPath + "local-suppliers.xml",result);
 
+        }
+
+        //TODO Problem 06
+        public static string GetCarsWithDistance(CarDealerContext context)
+        {
+            var cars = context.Cars
+                .Where(c => c.TravelledDistance > 2000000)
+                .OrderBy(c => c.Make)
+                .ThenBy(c => c.Model)
+                .Take(10)
+                .ProjectTo<ExportCarWithDistanceDTO>()
+                .ToArray();
+
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ExportCarWithDistanceDTO[]), new XmlRootAttribute("cars"));
+
+            StringBuilder sb = new StringBuilder();
+
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add("", ""); ;
+            xmlSerializer.Serialize(new StringWriter(sb), cars, namespaces);
+
+            return sb.ToString().Trim();
         }
 
         //TODO Problem 08
@@ -76,33 +100,29 @@ namespace CarDealer
                 new XmlSerializer(typeof(ExportLocalSuppliersDTO[]), new XmlRootAttribute("suppliers"));
 
             var namespaces = new XmlSerializerNamespaces();
-            namespaces.Add("","");
+            namespaces.Add("", "");
 
             xmlSerializer.Serialize(new StringWriter(sb), suppliers, namespaces);
 
             return sb.ToString().Trim();
         }
 
-        //TODO Problem 06
-        //public static string GetCarsWithDistance(CarDealerContext context)
-        //{
-
-        //}
 
         //TODO Problem 05
-       public static string ImportSales(CarDealerContext context, string inputXml)
-       {
-           XmlSerializer xmlSerializer = new XmlSerializer(typeof(ImportSaleDTO[]), new XmlRootAttribute("Sales"));
+        public static string ImportSales(CarDealerContext context, string inputXml)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ImportSaleDTO[]), new XmlRootAttribute("Sales"));
 
-           ImportSaleDTO[] salesDtos = (ImportSaleDTO[]) xmlSerializer.Deserialize(new StringReader(inputXml));
+            ImportSaleDTO[] salesDtos = (ImportSaleDTO[])xmlSerializer.Deserialize(new StringReader(inputXml));
 
-           var sales = Mapper.Map<Sale[]>(salesDtos).Where(s => context.Cars.Any(c => c.Id == s.CarId)).ToArray();
+            var sales = Mapper.Map<Sale[]>(salesDtos).Where(s => context.Cars.Any(c => c.Id == s.CarId)).ToArray();
 
-           context.Sales.AddRange(sales);
-           context.SaveChanges();
+            context.Sales.AddRange(sales);
+            context.SaveChanges();
 
-           return $"Successfully imported {sales.Length}";
-            ;       }
+            return $"Successfully imported {sales.Length}";
+            ;
+        }
 
         //TODO Problem 04
         public static string ImportCustomers(CarDealerContext context, string inputXml)
@@ -111,7 +131,7 @@ namespace CarDealer
                 new XmlSerializer(typeof(ImportCustomerDTO[]), new XmlRootAttribute("Customers"));
 
             ImportCustomerDTO[] customersDtos =
-                (ImportCustomerDTO[]) xmlSerializer.Deserialize(new StringReader(inputXml));
+                (ImportCustomerDTO[])xmlSerializer.Deserialize(new StringReader(inputXml));
 
             var customers = Mapper.Map<Customer[]>(customersDtos);
 
@@ -127,7 +147,7 @@ namespace CarDealer
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ImportCarsDTO[]), new XmlRootAttribute("Cars"));
 
-            ImportCarsDTO[] carsDtos = (ImportCarsDTO[]) xmlSerializer.Deserialize(new StringReader(inputXml));
+            ImportCarsDTO[] carsDtos = (ImportCarsDTO[])xmlSerializer.Deserialize(new StringReader(inputXml));
 
             var cars = new List<Car>();
             var partCars = new List<PartCar>();
@@ -163,7 +183,7 @@ namespace CarDealer
             }
 
             context.PartCars.AddRange(partCars);
-            
+
             context.Cars.AddRange(cars);
 
             context.SaveChanges();
