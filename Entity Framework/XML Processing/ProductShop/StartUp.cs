@@ -1,9 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml.Serialization;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using ProductShop.Data;
+using ProductShop.Dtos.Export;
 using ProductShop.Dtos.Import;
 using ProductShop.Models;
 
@@ -12,6 +15,7 @@ namespace ProductShop
     public class StartUp
     {
         private const string DatasetDirPath = @"../../../Datasets/";
+        private const string ResultsDirPath = DatasetDirPath + "Results/";
         public static void Main(string[] args)
         {
             ProductShopContext db = new ProductShopContext();
@@ -34,10 +38,36 @@ namespace ProductShop
             //Console.WriteLine(result);
 
             //TODO Problem 04
-            var inputXml = File.ReadAllText(DatasetDirPath + "categories-products.xml");
-            var result = ImportCategoryProducts(db, inputXml);
-            Console.WriteLine(result);
+            //var inputXml = File.ReadAllText(DatasetDirPath + "categories-products.xml");
+            //var result = ImportCategoryProducts(db, inputXml);
+            //Console.WriteLine(result);
 
+            //TODO Problem 05
+            var result = GetProductsInRange(db);
+            File.WriteAllText(ResultsDirPath + "products-in-range.xml", result);
+
+        }
+
+        //TODO Problem 05
+        public static string GetProductsInRange(ProductShopContext context)
+        {
+            StringBuilder sb = new StringBuilder();
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add(String.Empty, String.Empty);
+
+            var products = context
+                .Products
+                .Where(p => p.Price >= 500 && p.Price <= 1000)
+                .OrderBy(p => p.Price)
+                .ProjectTo<ExportProductsInRangeDTO>()
+                .ToArray();
+
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ExportProductsInRangeDTO[]), new XmlRootAttribute("Products"));
+
+            xmlSerializer.Serialize(new StringWriter(sb), products, namespaces);
+
+            return sb.ToString().Trim();
         }
 
         //TODO Problem 04
