@@ -31,6 +31,10 @@ namespace ProductShop
                 .ForMember(x => x.ProductsCount, y => y.MapFrom(z => z.CategoryProducts.Count))
                 .ForMember(x => x.AveragePrice, y => y.MapFrom(z => z.CategoryProducts.Average(cp => cp.Product.Price)))
                 .ForMember(x => x.TotalRevenue, y => y.MapFrom(z => z.CategoryProducts.Sum(cp => cp.Product.Price)));
+
+            this.CreateMap<Product, ExportProductSoldDTO>();
+
+
         }
     }
 }

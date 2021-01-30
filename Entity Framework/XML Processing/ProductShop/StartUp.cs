@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -51,9 +52,56 @@ namespace ProductShop
             //File.WriteAllText(ResultsDirPath + "users-sold-products.xml", result);
 
             //TODO Problem 07
-            var result = GetCategoriesByProductsCount(db);
-            File.WriteAllText(ResultsDirPath + "categories-by-products.xml", result);
+            //var result = GetCategoriesByProductsCount(db);
+            //File.WriteAllText(ResultsDirPath + "categories-by-products.xml", result);
 
+            //TODO Problem 08
+            var result = GetUsersWithProducts(db);
+            File.WriteAllText(ResultsDirPath + "users-and-products.xml", result);
+
+        }
+
+        //TODO Problem 08
+        public static string GetUsersWithProducts(ProductShopContext context)
+        {
+            StringBuilder sb = new StringBuilder();
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add(String.Empty, String.Empty);
+
+            var users = new UserRootDTO()
+            {
+                Count = context.Users.Count(u => u.FirstName != null),
+                Users = context.Users
+                    .Where(u => u.ProductsSold.Count >= 1)
+                    .OrderByDescending(u => u.ProductsSold.Count)
+                    .Select(u => new UserExportDTO()
+                    {
+                        FirstName = u.FirstName,
+                        LastName = u.LastName,
+                        Age = u.Age,
+                        SoldProducts = new SoldProductsDTO()
+                        {
+                            Count = u.ProductsSold.Count(ps => ps.Buyer != null),
+                            Products = u.ProductsSold
+                                .Where(ps => ps.Buyer != null)
+                                .Select(ps => new ExportProductSoldDTO()
+                                {
+                                    Name = ps.Name,
+                                    Price = ps.Price
+                                })
+                                .OrderByDescending(p=>p.Price)
+                                .Take(10)
+                                .ToArray()
+                        }
+                    })
+                    .ToArray()
+            };
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserRootDTO), new XmlRootAttribute("Users"));
+
+            xmlSerializer.Serialize(new StringWriter(sb), users, namespaces);
+
+            return sb.ToString().Trim();
         }
 
         //TODO Problem 07
