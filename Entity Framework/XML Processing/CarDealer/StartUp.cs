@@ -56,58 +56,41 @@ namespace CarDealer
             //File.WriteAllText(ResultDirPath + "cars.xml", result);
 
             //TODO Problem 07
-            string result = GetCarsFromMakeBmw(db);
-            File.WriteAllText(ResultDirPath + "bmw-cars.xml", result);
+            //string result = GetCarsFromMakeBmw(db);
+            //File.WriteAllText(ResultDirPath + "bmw-cars.xml", result);
 
             //TODO Problem 08
             //string result = GetLocalSuppliers(db);
             //File.WriteAllText(ResultDirPath + "local-suppliers.xml",result);
 
+            //TODO Problem 09
+            string result = GetCarsWithTheirListOfParts(db);
+            File.WriteAllText(ResultDirPath + "cars-and-parts.xml", result);
         }
 
-        //TODO Problem 07
-        public static string GetCarsFromMakeBmw(CarDealerContext context)
+        //TODO Problem 09
+        public static string GetCarsWithTheirListOfParts(CarDealerContext context)
         {
+            StringBuilder sb = new StringBuilder();
             var cars = context
                 .Cars
-                .Where(c => c.Make == "BMW")
-                .OrderBy(c => c.Model)
-                .ThenByDescending(c => c.TravelledDistance)
-                .ProjectTo<ExportCarsBMWDTO>()
+                .OrderByDescending(c => c.TravelledDistance)
+                .ThenBy(c => c.Model)
+                .Take(5)
+                .ProjectTo<ExportCarWithPartsDTO>()
                 .ToArray();
-
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ExportCarsBMWDTO[]), new XmlRootAttribute("cars"));
 
             var namespaces = new XmlSerializerNamespaces();
-            namespaces.Add("", "");
-
-            StringBuilder sb = new StringBuilder();
-            xmlSerializer.Serialize(new StringWriter(sb), cars, namespaces);
-
-            return sb.ToString().Trim();
-        }
-
-        //TODO Problem 06
-        public static string GetCarsWithDistance(CarDealerContext context)
-        {
-            var cars = context.Cars
-                .Where(c => c.TravelledDistance > 2000000)
-                .OrderBy(c => c.Make)
-                .ThenBy(c => c.Model)
-                .Take(10)
-                .ProjectTo<ExportCarWithDistanceDTO>()
-                .ToArray();
+            namespaces.Add(String.Empty, String.Empty);
 
             XmlSerializer xmlSerializer =
-                new XmlSerializer(typeof(ExportCarWithDistanceDTO[]), new XmlRootAttribute("cars"));
+                new XmlSerializer(typeof(ExportCarWithPartsDTO[]), new XmlRootAttribute("cars"));
 
-            StringBuilder sb = new StringBuilder();
-
-            var namespaces = new XmlSerializerNamespaces();
-            namespaces.Add("", ""); ;
             xmlSerializer.Serialize(new StringWriter(sb), cars, namespaces);
 
             return sb.ToString().Trim();
+
+
         }
 
         //TODO Problem 08
@@ -133,6 +116,51 @@ namespace CarDealer
             return sb.ToString().Trim();
         }
 
+        //TODO Problem 07
+        public static string GetCarsFromMakeBmw(CarDealerContext context)
+        {
+            var cars = context
+                .Cars
+                .Where(c => c.Make == "BMW")
+                .OrderBy(c => c.Model)
+                .ThenByDescending(c => c.TravelledDistance)
+                .ProjectTo<ExportCarsBMWDTO>()
+                .ToArray();
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ExportCarsBMWDTO[]), new XmlRootAttribute("cars"));
+
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add("", "");
+
+            StringBuilder sb = new StringBuilder();
+            xmlSerializer.Serialize(new StringWriter(sb), cars, namespaces);
+
+            return sb.ToString().Trim();
+        }
+
+
+        //TODO Problem 06
+        public static string GetCarsWithDistance(CarDealerContext context)
+        {
+            var cars = context.Cars
+                .Where(c => c.TravelledDistance > 2000000)
+                .OrderBy(c => c.Make)
+                .ThenBy(c => c.Model)
+                .Take(10)
+                .ProjectTo<ExportCarWithDistanceDTO>()
+                .ToArray();
+
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ExportCarWithDistanceDTO[]), new XmlRootAttribute("cars"));
+
+            StringBuilder sb = new StringBuilder();
+
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add("", ""); ;
+            xmlSerializer.Serialize(new StringWriter(sb), cars, namespaces);
+
+            return sb.ToString().Trim();
+        }
 
         //TODO Problem 05
         public static string ImportSales(CarDealerContext context, string inputXml)
