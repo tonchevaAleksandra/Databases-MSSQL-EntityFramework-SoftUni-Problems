@@ -72,8 +72,8 @@ namespace CarDealer
             //File.WriteAllText(ResultDirPath + "customers-total-sales.xml", result);
 
             //TODO Problem 11
-            string result = GetSalesWithAppliedDiscount(db);
-            File.WriteAllText(ResultDirPath + "sales-discounts.xml", result);
+            //string result = GetSalesWithAppliedDiscount(db);
+            //File.WriteAllText(ResultDirPath + "sales-discounts.xml", result);
 
         }
 
