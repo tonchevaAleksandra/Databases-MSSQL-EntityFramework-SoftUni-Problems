@@ -29,9 +29,34 @@ namespace ProductShop
             //Console.WriteLine(result);
 
             //TODO Problem 03
-            var inputXml = File.ReadAllText(DatasetDirPath + "categories.xml");
-            var result = ImportCategories(db, inputXml);
+            //var inputXml = File.ReadAllText(DatasetDirPath + "categories.xml");
+            //var result = ImportCategories(db, inputXml);
+            //Console.WriteLine(result);
+
+            //TODO Problem 04
+            var inputXml = File.ReadAllText(DatasetDirPath + "categories-products.xml");
+            var result = ImportCategoryProducts(db, inputXml);
             Console.WriteLine(result);
+
+        }
+
+        //TODO Problem 04
+        public static string ImportCategoryProducts(ProductShopContext context, string inputXml)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ImportCategoryProductDTO[]),
+                new XmlRootAttribute("CategoryProducts"));
+
+            var categoryProductsDtos =
+                (ImportCategoryProductDTO[]) xmlSerializer.Deserialize(new StringReader(inputXml));
+
+            var categoryProducts = Mapper.Map<CategoryProduct[]>(categoryProductsDtos.Where(cp =>
+                context.Categories.Any(c => c.Id == cp.CategoryId) && context.Products.Any(p => p.Id == cp.ProductId)));
+
+            context.CategoryProducts.AddRange(categoryProducts);
+            context.SaveChanges();
+
+            return $"Successfully imported {categoryProducts.Length}";
+
         }
 
         //TODO Problem 03

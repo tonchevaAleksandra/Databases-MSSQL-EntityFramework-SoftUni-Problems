@@ -13,6 +13,8 @@ namespace ProductShop
             this.CreateMap<ImportProductDTO, Product>();
 
             this.CreateMap<ImportCategoryDTO, Category>();
+
+            this.CreateMap<ImportCategoryProductDTO, CategoryProduct>();
         }
     }
 }
