@@ -18,9 +18,30 @@ namespace ProductShop
             InitializeMapper();
 
             //TODO  Problem 01 
-            var inputXml = File.ReadAllText(DatasetDirPath+ "users.xml");
-            var result = ImportUsers(db, inputXml);
+            //var inputXml = File.ReadAllText(DatasetDirPath+ "users.xml");
+            //var result = ImportUsers(db, inputXml);
+            //Console.WriteLine(result);
+
+            //TODO Problem 02
+            var inputXml = File.ReadAllText(DatasetDirPath + "products.xml");
+            var result = ImportProducts(db, inputXml);
             Console.WriteLine(result);
+        }
+
+        //TODO Problem 02
+        public static string ImportProducts(ProductShopContext context, string inputXml)
+        {
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ImportProductDTO[]), new XmlRootAttribute("Products"));
+
+            var productsDtodDtos = (ImportProductDTO[])xmlSerializer.Deserialize(new StringReader(inputXml));
+
+            var products = Mapper.Map<Product[]>(productsDtodDtos);
+
+            context.Products.AddRange(products);
+            context.SaveChanges();
+
+            return $"Successfully imported {products.Length}";
 
         }
 
@@ -36,7 +57,7 @@ namespace ProductShop
             context.SaveChanges();
 
             return $"Successfully imported {users.Length}";
-           
+
         }
 
         private static void InitializeMapper()
