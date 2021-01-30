@@ -69,7 +69,7 @@ namespace CarDealer
                     PartCar partCar = new PartCar()
                     {
                         PartId = part,
-                        CarId = car.Id
+                        Car = car
                     };
 
                     partCars.Add(partCar);
@@ -79,9 +79,9 @@ namespace CarDealer
 
             }
 
-            context.Cars.AddRange(cars);
-
             context.PartCars.AddRange(partCars);
+            
+            context.Cars.AddRange(cars);
 
             context.SaveChanges();
 
