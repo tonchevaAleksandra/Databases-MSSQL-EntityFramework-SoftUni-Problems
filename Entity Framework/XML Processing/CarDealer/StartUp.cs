@@ -64,8 +64,32 @@ namespace CarDealer
             //File.WriteAllText(ResultDirPath + "local-suppliers.xml",result);
 
             //TODO Problem 09
-            string result = GetCarsWithTheirListOfParts(db);
-            File.WriteAllText(ResultDirPath + "cars-and-parts.xml", result);
+            //string result = GetCarsWithTheirListOfParts(db);
+            //File.WriteAllText(ResultDirPath + "cars-and-parts.xml", result);
+
+            //TODO Problem 10
+            string result = GetTotalSalesByCustomer(db);
+            File.WriteAllText(ResultDirPath + "customers-total-sales.xml", result);
+        }
+
+        //TODO Problem 10
+        public static string GetTotalSalesByCustomer(CarDealerContext context)
+        {
+            var customers = context
+                .Customers
+                .ProjectTo<ExportCustomerTotalSalesDTO>()
+                .Where(c=>c.BoughtCars>=1)
+                .OrderByDescending(c => c.SpentMoney)
+                .ToArray();
+            StringBuilder sb = new StringBuilder();
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add(String.Empty, String.Empty);
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ExportCustomerTotalSalesDTO[]), new XmlRootAttribute("customers"));
+
+            xmlSerializer.Serialize(new StringWriter(sb), customers, namespaces);
+
+            return sb.ToString().Trim();
         }
 
         //TODO Problem 09

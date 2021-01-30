@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-16"?>
+<customers>
+  <customer full-name="Johnette Derryberry" bought-cars="1" spent-money="3492.18" />
+  <customer full-name="Donnetta Soliz" bought-cars="1" spent-money="3201.30" />
+  <customer full-name="Teddy Hobby" bought-cars="1" spent-money="1476.83" />
+  <customer full-name="Emmitt Benally" bought-cars="1" spent-money="1337.88" />
+  <customer full-name="Hipolito Lamoreaux" bought-cars="1" spent-money="707.97" />
+  <customer full-name="Cinthia Lasala" bought-cars="1" spent-money="604.38" />
+  <customer full-name="Sylvie Mcelravy" bought-cars="1" spent-money="578.20" />
+  <customer full-name="Marcelle Griego" bought-cars="1" spent-money="400.22" />
+  <customer full-name="Garret Capron" bought-cars="1" spent-money="295.38" />
+</customers>

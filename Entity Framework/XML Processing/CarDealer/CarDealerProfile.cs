@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO.Compression;
+using System.Linq;
 using AutoMapper;
 using CarDealer.Dtos.Export;
 using CarDealer.Dtos.Import;
@@ -30,6 +31,11 @@ namespace CarDealer
 
             this.CreateMap<Car, ExportCarWithPartsDTO>()
                 .ForMember(x=>x.Parts, y=>y.MapFrom(s=>s.PartCars.OrderByDescending(pc => pc.Part.Price)));
+
+            this.CreateMap<Customer, ExportCustomerTotalSalesDTO>()
+                .ForMember(c => c.BoughtCars, y => y.MapFrom(s => s.Sales.Count))
+                .ForMember(c => c.SpentMoney,
+                    y => y.MapFrom(c => c.Sales.Select(s => s.Car.PartCars.Sum(pc => pc.Part.Price)).Sum()));
         }
     }
 }
