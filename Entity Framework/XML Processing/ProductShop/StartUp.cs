@@ -43,12 +43,40 @@ namespace ProductShop
             //Console.WriteLine(result);
 
             //TODO Problem 05
-            var result = GetProductsInRange(db);
-            File.WriteAllText(ResultsDirPath + "products-in-range.xml", result);
+            //var result = GetProductsInRange(db);
+            //File.WriteAllText(ResultsDirPath + "products-in-range.xml", result);
 
             //TODO Problem 06
             //var result = GetSoldProducts(db);
             //File.WriteAllText(ResultsDirPath + "users-sold-products.xml", result);
+
+            //TODO Problem 07
+            var result = GetCategoriesByProductsCount(db);
+            File.WriteAllText(ResultsDirPath + "categories-by-products.xml", result);
+
+        }
+
+        //TODO Problem 07
+        public static string GetCategoriesByProductsCount(ProductShopContext context)
+        {
+            StringBuilder sb = new StringBuilder();
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add(String.Empty, String.Empty);
+
+            var categories = context
+                .Categories
+                .ProjectTo<ExportCategoryByProductsDTO>()
+                .OrderByDescending(c => c.ProductsCount)
+                .ThenBy(c => c.TotalRevenue)
+                .ToArray();
+
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ExportCategoryByProductsDTO[]), new XmlRootAttribute("Categories"));
+
+            xmlSerializer.Serialize(new StringWriter(sb), categories, namespaces);
+
+            return sb.ToString().Trim();
+
 
         }
 
