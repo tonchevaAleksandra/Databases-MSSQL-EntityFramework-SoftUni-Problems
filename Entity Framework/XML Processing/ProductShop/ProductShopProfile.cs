@@ -19,6 +19,11 @@ namespace ProductShop
 
             this.CreateMap<Product, ExportProductsInRangeDTO>()
                 .ForMember(x=>x.BuyerName, y=>y.MapFrom(s=>s.Buyer.FirstName + " " + s.Buyer.LastName));
+
+            this.CreateMap<Product, ExportSoldProductsDTO>();
+
+            this.CreateMap<User, ExportUserSoldProductsDTO>()
+                .ForMember(x => x.SoldProducts, y => y.MapFrom(s => s.ProductsSold));
         }
     }
 }

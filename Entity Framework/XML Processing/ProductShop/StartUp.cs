@@ -46,6 +46,34 @@ namespace ProductShop
             var result = GetProductsInRange(db);
             File.WriteAllText(ResultsDirPath + "products-in-range.xml", result);
 
+            //TODO Problem 06
+            //var result = GetSoldProducts(db);
+            //File.WriteAllText(ResultsDirPath + "users-sold-products.xml", result);
+
+        }
+
+        //TODO Problem 06
+        public static string GetSoldProducts(ProductShopContext context)
+        {
+            StringBuilder sb = new StringBuilder();
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add(String.Empty, String.Empty);
+
+            var users = context
+                .Users
+                .Where(u => u.ProductsSold.Count >= 1)
+                .OrderBy(u => u.LastName)
+                .ThenBy(u => u.FirstName)
+                .Take(5)
+                .ProjectTo<ExportUserSoldProductsDTO>()
+                .ToArray();
+
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ExportUserSoldProductsDTO[]), new XmlRootAttribute("Users"));
+
+            xmlSerializer.Serialize(new StringWriter(sb), users, namespaces);
+
+            return sb.ToString().Trim();
         }
 
         //TODO Problem 05
@@ -59,6 +87,7 @@ namespace ProductShop
                 .Products
                 .Where(p => p.Price >= 500 && p.Price <= 1000)
                 .OrderBy(p => p.Price)
+                .Take(10)
                 .ProjectTo<ExportProductsInRangeDTO>()
                 .ToArray();
 
