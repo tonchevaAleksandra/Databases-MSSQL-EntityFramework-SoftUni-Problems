@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-16"?>
+<sales>
+  <sale>
+    <car make="BMW" model="M5 F10" travelled-distance="435603343" />
+    <discount>30.00</discount>
+    <customer-name>Hipolito Lamoreaux</customer-name>
+    <price>707.97</price>
+    <price-with-discount>495.58</price-with-discount>
+  </sale>
+  <sale>
+    <car make="Opel" model="Astra" travelled-distance="31468479" />
+    <discount>0.00</discount>
+    <customer-name>Garret Capron</customer-name>
+    <price>295.38</price>
+    <price-with-discount>295.38</price-with-discount>
+  </sale>
+  <sale>
+    <car make="Opel" model="Insignia" travelled-distance="339785118" />
+    <discount>10.00</discount>
+    <customer-name>Emmitt Benally</customer-name>
+    <price>1337.88</price>
+    <price-with-discount>1204.09</price-with-discount>
+  </sale>
+  <sale>
+    <car make="BMW" model="F25" travelled-distance="476132712" />
+    <discount>0.00</discount>
+    <customer-name>Sylvie Mcelravy</customer-name>
+    <price>578.20</price>
+    <price-with-discount>578.20</price-with-discount>
+  </sale>
+  <sale>
+    <car make="BMW" model="F04" travelled-distance="443756363" />
+    <discount>50.00</discount>
+    <customer-name>Marcelle Griego</customer-name>
+    <price>400.22</price>
+    <price-with-discount>200.11</price-with-discount>
+  </sale>
+  <sale>
+    <car make="Opel" model="Vectra" travelled-distance="238042093" />
+    <discount>30.00</discount>
+    <customer-name>Cinthia Lasala</customer-name>
+    <price>604.38</price>
+    <price-with-discount>423.07</price-with-discount>
+  </sale>
+  <sale>
+    <car make="Opel" model="Insignia" travelled-distance="225253817" />
+    <discount>15.00</discount>
+    <customer-name>Donnetta Soliz</customer-name>
+    <price>3201.30</price>
+    <price-with-discount>2721.11</price-with-discount>
+  </sale>
+  <sale>
+    <car make="Opel" model="Omega" travelled-distance="277250812" />
+    <discount>20.00</discount>
+    <customer-name>Teddy Hobby</customer-name>
+    <price>1476.83</price>
+    <price-with-discount>1181.46</price-with-discount>
+  </sale>
+  <sale>
+    <car make="BMW" model="E67" travelled-distance="476830509" />
+    <discount>15.00</discount>
+    <customer-name>Johnette Derryberry</customer-name>
+    <price>3492.18</price>
+    <price-with-discount>2968.35</price-with-discount>
+  </sale>
+</sales>

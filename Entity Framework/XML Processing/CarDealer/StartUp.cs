@@ -68,8 +68,32 @@ namespace CarDealer
             //File.WriteAllText(ResultDirPath + "cars-and-parts.xml", result);
 
             //TODO Problem 10
-            string result = GetTotalSalesByCustomer(db);
-            File.WriteAllText(ResultDirPath + "customers-total-sales.xml", result);
+            //string result = GetTotalSalesByCustomer(db);
+            //File.WriteAllText(ResultDirPath + "customers-total-sales.xml", result);
+
+            //TODO Problem 11
+            string result = GetSalesWithAppliedDiscount(db);
+            File.WriteAllText(ResultDirPath + "sales-discounts.xml", result);
+
+        }
+
+        //TODO Problem 11
+        public static string GetSalesWithAppliedDiscount(CarDealerContext context)
+        {
+            StringBuilder sb = new StringBuilder();
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add(String.Empty, String.Empty);
+
+            var sales = context
+                .Sales
+                .ProjectTo<ExportSaleDTO>()
+                .ToArray();
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ExportSaleDTO[]), new XmlRootAttribute("sales"));
+
+            xmlSerializer.Serialize(new StringWriter(sb), sales, namespaces);
+
+            return sb.ToString().Trim();
         }
 
         //TODO Problem 10
@@ -78,7 +102,7 @@ namespace CarDealer
             var customers = context
                 .Customers
                 .ProjectTo<ExportCustomerTotalSalesDTO>()
-                .Where(c=>c.BoughtCars>=1)
+                .Where(c => c.BoughtCars >= 1)
                 .OrderByDescending(c => c.SpentMoney)
                 .ToArray();
             StringBuilder sb = new StringBuilder();
