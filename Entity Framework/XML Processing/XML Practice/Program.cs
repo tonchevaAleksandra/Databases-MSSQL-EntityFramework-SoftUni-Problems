@@ -80,7 +80,7 @@ namespace XML_Practice
 
             var binarySerializer = new BinaryFormatter();
             //binarySerializer.Serialize(File.OpenWrite("test.bin"), docs);
-           var articles= binarySerializer.Deserialize(File.OpenRead("test.bin")) as List<Article>;
+            var articles= binarySerializer.Deserialize(File.OpenRead("test.bin")) as List<Article>;
 
 
             //List<Article> docs = new List<Article>
