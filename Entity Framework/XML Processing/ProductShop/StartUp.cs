@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using AutoMapper;
 using ProductShop.Data;
@@ -23,9 +24,31 @@ namespace ProductShop
             //Console.WriteLine(result);
 
             //TODO Problem 02
-            var inputXml = File.ReadAllText(DatasetDirPath + "products.xml");
-            var result = ImportProducts(db, inputXml);
+            //var inputXml = File.ReadAllText(DatasetDirPath + "products.xml");
+            //var result = ImportProducts(db, inputXml);
+            //Console.WriteLine(result);
+
+            //TODO Problem 03
+            var inputXml = File.ReadAllText(DatasetDirPath + "categories.xml");
+            var result = ImportCategories(db, inputXml);
             Console.WriteLine(result);
+        }
+
+        //TODO Problem 03
+        public static string ImportCategories(ProductShopContext context, string inputXml)
+        {
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ImportCategoryDTO[]), new XmlRootAttribute("Categories"));
+
+            var categoriesDtos = (ImportCategoryDTO[]) xmlSerializer.Deserialize(new StringReader(inputXml));
+
+            var categories = Mapper.Map<Category[]>(categoriesDtos.Where(c => c.Name != null));
+
+            context.Categories.AddRange(categories);
+            context.SaveChanges();
+
+            return $"Successfully imported {categories.Length}";
+
         }
 
         //TODO Problem 02
