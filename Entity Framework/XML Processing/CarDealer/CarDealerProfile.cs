@@ -13,6 +13,8 @@ namespace CarDealer
             this.CreateMap<ImportPartsDTO, Part>();
 
             this.CreateMap<ImportCustomerDTO, Customer>();
+
+            this.CreateMap<ImportSaleDTO, Sale>();
         }
     }
 }

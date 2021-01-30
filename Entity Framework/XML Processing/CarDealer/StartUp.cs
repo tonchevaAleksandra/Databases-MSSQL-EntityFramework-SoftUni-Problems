@@ -38,10 +38,31 @@ namespace CarDealer
             //Console.WriteLine(result);
 
             //TODO Problem 04
-            string inputXml = File.ReadAllText(DatasetsDirPath + "customers.xml");
-            string result = ImportCustomers(db, inputXml);
+            //string inputXml = File.ReadAllText(DatasetsDirPath + "customers.xml");
+            //string result = ImportCustomers(db, inputXml);
+            //Console.WriteLine(result);
+
+            //TODO Problem 05
+            string inputXml = File.ReadAllText(DatasetsDirPath + "sales.xml");
+            string result = ImportSales(db, inputXml);
             Console.WriteLine(result);
+
         }
+
+        //TODO Problem 05
+       public static string ImportSales(CarDealerContext context, string inputXml)
+       {
+           XmlSerializer xmlSerializer = new XmlSerializer(typeof(ImportSaleDTO[]), new XmlRootAttribute("Sales"));
+
+           ImportSaleDTO[] salesDtos = (ImportSaleDTO[]) xmlSerializer.Deserialize(new StringReader(inputXml));
+
+           var sales = Mapper.Map<Sale[]>(salesDtos).Where(s => context.Cars.Any(c => c.Id == s.CarId)).ToArray();
+
+           context.Sales.AddRange(sales);
+           context.SaveChanges();
+
+           return $"Successfully imported {sales.Length}";
+            ;       }
 
         //TODO Problem 04
         public static string ImportCustomers(CarDealerContext context, string inputXml)
