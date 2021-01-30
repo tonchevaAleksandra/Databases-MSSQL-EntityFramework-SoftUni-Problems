@@ -2,9 +2,12 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Xml.Serialization;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using CarDealer.Data;
+using CarDealer.Dtos.Export;
 using CarDealer.Dtos.Import;
 using CarDealer.Models;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -15,6 +18,7 @@ namespace CarDealer
     public class StartUp
     {
         private const string DatasetsDirPath = @"../../../Datasets/";
+        private const string ResultDirPath = DatasetsDirPath + "Results/";
         public static void Main(string[] args)
         {
             InitializeMapper();
@@ -43,11 +47,47 @@ namespace CarDealer
             //Console.WriteLine(result);
 
             //TODO Problem 05
-            string inputXml = File.ReadAllText(DatasetsDirPath + "sales.xml");
-            string result = ImportSales(db, inputXml);
-            Console.WriteLine(result);
+            //string inputXml = File.ReadAllText(DatasetsDirPath + "sales.xml");
+            //string result = ImportSales(db, inputXml);
+            //Console.WriteLine(result);
+
+            //TODO Problem 06
+
+
+            //TODO Problem 08
+            string result = GetLocalSuppliers(db);
+            File.WriteAllText(ResultDirPath + "local-suppliers.xml",result);
 
         }
+
+        //TODO Problem 08
+        public static string GetLocalSuppliers(CarDealerContext context)
+        {
+
+            StringBuilder sb = new StringBuilder();
+
+            var suppliers = context
+                .Suppliers
+                .Where(s => !s.IsImporter)
+                .ProjectTo<ExportLocalSuppliersDTO>()
+                .ToArray();
+
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ExportLocalSuppliersDTO[]), new XmlRootAttribute("suppliers"));
+
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add("","");
+
+            xmlSerializer.Serialize(new StringWriter(sb), suppliers, namespaces);
+
+            return sb.ToString().Trim();
+        }
+
+        //TODO Problem 06
+        //public static string GetCarsWithDistance(CarDealerContext context)
+        //{
+
+        //}
 
         //TODO Problem 05
        public static string ImportSales(CarDealerContext context, string inputXml)
