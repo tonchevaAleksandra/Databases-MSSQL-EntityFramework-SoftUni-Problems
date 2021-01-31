@@ -2,14 +2,15 @@
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml;
 using System.Xml.Serialization;
+
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+
 using ProductShop.Data;
+using ProductShop.Models;
 using ProductShop.Dtos.Export;
 using ProductShop.Dtos.Import;
-using ProductShop.Models;
 
 namespace ProductShop
 {

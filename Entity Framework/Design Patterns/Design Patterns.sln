@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Design Patterns LAB", "Design Patterns LAB", "{3F3A0B57-C77D-4713-876E-3F45E363309F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Practice", "Practice\Practice.csproj", "{DDF0E9C4-4653-4D88-B091-A79562CA33BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingletonDemo", "SingletonDemo\SingletonDemo.csproj", "{4D85BE77-7585-4C82-B2C1-27B03C0EFAA6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DDF0E9C4-4653-4D88-B091-A79562CA33BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDF0E9C4-4653-4D88-B091-A79562CA33BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDF0E9C4-4653-4D88-B091-A79562CA33BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDF0E9C4-4653-4D88-B091-A79562CA33BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D85BE77-7585-4C82-B2C1-27B03C0EFAA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D85BE77-7585-4C82-B2C1-27B03C0EFAA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D85BE77-7585-4C82-B2C1-27B03C0EFAA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D85BE77-7585-4C82-B2C1-27B03C0EFAA6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DDF0E9C4-4653-4D88-B091-A79562CA33BF} = {3F3A0B57-C77D-4713-876E-3F45E363309F}
+		{4D85BE77-7585-4C82-B2C1-27B03C0EFAA6} = {3F3A0B57-C77D-4713-876E-3F45E363309F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14301BC2-5407-4ED6-A58B-0EF4710018A2}
+	EndGlobalSection
+EndGlobal
