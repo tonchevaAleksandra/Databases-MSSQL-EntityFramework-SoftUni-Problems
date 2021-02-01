@@ -5,27 +5,27 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome, @DateTime.UtcNow.DayOfWeek!</h1>
-    <p>Learn about How to became a poor man :)@*<a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a*@</p>
+    <h1 class="display-4">Welcome to everyone in this sunny @DateTime.UtcNow.DayOfWeek!</h1>
+    <p>It is always sunny here because our prices are so high that they always exceed  the cloud limits! :) @*<a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a*@</p>
 </div>
 <p align="center">Искаш ли да си купиш имот на изгодна цена?! </p>
 <p align="center">Цените са в €, не се обнадеждявайте излишно! </p>
-<table class="table table-striped table-hover align-content-lg-center align-items-center">
+<table class="table table-striped table-hover align-content-lg-center align-items-center" table-sm>
     <tr>
         <th>Кватрал</th>
         <th>Брой Имоти</th>
-        <th>Средна цена в €</th>
-        <th>Минимална цена в €</th>
-        <th>Максимална цена в €</th>
+        <th>Средна цена на кв.м в €</th>
+        <th>Минимална цена на кв.м в €</th>
+        <th>Максимална цена на кв.м в €</th>
     </tr>
     @foreach (var district in this.Model)
     {
         <tr>
             <td>@district.Name</td>
             <td>@district.PropertiesCount</td>
-            <td>@district.AveragePrice €</td>
-            <td>@district.MinPrice €</td>
-            <td>@district.MaxPrice €</td>
+            <td>@district.AveragePrice.ToString("0.00") €</td>
+            <td>@district.MinPrice.ToString("0.00") €</td>
+            <td>@district.MaxPrice.ToString("0.00") €</td>
         </tr>
     }
 </table>

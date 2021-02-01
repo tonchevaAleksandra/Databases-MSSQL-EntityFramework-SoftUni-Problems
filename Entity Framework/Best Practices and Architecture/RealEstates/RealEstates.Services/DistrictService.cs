@@ -38,9 +38,9 @@ namespace RealEstates.Services
         {
             return x=> new DistrictViewModel()
             {
-                AveragePrice = x.Properties.Average(p=>p.Price),
-                MaxPrice = x.Properties.Max(p=>p.Price),
-                MinPrice = x.Properties.Min(p=>p.Price),
+                AveragePrice = x.Properties.Average(p=>p.Price/p.Size),
+                MaxPrice = x.Properties.Max(p=>p.Price/p.Size),
+                MinPrice = x.Properties.Min(p=>p.Price/p.Size),
                 Name=x.Name,
                 PropertiesCount = x.Properties.Count()
             };

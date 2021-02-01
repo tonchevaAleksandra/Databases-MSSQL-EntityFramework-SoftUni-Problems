@@ -21,7 +21,7 @@ namespace RealEstates.Web.Controllers
 
         public IActionResult Index()
         {
-            var districts = this.districtService.GetTopDistrictsByAveragePPrice();
+            var districts = this.districtService.GetTopDistrictsByAveragePPrice(1000);
             return View(districts);
         }
 
