@@ -4,7 +4,7 @@
     {
         public int Size { get; set; }
         public int Floor { get; set; }
-        public int TotalFloor { get; set; }
+        public int TotalFloors { get; set; }
         public string District { get; set; }
         public int Year { get; set; }
         public string Type { get; set; }

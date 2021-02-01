@@ -24,7 +24,7 @@ namespace RealEstates.Importer
                    propertiesService.Create(
                        property.Size, 
                        property.Floor,
-                       property.TotalFloor,
+                       property.TotalFloors,
                        property.District,
                        property.Type,
                        property.BuildingType,

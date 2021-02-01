@@ -17,6 +17,11 @@ namespace RealEstates.ConsoleApplication
 
             //PrintTopDistrictsByAveragePrice(db);
 
+            //SearchPropertiesInPriceRange(db);
+        }
+
+        private static void SearchPropertiesInPriceRange(RealEstateDbContext db)
+        {
             IPropertiesService propertiesService = new PropertiesService(db);
 
             Console.Write("Min price: ");
@@ -27,7 +32,8 @@ namespace RealEstates.ConsoleApplication
 
             foreach (var property in properties)
             {
-                Console.WriteLine($"{property.District}, fl. {property.Floor}, {property.Size} m², {property.Year}, {property.Price:f2}€, {property.PropertyType}, {property.BuildingType}");
+                Console.WriteLine(
+                    $"{property.District}, fl. {property.Floor}, {property.Size} m², {property.Year}, {property.Price:f2}€, {property.PropertyType}, {property.BuildingType}");
             }
         }
 
