@@ -13,18 +13,19 @@ a {
   color: #0366d6;
 }
 
-tr {
+/*tr {
     background-color: wheat;
     color: blue;
-}
-table, th {
+}*/
+table, th,tr,td {
     border: 2px solid blueviolet;
+    color: blue;
 }
-td {
+/*td {
     background-color: cornsilk;
     border: 2px solid blueviolet;
     color: blue;
-}
+}*/
 h1 {
   
     color: blue;
