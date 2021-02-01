@@ -21,6 +21,11 @@ namespace RealEstates.Services
         public void Create(int size, int? floor, int? maxFloor, string district, string propertyType, string buildingType, int? year,
             int price)
         {
+            if (district == null)
+            {
+                throw new ArgumentNullException(nameof(district));
+                
+            }
             var property = new RealEstateProperty
             {
                 Size = size,
