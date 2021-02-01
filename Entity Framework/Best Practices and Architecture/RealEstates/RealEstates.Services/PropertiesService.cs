@@ -144,6 +144,8 @@ namespace RealEstates.Services
                         Tag = this.GetOrCreateTag("ExpensiveProperty")
                     });
             }
+
+            this.db.SaveChanges();
         }
 
         private Tag GetOrCreateTag(string tag)
