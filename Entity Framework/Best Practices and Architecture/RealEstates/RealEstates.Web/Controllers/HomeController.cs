@@ -6,21 +6,23 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using RealEstates.Services;
 
 namespace RealEstates.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IDistrictService districtService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IDistrictService districtService)
         {
-            _logger = logger;
+            this.districtService=districtService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var districts = this.districtService.GetTopDistrictsByAveragePPrice();
+            return View(districts);
         }
 
         public IActionResult Privacy()
