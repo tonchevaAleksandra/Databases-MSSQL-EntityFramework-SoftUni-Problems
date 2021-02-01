@@ -16,6 +16,19 @@ namespace RealEstates.ConsoleApplication
             //AddCustomPropertiesToDatabase(db);
 
             //PrintTopDistrictsByAveragePrice(db);
+
+            IPropertiesService propertiesService = new PropertiesService(db);
+
+            Console.Write("Min price: ");
+            int minPrice = int.Parse(Console.ReadLine());
+            Console.Write("Max price: ");
+            int maxPrice = int.Parse(Console.ReadLine());
+            var properties = propertiesService.SearchByPrice(minPrice, maxPrice);
+
+            foreach (var property in properties)
+            {
+                Console.WriteLine($"{property.District}, fl. {property.Floor}, {property.Size} m², {property.Year}, {property.Price:f2}€, {property.PropertyType}, {property.BuildingType}");
+            }
         }
 
         private static void PrintTopDistrictsByAveragePrice(RealEstateDbContext db)
@@ -27,7 +40,7 @@ namespace RealEstates.ConsoleApplication
             {
                 var propertyCount = district.PropertiesCount == 1 ? "property" : "properties";
                 Console.WriteLine(
-                    $"{district.Name} => Price: {district.AveragePrice:f2} EUR ({district.MinPrice} EUR <-> {district.MaxPrice} EUR) => {district.PropertiesCount} {propertyCount}");
+                    $"{district.Name} => Price: {district.AveragePrice:f2} € ({district.MinPrice} € <-> {district.MaxPrice} €) => {district.PropertiesCount} {propertyCount}");
             }
         }
 
