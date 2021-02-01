@@ -29,9 +29,7 @@ namespace RealEstates.Services
                 Floor = floor <= 0 ? null : floor,
                 TotalNumberOfFloors = maxFloor <= 0 ? null : maxFloor,
 
-
             };
-
 
             //District 
             var districtEntity = db.Districts
@@ -72,9 +70,92 @@ namespace RealEstates.Services
 
         public void UpdateTags(int propertyId)
         {
-            throw new NotImplementedException();
+            var property = this.db.RealEstateProperties.FirstOrDefault(x => x.Id == propertyId);
+
+            property.Tags.Clear();
+
+            if (property.Year.HasValue && property.Year < 1990)
+            {
+                property.Tags
+                    .Add(new RealEstatePropertyTag
+                    {
+                        Tag = this.GetOrCreateTag("OldBuilding")
+                    });
+            }
+            if (property.Year.HasValue && property.Year > 2018 && property.TotalNumberOfFloors.HasValue && property.TotalNumberOfFloors > 5)
+            {
+                property.Tags
+                    .Add(new RealEstatePropertyTag
+                    {
+                        Tag = this.GetOrCreateTag("HasParking")
+                    });
+            }
+
+            if (property.Floor.HasValue && property.TotalNumberOfFloors.HasValue
+                                        && property.Floor == property.TotalNumberOfFloors)
+            {
+                property.Tags
+                    .Add(new RealEstatePropertyTag
+                    {
+                        Tag = this.GetOrCreateTag("TopFloor")
+                    });
+            }
+
+            if (property.Size > 120)
+            {
+                property.Tags
+                    .Add(new RealEstatePropertyTag()
+                    {
+                        Tag = this.GetOrCreateTag("HugeProperty")
+                    });
+            }
+            if (property.Year.HasValue && property.Year==DateTime.UtcNow.Year)
+            {
+                property.Tags
+                    .Add(new RealEstatePropertyTag()
+                    {
+                        Tag = this.GetOrCreateTag("NewBuilding")
+                    });
+            }
+
+            if (property.Floor.HasValue && property.TotalNumberOfFloors.HasValue
+            && property.TotalNumberOfFloors>1 && property.Floor==1)
+            {
+                property.Tags
+                    .Add(new RealEstatePropertyTag()
+                    {
+                        Tag = this.GetOrCreateTag("ParterFloor")
+                    });
+            }
+
+            if ((double)(property.Price * 1.00 / property.Size) < 800)
+            {
+                property.Tags
+                    .Add(new RealEstatePropertyTag()
+                    {
+                        Tag = this.GetOrCreateTag("CheepProperty")
+                    });
+            }
+            if ((double)(property.Price * 1.00 / property.Size) > 2000)
+            {
+                property.Tags
+                    .Add(new RealEstatePropertyTag()
+                    {
+                        Tag = this.GetOrCreateTag("ExpensiveProperty")
+                    });
+            }
         }
 
+        private Tag GetOrCreateTag(string tag)
+        {
+            var tagEntity = this.db.Tags
+                .FirstOrDefault(x => x.Name.Trim() == tag.Trim()) ?? new Tag
+                {
+                    Name = tag
+                };
+
+            return tagEntity;
+        }
 
         public IEnumerable<PropertyViewModel> Search(int minYear, int maxYear, int minSize, int maxSize)
         {
@@ -84,6 +165,13 @@ namespace RealEstates.Services
                 .ToList();
         }
 
+        public IEnumerable<PropertyViewModel> SearchByPrice(int minPrice, int maxPrice)
+        {
+            return this.db.RealEstateProperties.Where(x => x.Price >= minPrice && x.Price <= maxPrice)
+                .Select(MapToPropertyViewModel())
+                .OrderBy(x => x.Price)
+                .ToList();
+        }
         private static Expression<Func<RealEstateProperty, PropertyViewModel>> MapToPropertyViewModel()
         {
             return x => new PropertyViewModel
@@ -96,14 +184,6 @@ namespace RealEstates.Services
                 Size = x.Size,
                 Year = x.Year
             };
-        }
-
-        public IEnumerable<PropertyViewModel> SearchByPrice(int minPrice, int maxPrice)
-        {
-            return this.db.RealEstateProperties.Where(x => x.Price >= minPrice && x.Price <= maxPrice)
-                .Select(MapToPropertyViewModel())
-                .OrderBy(x => x.Price)
-                .ToList();
         }
     }
 }
