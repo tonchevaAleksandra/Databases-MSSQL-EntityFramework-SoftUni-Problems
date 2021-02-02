@@ -1,0 +1,38 @@
+﻿@using RealEstates.Services.Models;
+@model IEnumerable<PropertyViewModel>
+
+<h1>Properties in this district</h1>
+<table class="table table-sm table-striped table-bordered table-hover" align="center">
+    <tr>
+        <th>District</th>
+        <th>Building Type</th>
+        <th>Property Type</th>
+        <th>Year</th>
+        <th>Size</th>
+        <th>Floor</th>
+        <th>Price</th>
+    </tr>
+    @foreach (var property in this.Model)
+    {
+        <tr>
+            <td>@property.District</td>
+            <td>@property.BuildingType</td>
+            <td>@property.PropertyType</td>
+            <td>
+                @property.Year
+                @if (property.Year.HasValue)
+                {
+                    @:г.
+                }
+            </td>
+            <td>@property.Size</td>
+            <td>
+                @if (property.Floor != "0/0")
+                {
+                    @property.Floor
+                }
+            </td>
+            <td>@property.Price.ToString("0.00")€</td>
+        </tr>
+    }
+</table>

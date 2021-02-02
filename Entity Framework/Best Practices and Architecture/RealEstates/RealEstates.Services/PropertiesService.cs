@@ -179,12 +179,29 @@ namespace RealEstates.Services
                 .OrderBy(x => x.Price)
                 .ToList();
         }
+
+        public IEnumerable<PropertyViewModel> SearchByDistrictMaxProperties(string district)
+        {
+            return this.db.RealEstateProperties.Where(x => x.District.Name.Trim() == district.Trim())
+                .Select(MapToPropertyViewModel())
+                .OrderByDescending(x => x.Price)
+                .ToList();
+        }
+
+        //public IEnumerable<PropertyViewModel> SearchByDistrict(string district)
+        //{
+        //    return this.db.RealEstateProperties.Where(x => x.District.Name.Trim()==district.Trim())
+        //        .Select(MapToPropertyViewModel())
+        //        .OrderByDescending(x => x.Price)
+        //        .ToList();
+        //}
+
         private static Expression<Func<RealEstateProperty, PropertyViewModel>> MapToPropertyViewModel()
         {
             return x => new PropertyViewModel
             {
                 Price = x.Price,
-                Floor = (x.Floor ?? 0).ToString() + "/" + (x.TotalNumberOfFloors ?? 0).ToString(),
+                Floor = (x.Floor ?? 0).ToString() /*+ "/" + (x.TotalNumberOfFloors ?? 0).ToString()*/,
                 BuildingType = x.BuildingType.Name,
                 District = x.District.Name,
                 PropertyType = x.PropertyType.Name,

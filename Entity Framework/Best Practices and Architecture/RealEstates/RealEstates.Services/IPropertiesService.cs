@@ -15,5 +15,7 @@ namespace RealEstates.Services
         IEnumerable<PropertyViewModel> Search(int minYear, int maxYear, int minSize, int maxSize);
 
         IEnumerable<PropertyViewModel> SearchByPrice(int minPrice, int maxPrice);
+
+        IEnumerable<PropertyViewModel> SearchByDistrictMaxProperties(string district);
     }
 }

@@ -22,7 +22,22 @@ namespace RealEstates.Web.Controllers
         {
             return this.View();
         }
+        public IActionResult SearchByPriceRange()
+        {
+            return this.View();
+        }
 
+        public IActionResult DoSearchByDistrict()
+        {
+            
+            return this.View();
+          
+        }
+
+        //public IActionResult SearchByDistrict(string district)
+        //{
+        //    return this.View();
+        //}
         //[Authorize(Roles = "Moderator")]
         public IActionResult DoSearch(int minPrice, int maxPrice)
         {
@@ -30,7 +45,7 @@ namespace RealEstates.Web.Controllers
             //{
             //    return this.BadRequest();
             //}
-           var properties= this.propertiesService.SearchByPrice(minPrice, maxPrice);
+            var properties = this.propertiesService.SearchByPrice(minPrice, maxPrice);
             return this.View(properties);
         }
     }

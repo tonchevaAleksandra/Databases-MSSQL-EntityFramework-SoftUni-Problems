@@ -1,0 +1,24 @@
+﻿@using RealEstates.Services.Models;
+@model IEnumerable<PropertyViewModel>
+
+<h1>Search by district</h1>
+<form method="get" action="/Properties/DoSearchByDistrict" class="col-md-6">
+    <div class="dropdown">
+        <button class="btn dropdown-toggle" data-toggle="dropdown">
+            Search menu
+        </button>
+        <div class="dropdown-menu">
+            @*<a href="#" class="dropdown-item">First district</a>*@
+            @*@foreach (var property in this.Model)
+            {
+                <a href="#" class="dropdown-item">@property.District</a>
+            }*@
+            @*<a class="nav-link text-dark" asp-area="" asp-controller="Properties" asp-action="SearchByPriceRange">Search by price</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Properties" asp-action="SearchByDistrictMaxProperties">Search by district</a>*@
+        </div>
+    </div>
+    <hr />
+    <input type="submit" class="btn btn-primary float-right" value="Search" />
+</form>
+
+
