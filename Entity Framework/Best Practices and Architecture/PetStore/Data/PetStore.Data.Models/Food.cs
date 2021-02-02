@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+using static PetStore.Data.Models.DataValidation;
 
 namespace PetStore.Data.Models
 {
     public class Food
     {
         public int Id { get; set; }
+
+        [Required]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; }
         public int BrandId { get; set; }
         public virtual Brand Brand { get; set; }

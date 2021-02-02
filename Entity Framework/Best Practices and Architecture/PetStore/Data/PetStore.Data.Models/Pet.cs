@@ -1,4 +1,7 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+using static PetStore.Data.Models.DataValidation;
 
 namespace PetStore.Data.Models
 {
@@ -12,6 +15,8 @@ namespace PetStore.Data.Models
         public virtual Category Category { get; set; }
         public DateTime DateOfBirth { get; set; }
         public decimal Price { get; set; }
+
+        [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; }
         public int? OrderId { get; set; }
         public Order Order { get; set; }
