@@ -68,7 +68,7 @@ namespace PetStore.Services.Implementations
         {
             if (String.IsNullOrWhiteSpace(name))
             {
-                throw new InvalidOperationException("Name cannot be null or whitespace!");
+                throw new ArgumentException("Name cannot be null or whitespace!");
             }
         }
     }

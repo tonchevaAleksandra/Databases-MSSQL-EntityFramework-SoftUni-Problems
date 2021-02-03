@@ -15,8 +15,11 @@ namespace PetStore
 
             //var brandWithToys = brandService.FindByIdWithToys(1);
 
-            var foodService = new FoodService(data);
-            foodService.BuyFromDistributor("Cat food", 0.350, 1.10M, 0.3M, DateTime.Now, 1, 1);
+            //var foodService = new FoodService(data);
+            //foodService.BuyFromDistributor("Cat food", 0.350, 1.10M, 0.3M, DateTime.Now, 1, 1);
+
+            var toyService = new ToyService(data);
+            toyService.BuyToyFromDistributor("Ball", null, 3.50M, 0.3M, 1,1);
 
         }
     }

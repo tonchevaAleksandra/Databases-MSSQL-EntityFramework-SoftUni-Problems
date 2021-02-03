@@ -9,6 +9,7 @@ namespace PetStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Food> food)
         {
+            //food.HasKey(f => f.Id);
             food.HasOne(f => f.Brand)
                 .WithMany(b => b.Foods)
                 .HasForeignKey(f => f.BrandId)
