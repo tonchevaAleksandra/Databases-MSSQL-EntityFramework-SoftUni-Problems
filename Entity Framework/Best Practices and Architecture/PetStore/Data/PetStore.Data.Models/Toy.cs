@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
+using System.Reflection;
 using static PetStore.Data.Models.DataValidation;
 
 namespace PetStore.Data.Models
@@ -16,6 +16,7 @@ namespace PetStore.Data.Models
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; }
         public decimal Price { get; set; }
+        public decimal DistributorPrice { get; set; }
         public int BrandId { get; set; }
         public Brand Brand { get; set; }
         public int CategoryId { get; set; }

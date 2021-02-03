@@ -17,6 +17,7 @@ namespace PetStore.Data.Models
         public virtual Brand Brand { get; set; }
         // In kg,
         public double Weight { get; set; }
+        public decimal DistributorPrice { get; set; }
         public decimal Price { get; set; }
         public DateTime ExpirationDate { get; set; }
         public int CategoryId { get; set; }
