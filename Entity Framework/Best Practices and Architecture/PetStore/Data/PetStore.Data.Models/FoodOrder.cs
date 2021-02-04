@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PetStore.Data.Models
+﻿namespace PetStore.Data.Models
 {
    public class FoodOrder
     {

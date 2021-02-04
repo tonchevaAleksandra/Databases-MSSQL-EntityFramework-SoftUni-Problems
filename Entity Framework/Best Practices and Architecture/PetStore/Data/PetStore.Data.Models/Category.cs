@@ -5,8 +5,6 @@ using static PetStore.Data.Models.DataValidation;
 
 namespace PetStore.Data.Models
 {
-
-
     //Each category is for each animal
    public class Category
     {

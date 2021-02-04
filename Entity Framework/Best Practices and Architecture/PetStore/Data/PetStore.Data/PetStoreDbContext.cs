@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 using PetStore.Data.Models;
 
 namespace PetStore.Data
@@ -13,6 +14,9 @@ namespace PetStore.Data
         public DbSet<Pet> Pets { get; set; }
         public DbSet<Toy> Toys { get; set; }
         public DbSet<User> Users { get; set; }
+
+        public DbSet<FoodOrder> FoodOrders { get; set; }
+        public DbSet<ToyOrder> ToyOrders { get; set; }
         public PetStoreDbContext()
         {
 

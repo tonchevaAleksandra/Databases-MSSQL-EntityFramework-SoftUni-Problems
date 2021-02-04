@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using PetStore.Services.Models.Toy;
+﻿using PetStore.Services.Models.Toy;
 
 namespace PetStore.Services
 {
@@ -11,5 +8,9 @@ namespace PetStore.Services
            int categoryId);
 
        void BuyToyFromDistributor(AddingToyServiceModel model);
+
+       void SellToyToUser(int toyId, int userId);
+
+       bool Exists(int toyId);
    }
 }
