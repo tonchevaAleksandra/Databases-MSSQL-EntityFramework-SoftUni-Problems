@@ -8,6 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PetStore.Data;
+using PetStore.Data.Models;
+using PetStore.Services;
+using PetStore.Services.Implementations;
 
 namespace PetStore.Web
 {
@@ -23,7 +27,15 @@ namespace PetStore.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-          
+            services.AddDbContext<PetStoreDbContext>();
+            services.AddTransient<IPetService, PetService>();
+            services.AddTransient<IBreedService, BreedService>();
+            //services.AddTransient<IBrandService, BrandService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IUserService, UserService>();
+            //services.AddTransient<IFoodService, FoodService>();
+            //services.AddTransient<IOrderService, OrderService>();
+            //services.AddTransient<IToyService, ToyService>();
             services.AddControllersWithViews();
         }
 

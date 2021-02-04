@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using PetStore.Data;
 using PetStore.Data.Models;
+using PetStore.Services.Models.Pet;
 
 namespace PetStore.Services.Implementations
 {
@@ -21,7 +23,17 @@ namespace PetStore.Services.Implementations
             this.userService = userService;
         }
 
-        public void BuyPet(Gender gender, DateTime dateTime, decimal price, string description, int breedId, int categoryId)
+        public IEnumerable<PetListingServiceModel> All()
+            => this.data.Pets.Select(p => new PetListingServiceModel
+            {
+                Id = p.Id,
+                Category = p.Category.Name,
+                Breed = p.Breed.Name,
+                Price = p.Price
+            })
+                .ToList();
+
+        public void BuyPet(Gender gender, DateTime dateOfBirth, decimal price, string description, int breedId, int categoryId)
         {
             if (price < 0)
             {

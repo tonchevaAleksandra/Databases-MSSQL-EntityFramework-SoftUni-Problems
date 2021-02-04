@@ -6,20 +6,20 @@ using PetStore.Data.Models;
 
 namespace PetStore.Services.Implementations
 {
-   public class CategoryService:ICategoryService
-   {
-       private readonly PetStoreDbContext data;
+    public class CategoryService : ICategoryService
+    {
+        private readonly PetStoreDbContext data;
 
-       public CategoryService(PetStoreDbContext data)
-       {
-           this.data = data;
-       }
+        public CategoryService(PetStoreDbContext data)
+        {
+            this.data = data;
+        }
 
-       public void Add(string name, string description)
+        public void Add(string name, string description)
         {
             if (this.Exists(name))
             {
-                throw new ArgumentException("There is already caegory with given name!");
+                throw new ArgumentException("There is already category with given name!");
             }
 
             var category = new Category()
@@ -32,10 +32,10 @@ namespace PetStore.Services.Implementations
             this.data.SaveChanges();
         }
 
-       public bool Exists(int categoryId)
-           => this.data.Categories.Any(x => x.Id == categoryId);
+        public bool Exists(int categoryId)
+            => this.data.Categories.Any(x => x.Id == categoryId);
 
-       public bool Exists(string name)
-           => this.data.Categories.Any(x => x.Name.ToLower() == name.ToLower().Trim());
-   }
+        public bool Exists(string name)
+            => this.data.Categories.Any(x => x.Name.ToLower() == name.ToLower().Trim());
+    }
 }
