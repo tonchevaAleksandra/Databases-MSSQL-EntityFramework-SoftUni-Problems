@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{4E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetStore.Services.Models", "Services\PetStore.Services.Models\PetStore.Services.Models.csproj", "{24AC3979-A00A-4608-8C3B-338CC1469493}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetStore.Web", "Web\PetStore.Web\PetStore.Web.csproj", "{93434BFF-349C-47CE-B0CE-A2DBFF297B8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetStore.Web", "Web\PetStore.Web\PetStore.Web.csproj", "{93434BFF-349C-47CE-B0CE-A2DBFF297B8A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetStore.Services", "Services\PetStoreServices\PetStore.Services.csproj", "{38C60B2F-39AD-49ED-B88F-0C320BDA3824}"
 EndProject

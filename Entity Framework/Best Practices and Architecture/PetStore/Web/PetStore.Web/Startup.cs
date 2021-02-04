@@ -4,12 +4,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using PetStore.Data;
-using PetStore.Data.Models;
 using PetStore.Services;
 using PetStore.Services.Implementations;
 
@@ -29,10 +24,10 @@ namespace PetStore.Web
         {
             services.AddDbContext<PetStoreDbContext>();
             services.AddTransient<IPetService, PetService>();
-            services.AddTransient<IBreedService, BreedService>();
-            //services.AddTransient<IBrandService, BrandService>();
-            services.AddTransient<ICategoryService, CategoryService>();
-            services.AddTransient<IUserService, UserService>();
+            //services.AddTransient<IBreedService, BreedService>();
+            ////services.AddTransient<IBrandService, BrandService>();
+            //services.AddTransient<ICategoryService, CategoryService>();
+            //services.AddTransient<IUserService, UserService>();
             //services.AddTransient<IFoodService, FoodService>();
             //services.AddTransient<IOrderService, OrderService>();
             //services.AddTransient<IToyService, ToyService>();
