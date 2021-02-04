@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using PetStore.Web.Models.Pets;
 
 namespace PetStore.Web.Controllers
 {
