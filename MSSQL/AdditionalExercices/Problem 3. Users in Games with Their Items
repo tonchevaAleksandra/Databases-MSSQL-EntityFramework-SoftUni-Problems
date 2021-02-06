@@ -1,0 +1,17 @@
+SELECT U.Username,
+       G.Name AS Game,
+(SELECT COUNT(UGI.ItemId)
+    FROM UserGameItems AS UGI
+    WHERE UGI.UserGameId=UG.Id) AS [Items Count],
+    (SELECT SUM(I2.Price)
+      FROM UserGameItems AS UGI2
+          JOIN Items I2 on I2.Id = UGI2.ItemId)
+AS [Items Price]
+FROM UsersGames AS UG
+         JOIN Users U on U.Id = UG.UserId
+         JOIN Games G on G.Id = UG.GameId
+         JOIN UserGameItems UGI on UG.Id = UGI.UserGameId
+         JOIN Items I on I.Id = UGI.ItemId
+/*WHERE [Items Count]>=10*/
+GROUP BY U.Username, G.Name
+ORDER BY [Items Count] DESC , [Items Price] DESC ,U.Username
