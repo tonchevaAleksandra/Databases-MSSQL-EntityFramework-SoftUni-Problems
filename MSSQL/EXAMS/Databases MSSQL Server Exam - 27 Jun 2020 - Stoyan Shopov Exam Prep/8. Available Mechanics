@@ -1,0 +1,5 @@
+SELECT M.FirstName +' '+M.LastName
+FROM Mechanics AS M
+LEFT JOIN Jobs J on M.MechanicId = J.MechanicId
+WHERE J.Status ='Finished' OR J.JobId IS NULL
+ORDER BY M.MechanicId

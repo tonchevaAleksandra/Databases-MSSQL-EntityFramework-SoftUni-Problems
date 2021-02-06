@@ -1,0 +1,8 @@
+SELECT j.JobId,isnull (SUM(p.Price * op.Quantity),0.00) as TotalCosts
+FROM Jobs AS J
+         left JOIN Orders O on J.JobId = O.JobId
+          join OrderParts OP on O.OrderId = OP.OrderId
+         join Parts P on P.PartId = OP.PartId
+WHERE J.Status = 'Finished'
+group by j.JobId
+order by sum(p.Price) desc, j.JobId
