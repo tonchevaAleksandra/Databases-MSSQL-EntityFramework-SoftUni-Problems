@@ -8,7 +8,7 @@ GO
 EXEC sp_MSForEachTable 'DBCC CHECKIDENT(''?'', RESEED, 0)'
 GO
 
--- Enable referential integrity 
+-- Enable referential integrity
 EXEC sp_MSForEachTable 'ALTER TABLE ? WITH CHECK CHECK CONSTRAINT ALL'
 GO
 
@@ -101,7 +101,6 @@ SET IDENTITY_INSERT Models OFF
 
 -- Table: Vendors
 SET IDENTITY_INSERT Vendors ON
-
 INSERT INTO Vendors (VendorId, [Name]) VALUES
 (1, 'Shenzhen Ltd.'),
 (2, 'Suzhou Precision Products'),
@@ -141,7 +140,6 @@ SET IDENTITY_INSERT Parts OFF
 
 -- Table: Jobs
 SET IDENTITY_INSERT Jobs ON
-
 INSERT INTO Jobs (JobId, ModelId, [Status], ClientId, IssueDate, FinishDate, MechanicId) VALUES
 (1, 1, 'Finished', 13, '2017-01-12', '2017-01-23', 1),
 (2, 2, 'Finished', 7, '2017-01-16', '2017-01-18', 5),

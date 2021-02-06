@@ -1,0 +1,7 @@
+SELECT C.FirstName+' '+C.LastName AS Client,
+       DATEDIFF(DAY, J.IssueDate,'04/24/2017') AS [Days going],
+       J.Status
+FROM Jobs AS J
+JOIN Clients C on C.ClientId = J.ClientId
+WHERE J.Status!='Finished'
+ORDER BY [Days going] DESC, C.ClientId

@@ -1,11 +1,11 @@
 CREATE DATABASE WMS
-
+use WMS
 CREATE TABLE Clients
 (
     ClientId  INT PRIMARY KEY IDENTITY,
     FirstName VARCHAR(50)                      NOT NULL,
     LastName  VARCHAR(50)                      NOT NULL,
-    Phone     CHAR(10) CHECK (LEN(Phone) = 12) NOT NULL
+    Phone     CHAR(12) CHECK (LEN(Phone) = 12) NOT NULL
 
 )
 
@@ -63,7 +63,7 @@ CREATE TABLE OrderParts
     OrderId INT NOT NULL FOREIGN KEY REFERENCES Orders(OrderId),
     PartId INT NOT NULL FOREIGN KEY REFERENCES Parts(PartId),
     Quantity INT DEFAULT 1, CHECK (Quantity>0),
-CONSTRAINT PK_OrdersParts PRIMARY KEY (OrderId,PartId)
+CONSTRAINT PK_OrderParts PRIMARY KEY (OrderId,PartId)
 )
 
 CREATE TABLE PartsNeeded
@@ -74,4 +74,3 @@ CREATE TABLE PartsNeeded
         CONSTRAINT PK_JobsParts PRIMARY KEY (JobId,PartId)
 )
 
-EXEC sp_changedbowner 'sa'
