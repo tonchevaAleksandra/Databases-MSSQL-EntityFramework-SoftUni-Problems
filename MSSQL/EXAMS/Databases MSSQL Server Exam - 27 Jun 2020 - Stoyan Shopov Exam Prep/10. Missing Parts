@@ -1,0 +1,34 @@
+select p.PartId,
+       p.Description,
+       sum(OP.Quantity) as Required,
+       p.StockQty,
+        (COUNT(O.OrderId)* sum(OP.Quantity))
+from Parts as p
+right join PartsNeeded PN on p.PartId = PN.PartId
+join OrderParts OP on p.PartId = OP.PartId
+    join Orders O on O.OrderId = OP.OrderId
+join Jobs J on J.JobId = PN.JobId
+where j.Status not like 'Finished' and O.Delivered=0
+and (p.StockQty)<(op.Quantity)
+group by p.PartId,p.Description,p.StockQty
+
+
+SELECT P.PartId,
+       P.Description,
+       Pn.Quantity ,
+       P.StockQty,
+       COUNT(O.OrderId)* Pn.Quantity
+    FROM Jobs AS j
+             JOIN PartsNeeded Pn
+                  ON j.JobId = Pn.JobId
+           left  JOIN Parts P
+                  ON P.PartId = Pn.PartId
+             JOIN Orders O ON j.JobId = O.JobId
+    WHERE j.Status != 'Finished'
+      AND Pn.Quantity > P.StockQty
+and O.Delivered =0
+    GROUP BY P.PartId,
+             P.Description,
+             Pn.Quantity,
+             P.StockQty
+
