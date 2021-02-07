@@ -1,0 +1,7 @@
+SELECT concat(C.FirstName,' ', C.LastName) AS CustomerName,
+       C.PhoneNumber ,
+       c.Gender
+FROM Customers AS C
+         LEFT JOIN Feedbacks F on C.Id = F.CustomerId
+WHERE F.Id IS NULL
+ORDER BY C.Id

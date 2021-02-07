@@ -1,0 +1,5 @@
+SELECT F.ProductId, F.Rate, F.Description, F.CustomerId, C.Age, C.Gender
+FROM Feedbacks AS F
+JOIN Customers C on C.Id = F.CustomerId
+WHERE Rate <5.0
+ORDER BY F.ProductId DESC, F.Rate
