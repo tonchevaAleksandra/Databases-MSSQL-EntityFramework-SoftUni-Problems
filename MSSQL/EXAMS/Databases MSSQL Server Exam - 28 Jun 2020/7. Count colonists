@@ -1,0 +1,5 @@
+SELECT COUNT(*)
+FROM Colonists AS C
+JOIN TravelCards TC on C.Id = TC.ColonistId
+JOIN Journeys J on J.Id = TC.JourneyId
+WHERE J.Purpose='Technical'
