@@ -1,0 +1,12 @@
+create view v_UserWithCountries as
+(
+select CONCAT(C.FirstName, ' ', c.LastName) as CustomerName,
+             C.Age as Age,
+       C.Gender as Gender,
+       C2.Name as CountryName
+from Customers as C
+         join Countries C2 on C2.Id = C.CountryId)
+
+SELECT TOP 5 *
+  FROM v_UserWithCountries
+ ORDER BY Age
