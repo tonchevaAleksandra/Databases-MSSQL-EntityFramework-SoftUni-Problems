@@ -63,7 +63,7 @@ VALUES ('Airbus 336', 112, 5132),
        ('Boeing 338', 165, 5111),
        ('Airbus 558', 387, 1342),
        ('Boeing 128', 345, 5541)
-GO
+
 
 INSERT INTO LuggageTypes(Type)
 VALUES ('Crossbody Bag'),
