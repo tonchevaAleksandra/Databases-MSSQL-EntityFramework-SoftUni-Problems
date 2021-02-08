@@ -1,0 +1,11 @@
+SELECT (P.FirstName + ' ' + P.LastName)   AS [Full Name],
+       P2.Name                            AS [Plane Name],
+       (F.Origin + ' - ' + F.Destination) AS [Trip],
+       LT.Type                            AS [Luggage Type]
+FROM Passengers AS P
+         RIGHT JOIN Tickets T on P.Id = T.PassengerId
+         JOIN Flights F on F.Id = T.FlightId
+         JOIN Planes P2 on P2.Id = F.PlaneId
+         JOIN Luggages L on L.Id = T.LuggageId
+         JOIN LuggageTypes LT on LT.Id = L.LuggageTypeId
+ORDER BY [Full Name], P2.Name , F.Origin,F.Destination,[Luggage Type]
