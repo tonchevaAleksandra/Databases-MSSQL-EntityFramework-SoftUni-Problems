@@ -1,0 +1,25 @@
+SELECT U.Username,
+       G.Name AS GAME,
+       MAX(C.Name) AS CH,
+       SUM(S3.Strength) + MAX(S.Strength) + MAX(S2.Strength)
+AS STRENGTH,
+        SUM(S3.Defence) + MAX(S.Defence) + MAX(S2.Defence)
+AS DEFENSE,
+        SUM(S3.Speed) + MAX(S.Speed) + MAX(S2.Speed)
+AS SPEED,
+        SUM(S3.Mind) + MAX(S.Mind) + MAX(S2.Mind)
+AS MIND,
+        SUM(S3.Luck) + MAX(S.Luck) + MAX(S2.Luck)
+AS LUCK
+FROM Users AS U
+JOIN UsersGames UG on U.Id = UG.UserId
+JOIN Games G on G.Id = UG.GameId
+JOIN GameTypes GT on GT.Id = G.GameTypeId
+JOIN [Statistics] S on S.Id = GT.BonusStatsId
+    JOIN Characters C on S.Id = C.StatisticId
+    JOIN [Statistics] S2 on S2.Id = C.StatisticId
+    JOIN UserGameItems UGI on UG.Id = UGI.UserGameId
+    JOIN Items I on I.Id = UGI.ItemId
+JOIN [Statistics] S3 on S3.Id = I.StatisticId
+GROUP BY U.Username, G.Name
+ORDER BY STRENGTH DESC, DEFENSE DESC,SPEED DESC , MIND DESC, LUCK DESC
