@@ -1,0 +1,5 @@
+SELECT F.Id, SUM(T.Price) AS TotalPrice
+FROM Flights AS F
+JOIN Tickets T on F.Id = T.FlightId
+GROUP BY F.Id
+ORDER BY TotalPrice  DESC, F.Id
