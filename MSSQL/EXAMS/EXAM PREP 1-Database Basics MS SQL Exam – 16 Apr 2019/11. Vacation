@@ -1,0 +1,31 @@
+CREATE FUNCTION udf_CalculateTickets(
+@origin VARCHAR(50),
+@destination VARCHAR(50),
+@peopleCount INT)
+RETURNS VARCHAR(50)
+AS
+    BEGIN
+        DECLARE @RESULT VARCHAR(50) ;
+
+        IF(@peopleCount<=0)
+        BEGIN
+            RETURN 'Invalid people count!';
+        end
+
+        DECLARE @FLIGHTID INT= (SELECT Id
+            FROM Flights
+            WHERE Origin=@origin
+            AND Destination=@destination);
+        IF(@FLIGHTID IS NULL)
+        BEGIN
+           RETURN 'Invalid flight!';
+        end
+
+        DECLARE @TOTALPRICE DECIMAL(15,2) = @peopleCount *
+        (SELECT Price
+            FROM Tickets
+            WHERE FlightId=@FLIGHTID);
+
+       SET @RESULT = 'Total price ' + CAST(@TOTALPRICE AS VARCHAR(15))
+        RETURN @RESULT
+    END
