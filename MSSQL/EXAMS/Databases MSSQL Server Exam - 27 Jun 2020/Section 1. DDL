@@ -172,6 +172,8 @@ WHERE j.Status LIKE 'Finished'
 GROUP BY j.JobId
 ORDER BY Total DESC, j.JobId
 
+
+--NOT PASS IN JUDGE
 --10.	Missing Parts
 --Not Working Code
 SELECT k.PartId, k.Description, k.Required, k.[In Stock], k.count AS Ordered
@@ -186,7 +188,7 @@ FROM (SELECT p.PartId, p.Description, pn.Quantity AS Required, p.StockQty AS [In
         AND O2.Delivered = 0
       GROUP BY p.PartId, p.Description, pn.Quantity, p.StockQty) AS k
 
-
+--NOT PASS IN JUDGE
 --Section 4. Programmability
 --11.	Place Order
 
