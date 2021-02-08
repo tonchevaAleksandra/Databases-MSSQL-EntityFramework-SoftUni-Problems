@@ -1,0 +1,5 @@
+SELECT I.Name, I.Price, I.MinLevel, GT.Name
+FROM Items AS I
+JOIN GameTypeForbiddenItems GTFI on I.Id = GTFI.ItemId
+JOIN GameTypes GT on GT.Id = GTFI.GameTypeId
+ORDER BY GT.Name DESC, I.Name
