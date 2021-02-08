@@ -1,0 +1,7 @@
+SELECT C.CurrencyCode AS CurrencyCode,
+       C.Description AS Currency,
+       COUNT(C2.CountryCode) AS NumberOfCountries
+FROM Currencies AS C
+LEFT JOIN Countries C2 on C.CurrencyCode = C2.CurrencyCode
+GROUP BY C.CurrencyCode, C.Description
+ORDER BY NumberOfCountries DESC, C.Description
