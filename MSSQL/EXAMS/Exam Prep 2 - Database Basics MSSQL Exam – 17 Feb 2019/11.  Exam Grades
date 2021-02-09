@@ -1,0 +1,24 @@
+CREATE FUNCTION udf_ExamGradesToUpdate(@studentId INT,
+                                       @grade decimal(3, 2))
+    RETURNS VARCHAR(200)
+AS
+BEGIN
+    DECLARE @STUDENTFIRSTNAME NVARCHAR(30)= (SELECT FirstName
+                                             FROM Students
+                                             WHERE Id = @studentId)
+    IF (@STUDENTFIRSTNAME IS NULL)
+        RETURN 'The student with provided id does not exist in the school!'
+    IF (@grade > 6.00)
+        RETURN 'Grade cannot be above 6.00!'
+
+    DECLARE @GRADESCOUNT INT=(SELECT COUNT(Grade)
+                              FROM StudentsExams
+                              WHERE StudentId = @studentId
+                                AND ((Grade > @grade AND Grade <= @grade + 0.5) OR
+                                     (Grade < @grade AND Grade >= @grade - 0.5)))
+
+    RETURN 'You have to update ' + CAST(@GRADESCOUNT AS VARCHAR(3))
+               + ' grades for the student '
+               + @STUDENTFIRSTNAME
+
+END
