@@ -1,0 +1,4 @@
+SELECT S.FirstName,S.LastName, COUNT(st.TeacherId)
+FROM Students AS S
+LEFT JOIN StudentsTeachers ST on S.Id = ST.StudentId
+GROUP BY S.FirstName,S.LastName
