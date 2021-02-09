@@ -1,0 +1,7 @@
+SELECT
+CONCAT
+    (S.FirstName, ' ', ISNULL( S.MiddleName + ' ', ''), S.LastName) AS [Full Name]
+FROM Students AS S
+LEFT JOIN StudentsSubjects SS on S.Id = SS.StudentId
+WHERE SS.StudentId IS NULL
+ORDER BY [Full Name]

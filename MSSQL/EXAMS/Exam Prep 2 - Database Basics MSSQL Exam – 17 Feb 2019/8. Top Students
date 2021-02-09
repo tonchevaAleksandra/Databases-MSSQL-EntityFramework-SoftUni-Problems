@@ -1,0 +1,6 @@
+SELECT TOP(10) S.FirstName, S.LastName,FORMAT(AVG(SE.Grade),'0.00')
+FROM Students AS S
+JOIN StudentsExams SE on S.Id = SE.StudentId
+GROUP BY S.FirstName, S.LastName
+ORDER BY AVG(SE.Grade) DESC, S.FirstName, S.LastName
+
