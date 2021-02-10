@@ -1,0 +1,7 @@
+SELECT TOP(10) C.Id,C.Name,
+       C.CountryCode AS COUNTRY,
+       COUNT(A.Id) AS Accounts
+FROM Cities AS C
+JOIN Accounts A on C.Id = A.CityId
+GROUP BY C.Id, C.Name,C.CountryCode
+ORDER BY Accounts DESC
