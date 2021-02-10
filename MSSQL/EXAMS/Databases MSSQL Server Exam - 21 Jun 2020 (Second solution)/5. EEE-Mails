@@ -1,0 +1,9 @@
+SELECT A.FirstName,
+       A.LastName,
+       FORMAT(A.BirthDate, 'MM-dd-yyyy') AS BirthDate,
+C.Name AS HOMETOWN,
+       A.Email
+FROM Accounts AS A
+JOIN Cities C on C.Id = A.CityId
+WHERE A.Email LIKE 'E%'
+ORDER BY HOMETOWN
