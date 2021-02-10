@@ -1,0 +1,12 @@
+SELECT A.Id,
+       A.Email,
+       C.Name,
+       COUNT(T.TripId) AS TRIPSCOUNT
+FROM Accounts AS A
+JOIN AccountsTrips T on A.Id = T.AccountId
+JOIN Trips T2 on T2.Id = T.TripId
+    JOIN Rooms R2 on R2.Id = T2.RoomId
+    JOIN Hotels H on A.CityId = H.CityId AND H.Id=R2.HotelId
+JOIN Cities C on C.Id = A.CityId
+GROUP BY A.Id, A.Email, C.Name
+ORDER BY TRIPSCOUNT DESC , A.Id
