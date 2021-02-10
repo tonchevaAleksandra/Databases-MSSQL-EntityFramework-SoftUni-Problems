@@ -1,0 +1,10 @@
+SELECT A.Id,
+       CONCAT(A.FirstName,' ', A.LastName) AS FULLNAME,
+       MAX(DATEDIFF(DAY, T2.ArrivalDate, T2.ReturnDate)) AS LongestTrip,
+       MIN(DATEDIFF(DAY,T2.ArrivalDate,T2.ReturnDate)) AS ShortestTrip
+FROM Accounts AS A
+JOIN AccountsTrips T on A.Id = T.AccountId
+JOIN Trips T2 on T2.Id = T.TripId
+ WHERE T2.CancelDate IS NULL AND A.MiddleName IS NULL
+GROUP BY A.Id, CONCAT(A.FirstName,' ', A.LastName)
+ORDER BY LongestTrip DESC, ShortestTrip

@@ -1,0 +1,5 @@
+SELECT C.Name, COUNT(H.Id) AS HOTELS
+FROM Cities AS C
+JOIN Hotels H on C.Id = H.CityId
+GROUP BY C.Name
+ORDER BY HOTELS DESC, C.Name
