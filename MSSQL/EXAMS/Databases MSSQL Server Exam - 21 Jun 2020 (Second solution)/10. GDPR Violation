@@ -1,0 +1,18 @@
+SELECT T.Id,
+       CONCAT(A2.FirstName, ' ', ISNULL( A2.MiddleName + ' ',''), A2.LastName)
+               AS [Full Name],
+       C.Name  AS [From],
+       C2.Name AS [To],
+       CASE
+           WHEN T.CancelDate IS  NULL
+               THEN (CAST(DATEDIFF(DAY, T.ArrivalDate, T.ReturnDate) AS VARCHAR(10)) + ' days')
+           ELSE 'Canceled'
+           END AS Duration
+FROM Trips AS T
+        full JOIN AccountsTrips A on T.Id = A.TripId
+        JOIN Accounts A2 on A2.Id = A.AccountId
+       JOIN Cities C on C.Id = A2.CityId
+        JOIN Rooms R2 on R2.Id = T.RoomId
+         JOIN Hotels H on H.Id = R2.HotelId
+        JOIN Cities C2 on C2.Id = H.CityId
+ORDER BY [Full Name], T.Id
