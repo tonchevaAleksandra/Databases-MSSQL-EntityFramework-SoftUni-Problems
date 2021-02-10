@@ -1,0 +1,39 @@
+CREATE FUNCTION udf_GetAvailableRoom(@HotelId INT,
+                                     @Date DATETIME, @People INT)
+    RETURNS NVARCHAR(200)
+AS
+BEGIN
+      DECLARE @ROOMID INT = (SELECT TOP (1) r.Id
+                           FROM Trips AS t
+                                    JOIN Rooms AS r ON t.RoomId = r.Id
+                                    JOIN Hotels AS h ON r.HotelId = h.Id
+                           WHERE h.Id = @HotelId
+                             AND @Date NOT BETWEEN t.ArrivalDate AND t.ReturnDate
+                             AND t.CancelDate IS NULL
+                             AND r.Beds >= @People
+                             AND YEAR(@Date) = YEAR(t.ArrivalDate)
+                           ORDER BY r.Price DESC)
+
+    IF (@ROOMID IS NULL)
+        RETURN 'No rooms available'
+
+
+    DECLARE @ROOMTYPE NVARCHAR(20) = (SELECT Type
+                                      FROM Rooms
+                                      WHERE Id = @ROOMID)
+    DECLARE @BEDS INT = (SELECT Beds
+                                      FROM Rooms
+                                      WHERE Id = @ROOMID)
+    DECLARE @ROOMPRICE DECIMAL(18,2)= (SELECT Price
+        FROM Rooms
+        WHERE Id=@ROOMID)
+    DECLARE @HOTELBASERATE DECIMAL(5,2)= (SELECT BaseRate
+        FROM Hotels
+        WHERE Id=@HotelId)
+
+    DECLARE @TOTALPRICE DECIMAL(18,2)= (@HOTELBASERATE + @ROOMPRICE) * @People
+
+    RETURN 'Room ' + CAST(@ROOMID AS NVARCHAR(3)) +': ' + @ROOMTYPE+
+           ' (' + CAST(@BEDS AS NVARCHAR(2)) +' beds) - $' + CAST(@TOTALPRICE AS NVARCHAR(20))
+
+end
