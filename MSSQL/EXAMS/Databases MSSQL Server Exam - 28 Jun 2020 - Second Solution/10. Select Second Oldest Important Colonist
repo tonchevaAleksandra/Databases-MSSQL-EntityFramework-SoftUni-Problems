@@ -1,0 +1,9 @@
+SELECT R.JobDuringJourney,
+       CONCAT(R.FirstName, ' ', R.LastName) AS FullName,
+       RANK
+           FROM (SELECT TC.JobDuringJourney, C.FirstName,C.LastName
+             , DENSE_RANK() over (PARTITION BY TC.JobDuringJourney ORDER BY C.BirthDate ) AS RANK
+FROM Colonists AS C
+JOIN TravelCards TC on C.Id = TC.ColonistId)
+      AS R
+WHERE R.RANK=2
