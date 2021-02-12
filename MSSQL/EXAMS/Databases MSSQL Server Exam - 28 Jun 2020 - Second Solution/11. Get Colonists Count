@@ -1,0 +1,14 @@
+CREATE FUNCTION dbo.udf_GetColonistsCount(@PlanetName VARCHAR(30))
+RETURNS INT
+AS
+    BEGIN
+       DECLARE @RESULT INT=(SELECT COUNT(C.Id)
+      FROM Colonists AS C
+       JOIN TravelCards TC on C.Id = TC.ColonistId
+       JOIN Journeys J on J.Id = TC.JourneyId
+       JOIN Spaceports S on S.Id = J.DestinationSpaceportId
+       JOIN Planets P on P.Id = S.PlanetId
+            WHERE P.Name LIKE @PlanetName)
+
+        RETURN @RESULT
+    end
