@@ -1,0 +1,5 @@
+SELECT F2.Id, F2.Name, CONCAT(F2.Size, 'KB') AS Size
+FROM Files AS F1
+ RIGHT JOIN Files  AS F2 ON F1.ParentId=F2.Id
+WHERE F1.ParentId IS NULL
+ORDER BY F2.Id, F2.Name, F2.Size DESC

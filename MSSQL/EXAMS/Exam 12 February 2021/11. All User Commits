@@ -1,0 +1,12 @@
+CREATE FUNCTION udf_AllUserCommits(@username VARCHAR(30))
+RETURNS INT
+AS
+    BEGIN
+        RETURN (SELECT COUNT(C.Id)
+            FROM Users AS U
+            LEFT JOIN Commits C on U.Id = C.ContributorId
+            WHERE U.Username=@username)
+
+    end
+
+SELECT dbo.udf_AllUserCommits('UnderSinduxrein')
