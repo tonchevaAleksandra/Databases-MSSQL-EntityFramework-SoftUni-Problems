@@ -1,6 +1,12 @@
 ﻿using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Xml.Serialization;
+using Castle.Components.DictionaryAdapter;
+using Castle.DynamicProxy.Generators;
 using Newtonsoft.Json;
+using TeisterMask.DataProcessor.ExportDto;
 
 namespace TeisterMask.DataProcessor
 {
@@ -12,7 +18,40 @@ namespace TeisterMask.DataProcessor
     {
         public static string ExportProjectWithTheirTasks(TeisterMaskContext context)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ProjectExportDto[]), new XmlRootAttribute("Projects"));
+
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add(string.Empty, string.Empty);
+
+            using (StringWriter stringWriter = new StringWriter(sb))
+            {
+                ProjectExportDto[] projects = context.Projects
+                    .Where(p => p.Tasks.Count > 0)
+                    .Select(p => new ProjectExportDto()
+                    {
+                        HasEndDate = p.DueDate.HasValue ? "Yes" : "No",
+                        Name = p.Name,
+                        TasksCount = p.Tasks.Count,
+                        Tasks = p.Tasks.Select(t => new TaskExportDto()
+                        {
+                            Name = t.Name,
+                            Label = t.LabelType.ToString()
+                        })
+                            .OrderBy(t => t.Name)
+                            .ToArray()
+                    })
+                    .OrderByDescending(p => p.TasksCount)
+                    .ThenBy(p => p.Name)
+                    .ToArray();
+
+                xmlSerializer.Serialize(stringWriter, projects, namespaces);
+            }
+
+            return sb.ToString().TrimEnd();
+
         }
 
         public static string ExportMostBusiestEmployees(TeisterMaskContext context, DateTime date)
