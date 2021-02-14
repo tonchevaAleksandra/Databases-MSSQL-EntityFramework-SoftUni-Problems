@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace TeisterMask.DataProcessor
 {
@@ -17,8 +18,7 @@ namespace TeisterMask.DataProcessor
         public static string ExportMostBusiestEmployees(TeisterMaskContext context, DateTime date)
         {
             var employees = context.Employees
-                .ToArray()
-                .Where(e => e.EmployeesTasks.Count >= 1 && e.EmployeesTasks.Any(et => et.Task.OpenDate >= date))
+                .Where(e => e.EmployeesTasks.Any(et => et.Task.OpenDate >= date))
                 .Select(e => new
                 {
                     Username = e.Username,
@@ -39,8 +39,12 @@ namespace TeisterMask.DataProcessor
                 })
                 .OrderByDescending(e => e.Tasks.Length)
                 .ThenBy(e => e.Username)
+                .Take(10)
                 .ToArray();
 
+            string json = JsonConvert.SerializeObject(employees, Formatting.Indented);
+
+            return json;
 
         }
     }

@@ -172,7 +172,7 @@ namespace TeisterMask.DataProcessor
                     continue;
                 }
 
-                if (IsUserNameValid(employeeDto.Username))
+                if (!IsUserNameValid(employeeDto.Username))
                 {
                     sb.AppendLine(ErrorMessage);
                     continue;
