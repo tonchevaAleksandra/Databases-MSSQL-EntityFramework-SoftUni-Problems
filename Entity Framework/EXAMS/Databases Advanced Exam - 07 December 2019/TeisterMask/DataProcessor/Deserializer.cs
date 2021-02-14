@@ -172,6 +172,11 @@ namespace TeisterMask.DataProcessor
                     continue;
                 }
 
+                if (IsUserNameValid(employeeDto.Username))
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
                 Employee employee = new Employee()
                 {
                     Username = employeeDto.Username,
@@ -205,6 +210,19 @@ namespace TeisterMask.DataProcessor
             context.Employees.AddRange(employeesToAdd);
             context.SaveChanges();
             return sb.ToString().TrimEnd();
+        }
+
+        private static bool IsUserNameValid(string username)
+        {
+            foreach (char ch in username)
+            {
+                if (!char.IsLetterOrDigit(ch))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private static bool IsValid(object dto)
