@@ -1,9 +1,7 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using BookShop.Data.Models;
-
-namespace BookShop.Data
+﻿namespace BookShop.Data
 {
     using Microsoft.EntityFrameworkCore;
+    using Models;
 
     public class BookShopContext : DbContext
     {

@@ -1,6 +1,4 @@
-﻿
-
-namespace BookShop.Data.Models
+﻿namespace BookShop.Data.Models
 {
     using System;
     using System.Collections.Generic;

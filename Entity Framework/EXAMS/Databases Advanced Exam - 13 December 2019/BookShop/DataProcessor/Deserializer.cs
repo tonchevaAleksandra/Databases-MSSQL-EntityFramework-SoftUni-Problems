@@ -1,21 +1,20 @@
-﻿using System.Runtime.CompilerServices;
-using BookShop.Data.Models;
-using BookShop.Data.Models.Enums;
-using BookShop.DataProcessor.ImportDto;
-
-namespace BookShop.DataProcessor
+﻿namespace BookShop.DataProcessor
 {
     using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Text;
-    using System.Xml.Serialization;
-    using Data;
     using Newtonsoft.Json;
+    using System.Globalization;
+    using System.Xml.Serialization;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using ValidationContext = System.ComponentModel.DataAnnotations.ValidationContext;
+
+    using Data;
+    using Data.Models;
+    using Data.Models.Enums;
+    using ImportDto;
 
     public class Deserializer
     {

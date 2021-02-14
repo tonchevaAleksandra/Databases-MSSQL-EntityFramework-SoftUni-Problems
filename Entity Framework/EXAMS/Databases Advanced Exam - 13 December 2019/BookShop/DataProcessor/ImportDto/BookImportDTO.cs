@@ -1,9 +1,8 @@
-﻿
-using System.Xml.Serialization;
-
-namespace BookShop.DataProcessor.ImportDto
+﻿namespace BookShop.DataProcessor.ImportDto
 {
+    using System.Xml.Serialization;
     using System.ComponentModel.DataAnnotations;
+
     [XmlType("Book")]
     public class BookImportDTO
     {

@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BookShop.DataProcessor.ImportDto
+﻿namespace BookShop.DataProcessor.ImportDto
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class ImportAuthorDTO
     {
         [Required]
