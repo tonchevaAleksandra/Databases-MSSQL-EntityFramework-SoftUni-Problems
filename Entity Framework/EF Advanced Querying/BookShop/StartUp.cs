@@ -199,7 +199,7 @@
         public static string GetBooksByAuthor(BookShopContext context, string input)
         {
             List<string> books = context.Books
-                .Where(b => b.Author.LastName.ToLower().StartsWith(input))
+                .Where(b => b.Author.LastName.ToLower().StartsWith(input.ToLower()))
                 .OrderBy(b => b.BookId)
                 .Select(b => b.Title + " (" + b.Author.FirstName + " " + b.Author.LastName + ")")
                 .ToList();
@@ -212,7 +212,7 @@
         {
 
             List<string> books = context.Books
-                .Where(b => b.Title.ToLower().Contains(input))
+                .Where(b => b.Title.ToLower().Contains(input.ToLower()))
                 .OrderBy(b => b.Title)
                 .Select(b => b.Title)
                 .ToList();
