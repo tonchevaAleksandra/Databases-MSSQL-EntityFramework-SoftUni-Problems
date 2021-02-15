@@ -139,6 +139,7 @@ namespace CarDealer
         public static string GetSalesWithAppliedDiscount(CarDealerContext context)
         {
             var sales = context.Sales
+                .Take(10)
                 .Select(s => new CustomerSaleDTO
                 {
                     Car = new SaleCarDTO
