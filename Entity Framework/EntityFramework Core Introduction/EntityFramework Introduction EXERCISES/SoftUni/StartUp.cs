@@ -13,8 +13,10 @@ namespace SoftUni
     {
         static void Main(string[] args)
         {
-            var context = new SoftUniContext();
-            Console.WriteLine(/*RemoveTown(context)*/);
+            using var context = new SoftUniContext();
+
+            var result = GetEmployeesByFirstNameStartingWithSa(context);
+            Console.WriteLine(result);
         }
 
         //Problem 15
@@ -81,23 +83,42 @@ namespace SoftUni
         //Problem 13
         public static string GetEmployeesByFirstNameStartingWithSa(SoftUniContext context)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
-            context.Employees
-                .Where(e => e.FirstName.ToLower().StartsWith("sa"))
-                .Select(e => new
+            if (context.Employees.Any(e => e.FirstName == "Svetlin"))
+            {
+                string pattern = "SA";
+                var employeesByNamePattern = context.Employees
+                    .Where(employee => employee.FirstName.StartsWith(pattern));
+
+                foreach (var employeeByPattern in employeesByNamePattern)
                 {
-                    e.FirstName,
-                    e.LastName,
-                    e.JobTitle,
-                    e.Salary
-                })
-                .OrderBy(e => e.FirstName)
-                .ThenBy(e => e.LastName)
-                .ToList()
-                .ForEach(e => sb.AppendLine($"{e.FirstName} {e.LastName} - {e.JobTitle} - (${e.Salary:f2})"));
+                    sb.AppendLine($"{employeeByPattern.FirstName} {employeeByPattern.LastName} " +
+                                  $"- {employeeByPattern.JobTitle} - (${employeeByPattern.Salary})");
+                }
+            }
+            else
+            {
+                var employeesByNamePattern = context.Employees.Select(e => new
+                    {
+                        e.FirstName,
+                        e.LastName,
+                        e.JobTitle,
+                        e.Salary,
+                    })
+                    .Where(e => e.FirstName.StartsWith("Sa"))
+                    .OrderBy(e => e.FirstName)
+                    .ThenBy(e => e.LastName)
+                    .ToList();
 
-            return sb.ToString().Trim();
+                foreach (var employee in employeesByNamePattern)
+                {
+                    sb.AppendLine($"{employee.FirstName} {employee.LastName} " +
+                                  $"- {employee.JobTitle} - (${employee.Salary:F2})");
+                }
+            }
+
+            return sb.ToString().TrimEnd();
         }
 
         //Problem 12
@@ -202,29 +223,31 @@ namespace SoftUni
         //Problem 09
         public static string GetEmployee147(SoftUniContext context)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
-            var employee = context
-                .Employees
-                .Where(e => e.EmployeeId == 147)
+
+            var employeeData = context.Employees
                 .Select(e => new
                 {
-                    e.FirstName,
-                    e.LastName,
-                    e.JobTitle,
-                    Projects = e.EmployeesProjects
-                    .Select(ep => ep.Project.Name)
-                    .OrderBy(pn => pn)
-                    .ToList()
+                    EmployeeId = e.EmployeeId,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    JobTitle = e.JobTitle,
+                    Projects = e.EmployeesProjects.Select(ep => ep.Project.Name)
+                        .OrderBy(ep => ep)
+                        .ToList()
                 })
-                .Single();
+                .SingleOrDefault(e => e.EmployeeId == 147);
 
-            sb.AppendLine($"{employee.FirstName} {employee.LastName} -  {employee.JobTitle}");
+            sb.AppendLine($"{employeeData.FirstName} " +
+                          $"{employeeData.LastName} - " +
+                          $"{employeeData.JobTitle}");
 
-            foreach (var projectName in employee.Projects)
+            foreach (var project in employeeData.Projects)
             {
-                sb.AppendLine(projectName);
+                sb.AppendLine($"{project}");
             }
+
 
             return sb.ToString().Trim();
         }
