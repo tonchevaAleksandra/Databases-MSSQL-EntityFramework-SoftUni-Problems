@@ -148,10 +148,10 @@ namespace CarDealer
                         TravelledDistance = s.Car.TravelledDistance
                     },
                     CustomerName = s.Customer.Name,
-                    Discount = s.Discount.ToString("f2"),
-                    Price = s.Car.PartCars.Sum(pc => pc.Part.Price).ToString("f2"),
-                    PriceWithDiscount = (s.Car.PartCars.Sum(pc => pc.Part.Price) -
-                                            s.Car.PartCars.Sum(pc => pc.Part.Price) * s.Discount / 100).ToString("f2")
+                    Discount = s.Discount,
+                    Price = s.Car.PartCars.Sum(pc => pc.Part.Price),
+                    PriceWithDiscount = s.Car.PartCars.Sum(pc => pc.Part.Price) -
+                                            s.Car.PartCars.Sum(pc => pc.Part.Price) * s.Discount / 100
 
                 })
                 .ToList();

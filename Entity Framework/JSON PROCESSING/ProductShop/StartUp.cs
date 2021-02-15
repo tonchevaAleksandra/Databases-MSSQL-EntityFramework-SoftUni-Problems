@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Newtonsoft.Json;
 using ProductShop.Data;
 using ProductShop.DTO.ProductModels;
@@ -125,6 +126,7 @@ namespace ProductShop
         public static string GetSoldProducts(ProductShopContext context)
         {
             var users = context.Users
+                .Where(u => u.ProductsSold.Any(p => p.Buyer != null))
                 .Where(u => u.ProductsSold.Count > 0)
                 .OrderBy(u => u.LastName)
                 .ThenBy(u => u.FirstName)
@@ -150,31 +152,20 @@ namespace ProductShop
         //Problem 05
         public static string GetProductsInRange(ProductShopContext context)
         {
-            //var products = context.Products
-            //   .Where(p => p.Price >= 500M && p.Price <= 1000M)
-            //   .OrderBy(p => p.Price)
-            //   .Select(p => new ListProductsInRangeDTO
-            //   {
-            //       Name = p.Name,
-            //       Price = p.Price.ToString("f2"),
-            //       SellerFullName = p.Seller.FirstName + " " + p.Seller.LastName
-            //   })
-            //   .ToList();
+            using (context)
+            {
+                var products = context
+                    .Products
+                    .Where(p => p.Price >= 500 &&
+                                p.Price <= 1000)
+                    .ProjectTo<ListProductsInRangeDTO>()
+                    .OrderBy(p => p.Price)
+                    .ToList();
 
-            var products = context.Products
-                .Where(p => p.Price >= 500M && p.Price <= 1000M)
-                .OrderBy(p => p.Price)
-                .Select(p => new
-                {
-                    name = p.Name,
-                    price = p.Price.ToString("f2"),
-                    seller = p.Seller.FirstName + " " + p.Seller.LastName
-                })
-                .ToList();
+                var json = JsonConvert.SerializeObject(products, Formatting.Indented);
 
-            var result = JsonConvert.SerializeObject(products, Formatting.Indented);
-
-            return result;
+                return json;
+            }
         }
 
         //Problem 04

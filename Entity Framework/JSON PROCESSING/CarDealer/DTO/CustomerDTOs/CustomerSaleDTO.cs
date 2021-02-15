@@ -1,8 +1,6 @@
 ﻿using CarDealer.DTO.SalesDTOs;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace CarDealer.DTO.CustomerDTOs
 {
@@ -14,12 +12,14 @@ namespace CarDealer.DTO.CustomerDTOs
         [JsonProperty("customerName")]
         public string CustomerName { get; set; }
 
-        public string Discount { get; set; }
+        public decimal Discount { get; set; }
 
         [JsonProperty("price")]
-        public string  Price { get; set; }
+        public decimal Price { get; set; }
 
         [JsonProperty("priceWithDiscount")]
-        public string PriceWithDiscount { get; set; }
+        public decimal PriceWithDiscount { get; set; }
+
+      
     }
 }

@@ -30,7 +30,7 @@ namespace CarDealer
             //    .ForMember(s => s.Model, y => y.MapFrom(s => s.Car.Model))
             //    .ForMember(s => s.TravelledDistance, y => y.MapFrom(s => s.Car.TravelledDistance));
 
-          
+            this.CreateMap<Car, CarsDTO>();
 
         }
     }
