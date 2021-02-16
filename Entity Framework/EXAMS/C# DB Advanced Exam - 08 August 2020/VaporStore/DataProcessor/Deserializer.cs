@@ -57,7 +57,13 @@ namespace VaporStore.DataProcessor
                     continue;
                 }
 
-                var dev = context.Developers.FirstOrDefault(d => d.Name == game.Developer);
+                Game gametoAdd = new Game()
+                {
+                    Name = game.Name,
+                    Price = game.Price,
+                    ReleaseDate = releaseDate
+                };
+                var dev = developers.FirstOrDefault(d => d.Name == game.Developer);
                 if (dev == null)
                 {
                     dev = new Developer()
@@ -68,7 +74,9 @@ namespace VaporStore.DataProcessor
                     developers.Add(dev);
                 }
 
-                var genre = context.Genres.FirstOrDefault(g => g.Name == game.Genre);
+                gametoAdd.Developer = dev;
+
+                var genre = genres.FirstOrDefault(g => g.Name == game.Genre);
                 if (genre == null)
                 {
                     genre = new Genre()
@@ -78,14 +86,7 @@ namespace VaporStore.DataProcessor
                     genres.Add(genre);
                 }
 
-                Game gametoAdd = new Game()
-                {
-                    Developer = dev,
-                    Genre = genre,
-                    Name = game.Name,
-                    Price = game.Price,
-                    ReleaseDate = releaseDate
-                };
+                gametoAdd.Genre = genre;
 
                 foreach (var tagItem in game.Tags)
                 {
