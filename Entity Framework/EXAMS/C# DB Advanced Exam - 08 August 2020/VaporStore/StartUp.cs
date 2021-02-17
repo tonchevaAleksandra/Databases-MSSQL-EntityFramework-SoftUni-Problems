@@ -1,19 +1,19 @@
 ﻿namespace VaporStore
 {
-	using System;
-	using System.IO;
-	using AutoMapper;
-	using Data;
-	using DataProcessor;
-	using Microsoft.EntityFrameworkCore;
+    using AutoMapper;
+    using Data;
+    using DataProcessor;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.IO;
 
-	public class StartUp
-	{
-		public static void Main(string[] args)
-		{
-			var context = new VaporStoreDbContext();
+    public class StartUp
+    {
+        public static void Main(string[] args)
+        {
+            var context = new VaporStoreDbContext();
 
-			Mapper.Initialize(config => config.AddProfile<VaporStoreProfile>());
+            Mapper.Initialize(config => config.AddProfile<VaporStoreProfile>());
 
             ResetDatabase(context, shouldDropDatabase: true);
 
@@ -28,19 +28,19 @@
             }
         }
 
-		private static void ExportEntities(VaporStoreDbContext context, string exportDir)
-		{
-			var jsonOutput = Serializer.ExportGamesByGenres(context, new[] { "Nudity", "Violent" });
-			PrintAndExportEntityToFile(jsonOutput, exportDir + "GamesByGenres.json");
+        private static void ExportEntities(VaporStoreDbContext context, string exportDir)
+        {
+            var jsonOutput = Serializer.ExportGamesByGenres(context, new[] { "Nudity", "Violent" });
+            PrintAndExportEntityToFile(jsonOutput, exportDir + "GamesByGenres.json");
 
             var xmlOutput = Serializer.ExportUserPurchasesByType(context, "Digital");
             PrintAndExportEntityToFile(xmlOutput, exportDir + "UserPurchases.xml");
         }
 
-		private static void ImportEntities(VaporStoreDbContext context, string baseDir, string exportDir)
-		{
-			var games = Deserializer.ImportGames(context, File.ReadAllText(baseDir + "games.json"));
-			PrintAndExportEntityToFile(games, exportDir + "ImportGames.txt");
+        private static void ImportEntities(VaporStoreDbContext context, string baseDir, string exportDir)
+        {
+            var games = Deserializer.ImportGames(context, File.ReadAllText(baseDir + "games.json"));
+            PrintAndExportEntityToFile(games, exportDir + "ImportGames.txt");
 
             var users = Deserializer.ImportUsers(context, File.ReadAllText(baseDir + "users.json"));
             PrintAndExportEntityToFile(users, exportDir + "ImportUsers.txt");
@@ -49,46 +49,46 @@
             PrintAndExportEntityToFile(purchases, exportDir + "ImportPurchases.txt");
         }
 
-		private static void ResetDatabase(DbContext context, bool shouldDropDatabase = false)
-		{
-			if (shouldDropDatabase)
-			{
-				context.Database.EnsureDeleted();
-			}
+        private static void ResetDatabase(DbContext context, bool shouldDropDatabase = false)
+        {
+            if (shouldDropDatabase)
+            {
+                context.Database.EnsureDeleted();
+            }
 
-			if (context.Database.EnsureCreated())
-			{
-				return;
-			}
+            if (context.Database.EnsureCreated())
+            {
+                return;
+            }
 
-			var disableIntegrityChecksQuery = "EXEC sp_MSforeachtable @command1='ALTER TABLE ? NOCHECK CONSTRAINT ALL'";
-			context.Database.ExecuteSqlCommand(disableIntegrityChecksQuery);
+            var disableIntegrityChecksQuery = "EXEC sp_MSforeachtable @command1='ALTER TABLE ? NOCHECK CONSTRAINT ALL'";
+            context.Database.ExecuteSqlCommand(disableIntegrityChecksQuery);
 
-			var deleteRowsQuery = "EXEC sp_MSforeachtable @command1='SET QUOTED_IDENTIFIER ON;DELETE FROM ?'";
-			context.Database.ExecuteSqlCommand(deleteRowsQuery);
+            var deleteRowsQuery = "EXEC sp_MSforeachtable @command1='SET QUOTED_IDENTIFIER ON;DELETE FROM ?'";
+            context.Database.ExecuteSqlCommand(deleteRowsQuery);
 
-			var enableIntegrityChecksQuery =
-				"EXEC sp_MSforeachtable @command1='ALTER TABLE ? WITH CHECK CHECK CONSTRAINT ALL'";
-			context.Database.ExecuteSqlCommand(enableIntegrityChecksQuery);
+            var enableIntegrityChecksQuery =
+                "EXEC sp_MSforeachtable @command1='ALTER TABLE ? WITH CHECK CHECK CONSTRAINT ALL'";
+            context.Database.ExecuteSqlCommand(enableIntegrityChecksQuery);
 
-			var reseedQuery =
-				"EXEC sp_MSforeachtable @command1='IF OBJECT_ID(''?'') IN (SELECT OBJECT_ID FROM SYS.IDENTITY_COLUMNS) DBCC CHECKIDENT(''?'', RESEED, 0)'";
-			context.Database.ExecuteSqlCommand(reseedQuery);
-		}
+            var reseedQuery =
+                "EXEC sp_MSforeachtable @command1='IF OBJECT_ID(''?'') IN (SELECT OBJECT_ID FROM SYS.IDENTITY_COLUMNS) DBCC CHECKIDENT(''?'', RESEED, 0)'";
+            context.Database.ExecuteSqlCommand(reseedQuery);
+        }
 
-		private static void PrintAndExportEntityToFile(string entityOutput, string outputPath)
-		{
-			Console.WriteLine(entityOutput);
-			File.WriteAllText(outputPath, entityOutput.TrimEnd());
-		}
+        private static void PrintAndExportEntityToFile(string entityOutput, string outputPath)
+        {
+            Console.WriteLine(entityOutput);
+            File.WriteAllText(outputPath, entityOutput.TrimEnd());
+        }
 
-		private static string GetProjectDirectory()
-		{
-			var currentDirectory = Directory.GetCurrentDirectory();
-			var directoryName = Path.GetFileName(currentDirectory);
-			var relativePath = directoryName.StartsWith("netcoreapp") ? @"../../../" : string.Empty;
-			
-			return relativePath;
-		}
-	}
+        private static string GetProjectDirectory()
+        {
+            var currentDirectory = Directory.GetCurrentDirectory();
+            var directoryName = Path.GetFileName(currentDirectory);
+            var relativePath = directoryName.StartsWith("netcoreapp") ? @"../../../" : string.Empty;
+
+            return relativePath;
+        }
+    }
 }

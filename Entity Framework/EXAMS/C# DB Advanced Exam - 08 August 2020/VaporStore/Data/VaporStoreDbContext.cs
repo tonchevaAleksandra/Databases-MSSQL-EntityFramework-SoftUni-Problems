@@ -2,10 +2,10 @@
 
 namespace VaporStore.Data
 {
-	using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
 
-	public class VaporStoreDbContext : DbContext
-	{
+    public class VaporStoreDbContext : DbContext
+    {
 
         public DbSet<Game> Games { get; set; }
         public DbSet<Developer> Developers { get; set; }
@@ -16,25 +16,25 @@ namespace VaporStore.Data
         public DbSet<Card> Cards { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
 
-		public VaporStoreDbContext()
-		{
-		}
+        public VaporStoreDbContext()
+        {
+        }
 
-		public VaporStoreDbContext(DbContextOptions options)
-			: base(options)
-		{
-		}
+        public VaporStoreDbContext(DbContextOptions options)
+            : base(options)
+        {
+        }
 
-		protected override void OnConfiguring(DbContextOptionsBuilder options)
-		{
-			if (!options.IsConfigured)
-			{
-				options
-					.UseSqlServer(Configuration.ConnectionString);
-			}
-		}
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            if (!options.IsConfigured)
+            {
+                options
+                    .UseSqlServer(Configuration.ConnectionString);
+            }
+        }
 
-		protected override void OnModelCreating(ModelBuilder model)
+        protected override void OnModelCreating(ModelBuilder model)
         {
             model.Entity<Game>(game =>
             {
@@ -52,7 +52,7 @@ namespace VaporStore.Data
 
             model.Entity<GameTag>(gameTag =>
             {
-                gameTag.HasKey(gt => new {gt.GameId, gt.TagId});
+                gameTag.HasKey(gt => new { gt.GameId, gt.TagId });
 
                 gameTag.HasOne(gt => gt.Game)
                     .WithMany(g => g.GameTags)
@@ -88,5 +88,5 @@ namespace VaporStore.Data
             });
 
         }
-	}
+    }
 }
