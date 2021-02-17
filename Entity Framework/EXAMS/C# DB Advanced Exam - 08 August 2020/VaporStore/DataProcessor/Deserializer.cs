@@ -68,7 +68,7 @@ namespace VaporStore.DataProcessor
                 {
                     dev = new Developer()
                     {
-                        Name = game.Name
+                        Name = game.Developer
                     };
 
                     developers.Add(dev);
