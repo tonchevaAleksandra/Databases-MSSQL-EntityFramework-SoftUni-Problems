@@ -140,11 +140,22 @@ namespace ProductShop
 
             var users = context
                 .Users
-                .Where(u => u.ProductsSold.Count >= 1)
+                .Where(u => u.ProductsSold.Any(x=>x.Buyer!=null))
                 .OrderBy(u => u.LastName)
                 .ThenBy(u => u.FirstName)
                 .Take(5)
-                .ProjectTo<ExportUserSoldProductsDTO>()
+                .Select(x=> new ExportUserSoldProductsDTO()
+                    {
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    SoldProducts = x.ProductsSold.Where(p=>p.Buyer!=null)
+                        .Select(p=> new ExportSoldProductsDTO()
+                        {
+                            Name = p.Name,
+                            Price = p.Price
+                        }).ToArray()
+
+                    })
                 .ToArray();
 
             XmlSerializer xmlSerializer =
