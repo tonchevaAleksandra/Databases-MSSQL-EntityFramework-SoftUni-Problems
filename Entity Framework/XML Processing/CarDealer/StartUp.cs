@@ -217,12 +217,30 @@ namespace CarDealer
 
             ImportSaleDTO[] salesDtos = (ImportSaleDTO[])xmlSerializer.Deserialize(new StringReader(inputXml));
 
-            var sales = Mapper.Map<Sale[]>(salesDtos).Where(s => context.Cars.Any(c => c.Id == s.CarId)).ToArray();
+            //var sales = Mapper.Map<Sale[]>(salesDtos).Where(s => context.Cars.Any(c => c.Id == s.CarId)).ToArray();
+
+            List<Sale> sales = new List<Sale>();
+            foreach (var saleDto in salesDtos)
+            {
+                if (/*context.Customers.Any(c => c.Id == saleDto.CustomerId) &&*/
+                    context.Cars.Any(c=>c.Id==saleDto.CarId))
+                {
+                    Sale sale = new Sale()
+                    {
+                        CarId = saleDto.CarId,
+                        CustomerId = saleDto.CustomerId,
+                        Discount = saleDto.Discount
+                    };
+
+                    sales.Add(sale);
+                }
+               
+            }
 
             context.Sales.AddRange(sales);
             context.SaveChanges();
 
-            return $"Successfully imported {sales.Length}";
+            return $"Successfully imported {sales.Count}";
             ;
         }
 
