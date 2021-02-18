@@ -186,13 +186,29 @@ namespace ProductShop
             var categoryProductsDtos =
                 (ImportCategoryProductDTO[])xmlSerializer.Deserialize(new StringReader(inputXml));
 
-            var categoryProducts = Mapper.Map<CategoryProduct[]>(categoryProductsDtos.Where(cp =>
-                context.Categories.Any(c => c.Id == cp.CategoryId) && context.Products.Any(p => p.Id == cp.ProductId)));
+            //var categoryProducts = Mapper.Map<CategoryProduct[]>(categoryProductsDtos.Where(cp =>
+            //    context.Categories.Any(c => c.Id == cp.CategoryId) && context.Products.Any(p => p.Id == cp.ProductId)));
+            List<CategoryProduct> categoryProducts = new List<CategoryProduct>();
+
+            foreach (var categoryProductDto in categoryProductsDtos)
+            {
+                if (context.Categories.Any(c => c.Id == categoryProductDto.CategoryId) &&
+                    context.Products.Any(p => p.Id == categoryProductDto.ProductId))
+                {
+                    CategoryProduct categoryProduct = new CategoryProduct()
+                    {
+                        CategoryId = categoryProductDto.CategoryId,
+                        ProductId = categoryProductDto.ProductId
+                    };
+                    categoryProducts.Add(categoryProduct);
+                }
+              
+            }
 
             context.CategoryProducts.AddRange(categoryProducts);
             context.SaveChanges();
 
-            return $"Successfully imported {categoryProducts.Length}";
+            return $"Successfully imported {categoryProducts.Count}";
 
         }
 
