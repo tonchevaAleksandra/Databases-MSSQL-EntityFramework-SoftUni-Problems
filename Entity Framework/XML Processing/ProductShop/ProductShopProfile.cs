@@ -21,7 +21,9 @@ namespace ProductShop
             this.CreateMap<ImportCategoryProductDTO, CategoryProduct>();
 
             this.CreateMap<Product, ExportProductsInRangeDTO>()
-                .ForMember(x=>x.BuyerName, y=>y.MapFrom(s=>s.Buyer.FirstName + " " + s.Buyer.LastName));
+                .ForMember(x=>x.BuyerName, y=>y.MapFrom(s=>s.Buyer.FirstName + " " + s.Buyer.LastName))
+                .ForMember(x=>x.Price, y=>y.MapFrom(z=>z.Price))
+                .ForMember(x=>x.Name, y=>y.MapFrom(z=>z.Name));
 
             this.CreateMap<Product, ExportSoldProductsDTO>();
 

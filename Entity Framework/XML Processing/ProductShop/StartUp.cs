@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
 
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-
+using Newtonsoft.Json;
 using ProductShop.Data;
 using ProductShop.Models;
 using ProductShop.Dtos.Export;
@@ -166,11 +167,18 @@ namespace ProductShop
                 .Where(p => p.Price >= 500 && p.Price <= 1000)
                 .OrderBy(p => p.Price)
                 .Take(10)
-                .ProjectTo<ExportProductsInRangeDTO>()
+                .Select(p=> new ExportProductsInRangeDTO()
+                {
+                    Name = p.Name,
+                    BuyerName = p.Buyer.FirstName + " " + p.Buyer.LastName,
+                    Price = p.Price
+                    
+                })
                 .ToArray();
 
             XmlSerializer xmlSerializer =
                 new XmlSerializer(typeof(ExportProductsInRangeDTO[]), new XmlRootAttribute("Products"));
+          
 
             xmlSerializer.Serialize(new StringWriter(sb), products, namespaces);
 
