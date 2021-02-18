@@ -101,7 +101,12 @@ namespace CarDealer
         {
             var customers = context
                 .Customers
-                .ProjectTo<ExportCustomerTotalSalesDTO>()
+                .Select(x=> new ExportCustomerTotalSalesDTO()
+                    {
+                    Name = x.Name,
+                    BoughtCars = x.Sales.Count,
+                    SpentMoney = x.Sales.Sum(s=>s.Car.PartCars.Sum(p=>p.Part.Price))
+                    })
                 .Where(c => c.BoughtCars >= 1)
                 .OrderByDescending(c => c.SpentMoney)
                 .ToArray();
