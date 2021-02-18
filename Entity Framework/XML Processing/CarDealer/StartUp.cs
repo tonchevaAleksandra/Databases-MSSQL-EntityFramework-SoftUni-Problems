@@ -1,17 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Xml.Serialization;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using CarDealer.Data;
 using CarDealer.Dtos.Export;
 using CarDealer.Dtos.Import;
 using CarDealer.Models;
 using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore.Query;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Xml.Serialization;
 
 namespace CarDealer
 {
@@ -319,11 +318,23 @@ namespace CarDealer
 
             var suppliersDtos = (ImportSupplierDTO[])xmlSerializer.Deserialize(new StringReader(inputXml));
 
-            var suppliers = Mapper.Map<Supplier[]>(suppliersDtos);
+            //var suppliers = Mapper.Map<Supplier[]>(suppliersDtos);
+
+            List<Supplier> suppliers = new List<Supplier>();
+
+            foreach (var importSupplierDto in suppliersDtos)
+            {
+                Supplier supplier = new Supplier()
+                {
+                    Name = importSupplierDto.Name,
+                    IsImporter = importSupplierDto.IsImporter
+                };
+                suppliers.Add(supplier);
+            }
             context.Suppliers.AddRange(suppliers);
             context.SaveChanges();
 
-            return $"Successfully imported {suppliers.Length}";
+            return $"Successfully imported {suppliers.Count}";
 
 
         }
