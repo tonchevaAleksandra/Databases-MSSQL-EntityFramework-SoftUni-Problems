@@ -7,6 +7,7 @@ using CarDealer.Models;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -234,12 +235,32 @@ namespace CarDealer
             ImportCustomerDTO[] customersDtos =
                 (ImportCustomerDTO[])xmlSerializer.Deserialize(new StringReader(inputXml));
 
-            var customers = Mapper.Map<Customer[]>(customersDtos);
+            //var customers = Mapper.Map<Customer[]>(customersDtos);
+
+            List<Customer> customers = new List<Customer>();
+            foreach (var customerDto in customersDtos)
+            {
+
+                DateTime date;
+                bool isValidDate = DateTime.TryParseExact(customerDto.BirthDate, "yyyy-MM-dd'T'HH:mm:ss",
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+                if (isValidDate)
+                {
+                    Customer customer = new Customer()
+                    {
+                        Name = customerDto.Name,
+                        BirthDate = date,
+                        IsYoungDriver = customerDto.IsYoungDriver
+                    };
+                    customers.Add(customer);
+                }
+               
+            }
 
             context.Customers.AddRange(customers);
             context.SaveChanges();
 
-            return $"Successfully imported {customers.Length}";
+            return $"Successfully imported {customers.Count}";
 
         }
 

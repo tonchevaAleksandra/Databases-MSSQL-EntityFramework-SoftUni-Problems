@@ -12,7 +12,7 @@ namespace CarDealer.Dtos.Import
         public string Name { get; set; }
 
         [XmlElement("birthDate")]
-        public DateTime BirthDate { get; set; }
+        public string BirthDate { get; set; }
 
         [XmlElement("isYoungDriver")]
         public bool IsYoungDriver { get; set; }
