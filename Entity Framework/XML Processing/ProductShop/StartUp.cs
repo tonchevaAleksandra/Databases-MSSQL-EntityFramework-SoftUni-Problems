@@ -116,7 +116,13 @@ namespace ProductShop
 
             var categories = context
                 .Categories
-                .ProjectTo<ExportCategoryByProductsDTO>()
+                .Select(x=> new ExportCategoryByProductsDTO()
+                    {
+                    Name = x.Name,
+                    AveragePrice = x.CategoryProducts.Average(s=>s.Product.Price),
+                    ProductsCount = x.CategoryProducts.Count,
+                    TotalRevenue = x.CategoryProducts.Sum(s=>s.Product.Price)
+                    })
                 .OrderByDescending(c => c.ProductsCount)
                 .ThenBy(c => c.TotalRevenue)
                 .ToArray();
