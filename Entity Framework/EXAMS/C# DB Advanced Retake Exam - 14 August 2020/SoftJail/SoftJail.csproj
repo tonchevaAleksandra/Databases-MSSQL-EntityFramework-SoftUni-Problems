@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ImportResults\**" />
+    <EmbeddedResource Remove="ImportResults\**" />
+    <None Remove="ImportResults\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20180702165948_Initial.cs" />
     <Compile Remove="Migrations\20180703123523_Initial.cs" />
     <Compile Remove="Migrations\20180703123707_initial.cs" />

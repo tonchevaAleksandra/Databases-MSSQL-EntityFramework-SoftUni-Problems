@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SoftJail.DataProcessor.ImportDto
+﻿namespace SoftJail.DataProcessor.ImportDto
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class ImportPrisonerDto
     {
         [Required]

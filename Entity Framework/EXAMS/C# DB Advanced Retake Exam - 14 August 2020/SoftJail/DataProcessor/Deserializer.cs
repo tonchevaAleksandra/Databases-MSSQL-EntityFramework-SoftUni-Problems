@@ -1,5 +1,8 @@
 ﻿using System.Globalization;
+using System.IO;
+using System.Xml.Serialization;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
+using SoftJail.Data.Models.Enums;
 
 namespace SoftJail.DataProcessor
 {
@@ -18,7 +21,7 @@ namespace SoftJail.DataProcessor
         private const string ErrorMessage = "Invalid Data";
         private const string SuccessfullyAddedDepartment = "Imported {0} with {1} cells";
         private const string SuccessfullyAddedPrisoner = "Imported {0} {1} years old";
-
+        private const string SuccessfullyAddedOfficer = "Imported {0} ({1} prisoners)";
         public static string ImportDepartmentsCells(SoftJailDbContext context, string jsonString)
         {
             StringBuilder sb = new StringBuilder();
@@ -171,7 +174,83 @@ namespace SoftJail.DataProcessor
 
         public static string ImportOfficersPrisoners(SoftJailDbContext context, string xmlString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ImportOfficerDto[]), new XmlRootAttribute("Officers"));
+
+            using (StringReader reader= new StringReader(xmlString))
+            {
+                ImportOfficerDto[] officerDtos = (ImportOfficerDto[]) xmlSerializer.Deserialize(reader);
+
+                //List<OfficerPrisoner> officerPrisoners = new List<OfficerPrisoner>();
+                List<Officer> officers = new List<Officer>();
+
+                foreach (var officerDto in officerDtos)
+                {
+                    if (!IsValid(officerDto))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    //if (officers.Any(x => x.FullName == officerDto.FullName))
+                    //{
+                    //    sb.AppendLine(ErrorMessage);
+                    //    continue;
+                    //}
+
+                    Position position;
+                    bool isValidPosition = Enum.TryParse(officerDto.Position, out position);
+                    if(!isValidPosition)
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    Weapon weapon;
+                    bool isValidWeapon = Enum.TryParse(officerDto.Weapon, out weapon);
+                    if (!isValidWeapon)
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    //Department department = context.Departments.FirstOrDefault(x => x.Id == officerDto.DepartmentId);
+                    //if (department == null)
+                    //{
+                    //    sb.AppendLine(ErrorMessage);
+                    //    continue;
+                    //}
+
+                    Officer officer = new Officer()
+                    {
+                        DepartmentId = officerDto.DepartmentId,
+                        FullName = officerDto.FullName,
+                        Position = position,
+                        Weapon = weapon,
+                        Salary = officerDto.Salary
+                    };
+
+                    foreach (var prisonerDto in officerDto.Prisoners)
+                    {
+                       officer.OfficerPrisoners.Add(new OfficerPrisoner()
+                       {
+                           Officer = officer,
+                           PrisonerId = prisonerDto.Id
+                       });
+                    }
+
+                    officers.Add(officer);
+                    sb.AppendLine(string.Format(SuccessfullyAddedOfficer, officer.FullName,
+                        officer.OfficerPrisoners.Count));
+                }
+
+                context.Officers.AddRange(officers);
+                context.SaveChanges();
+
+                return sb.ToString().Trim();
+            }
+
         }
 
         private static bool IsValid(object obj)
