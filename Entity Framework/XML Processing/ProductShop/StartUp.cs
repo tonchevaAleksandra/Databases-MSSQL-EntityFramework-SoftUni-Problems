@@ -73,10 +73,12 @@ namespace ProductShop
 
             var users = new UserRootDTO()
             {
-                Count = context.Users.Count(u => u.FirstName != null),
+                Count = context.Users.Count(u => u.ProductsSold.Any(p=>p.Buyer!=null)),
                 Users = context.Users
-                    .Where(u => u.ProductsSold.Count >= 1)
+                    .ToArray()
+                    .Where(u => u.ProductsSold.Any(p=>p.Buyer!=null))
                     .OrderByDescending(u => u.ProductsSold.Count)
+                    .Take(10)
                     .Select(u => new UserExportDTO()
                     {
                         FirstName = u.FirstName,
@@ -86,6 +88,7 @@ namespace ProductShop
                         {
                             Count = u.ProductsSold.Count(ps => ps.Buyer != null),
                             Products = u.ProductsSold
+                                .ToArray()
                                 .Where(ps => ps.Buyer != null)
                                 .Select(ps => new ExportProductSoldDTO()
                                 {
@@ -93,10 +96,10 @@ namespace ProductShop
                                     Price = ps.Price
                                 })
                                 .OrderByDescending(p => p.Price)
-                                .Take(10)
                                 .ToArray()
                         }
                     })
+                
                     .ToArray()
             };
 
