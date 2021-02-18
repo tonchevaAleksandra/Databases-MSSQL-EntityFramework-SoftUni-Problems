@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using AutoMapper.QueryableExtensions;
 
 using CarDealer.Data;
+using CarDealer.DTO;
 using CarDealer.Models;
 using CarDealer.DTO.SalesDTOs;
 using CarDealer.DTO.CustomerDTOs;
@@ -82,9 +83,9 @@ namespace CarDealer
             //Console.WriteLine(result);
 
             //Problem 03
-            //string inputJson = File.ReadAllText("../../../Datasets/cars.json");
-            //string result = ImportCars(db, inputJson);
-            //Console.WriteLine(result);
+            string inputJson = File.ReadAllText("../../../Datasets/cars.json");
+            string result = ImportCars(db, inputJson);
+            Console.WriteLine(result);
 
             //Problem 04
             //string inputJson = File.ReadAllText("../../../Datasets/customers.json");
@@ -297,7 +298,30 @@ namespace CarDealer
         //Problem 03
         public static string ImportCars(CarDealerContext context, string inputJson)
         {
-            List<Car> cars = JsonConvert.DeserializeObject<List<Car>>(inputJson);
+            List<ImportCarDto> carsDtos = JsonConvert.DeserializeObject<List<ImportCarDto>>(inputJson);
+
+            List<Car> cars = new List<Car>();
+            foreach (var carDto in carsDtos)
+            {
+                Car car = new Car()
+                {
+                    Make = carDto.Make,
+                    Model = carDto.Model,
+                    TravelledDistance = carDto.TravelledDistance
+                };
+
+                foreach (int partId in carDto.partsId.Distinct())
+                {
+                    car.PartCars.Add(new PartCar()
+                    {
+                        Car = car,
+                        PartId = partId
+                    });
+                }
+
+                cars.Add(car);
+            }
+
             context.Cars.AddRange(cars);
             context.SaveChanges();
 

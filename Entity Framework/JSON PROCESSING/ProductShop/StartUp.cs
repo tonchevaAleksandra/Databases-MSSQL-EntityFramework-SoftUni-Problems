@@ -19,44 +19,44 @@ namespace ProductShop
             //ResetDatabase(db);
 
             //Problem 01
-            string inputJson = File.ReadAllText("../../../Datasets/users.json");
+            //string inputJson = File.ReadAllText("../../../Datasets/users.json");
 
-            var result = ImportUsers(db, inputJson);
-            Console.WriteLine(result);
+            //var result = ImportUsers(db, inputJson);
+            //Console.WriteLine(result);
 
             //Problem 02
 
-         inputJson = File.ReadAllText("../../../Datasets/products.json");
-            result = ImportProducts(db, inputJson);
-            Console.WriteLine(result);
+            //string inputJson = File.ReadAllText("../../../Datasets/products.json");
+            //var result = ImportProducts(db, inputJson);
+            //Console.WriteLine(result);
 
             //Problem 03
-           inputJson = File.ReadAllText("../../../Datasets/categories.json");
-             result = ImportCategories(db, inputJson);
-            Console.WriteLine(result);
+            //string inputJson = File.ReadAllText("../../../Datasets/categories.json");
+            //string result = ImportCategories(db, inputJson);
+            //Console.WriteLine(result);
 
             //Problem 04
-            inputJson = File.ReadAllText("../../../Datasets/categories-products.json");
-            result = ImportCategoryProducts(db, inputJson);
-            Console.WriteLine(result);
+            //string inputJson = File.ReadAllText("../../../Datasets/categories-products.json");
+            //string result = ImportCategoryProducts(db, inputJson);
+            //Console.WriteLine(result);
 
             //Problem 05
-          var  json = GetProductsInRange(db);
-            EnsureDirectoryExists();
-            File.WriteAllText(ResultsDirectoryPath + "/products-in-range.json", json);
+            //string json=GetProductsInRange(db);
+            //EnsureDirectoryExists();
+            // File.WriteAllText(ResultsDirectoryPath + "/products-in-range.json", json);
 
             //Problem 06
-           json = GetSoldProducts(db);
-            EnsureDirectoryExists();
-            File.WriteAllText(ResultsDirectoryPath + "/users-sold-products.json", json);
+            //var json=GetSoldProducts(db);
+            // EnsureDirectoryExists();
+            // File.WriteAllText(ResultsDirectoryPath + "/users-sold-products.json", json);
 
             //Problem 07
-        json = GetCategoriesByProductsCount(db);
-            EnsureDirectoryExists();
-            File.WriteAllText(ResultsDirectoryPath + "/categories-by-products.json", json);
+            //var json = GetCategoriesByProductsCount(db);
+            //EnsureDirectoryExists();
+            //File.WriteAllText(ResultsDirectoryPath + "/categories-by-products.json", json);
 
             //Problem 08
-           json = GetUsersWithProducts(db);
+            var json = GetUsersWithProducts(db);
             EnsureDirectoryExists();
             File.WriteAllText(ResultsDirectoryPath + "/users-and-products.json", json);
 
@@ -67,17 +67,18 @@ namespace ProductShop
 
             var users = context.Users
                 .ToList()
-                .Where(u =>u.ProductsSold.Any() && u.ProductsSold.Any(p => p.Buyer != null))
+                .Where(u => u.ProductsSold.Any(p => p.Buyer != null))
+                .OrderByDescending(u=>u.ProductsSold.Count(p=>p.Buyer!=null))
                 .Select(u => new
                 {
                     lastName = u.LastName,
                     age = u.Age,
                     soldProducts = new
                     {
-                        count = u.ProductsSold.Count(p => p.Buyer != null),
+                        count = u.ProductsSold.Count(/*p => p.Buyer != null*/),
                         products = u.ProductsSold
                             .ToList()
-                        //.Where(p => p.Buyer != null)
+                        .Where(p => p.Buyer != null)
                         .Select(p => new
                         {
                             name = p.Name,
@@ -86,7 +87,7 @@ namespace ProductShop
                             .ToList()
                     }
                 })
-                .OrderByDescending(u => u.soldProducts.count)
+                //.OrderByDescending(u => u.soldProducts.count)
                 .ToList();
 
             var resultObj = new
