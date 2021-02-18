@@ -86,7 +86,20 @@ namespace CarDealer
 
             var sales = context
                 .Sales
-                .ProjectTo<ExportSaleDTO>()
+                .Select(x=> new ExportSaleDTO()
+                {
+                    Car= new ExportCarSaleDTO()
+                    {
+                        Make = x.Car.Make,
+                        Model = x.Car.Model,
+                        TravelledDistance = x.Car.TravelledDistance
+                    },
+                    CustomerName = x.Customer.Name,
+                    Discount = x.Discount,
+                    Price = x.Car.PartCars.Sum(c=>c.Part.Price),
+                    PriceWithDiscount = x.Car.PartCars.Sum(c => c.Part.Price)-
+                                        x.Car.PartCars.Sum(c => c.Part.Price)*x.Discount/100
+                })
                 .ToArray();
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ExportSaleDTO[]), new XmlRootAttribute("sales"));
