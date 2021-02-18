@@ -302,12 +302,29 @@ namespace CarDealer
                 .Where(p => context.Suppliers.Any(s => s.Id == p.SupplierId))
                 .ToArray();
 
-            Part[] parts = Mapper.Map<Part[]>(partsDtos);
+            //Part[] parts = Mapper.Map<Part[]>(partsDtos);
+            List<Part> parts = new List<Part>();
+            foreach (var partsDto in partsDtos)
+            {
+                if (context.Suppliers.Any(c => c.Id == partsDto.SupplierId))
+                {
+                    Part part = new Part()
+                    {
+                        Name = partsDto.Name,
+                        Price = partsDto.Price,
+                        Quantity = partsDto.Quantity,
+                        SupplierId = partsDto.SupplierId
+                    };
+
+                    parts.Add(part);
+                }
+               
+            }
 
             context.Parts.AddRange(parts);
             context.SaveChanges();
 
-            return $"Successfully imported {parts.Length}";
+            return $"Successfully imported {parts.Count}";
 
         }
 
