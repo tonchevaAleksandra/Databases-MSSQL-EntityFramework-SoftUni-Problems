@@ -26,7 +26,7 @@
         public DateTime IncarcerationDate { get; set; }
 
         public DateTime? ReleaseDate { get; set; }
-
+    
         public decimal? Bail { get; set; }
 
         [ForeignKey(nameof(Cell))]

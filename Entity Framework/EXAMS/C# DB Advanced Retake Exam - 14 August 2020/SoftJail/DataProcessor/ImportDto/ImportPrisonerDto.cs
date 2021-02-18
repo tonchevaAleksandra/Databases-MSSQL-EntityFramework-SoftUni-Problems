@@ -21,6 +21,7 @@ namespace SoftJail.DataProcessor.ImportDto
 
         public string ReleaseDate { get; set; }
 
+        [Range(typeof(decimal), "0", "79228162514264337593543950335")]
         public decimal? Bail { get; set; }
 
         public int? CellId { get; set; }

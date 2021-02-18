@@ -33,30 +33,30 @@ namespace SoftJail.Data
 
 		protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Prisoner>(prisoner =>
-            {
-                prisoner.HasOne(p => p.Cell)
-                    .WithMany(c => c.Prisoners)
-                    .HasForeignKey(p => p.CellId)
-                    .OnDelete(DeleteBehavior.Restrict);
-            });
+            //builder.Entity<Prisoner>(prisoner =>
+            //{
+            //    prisoner.HasOne(p => p.Cell)
+            //        .WithMany(c => c.Prisoners)
+            //        .HasForeignKey(p => p.CellId)
+            //        .OnDelete(DeleteBehavior.Restrict);
 
+            //});
 
-            builder.Entity<Cell>(cell =>
-            {
-                cell.HasOne(c => c.Department)
-                    .WithMany(d => d.Cells)
-                    .HasForeignKey(c => c.DepartmentId)
-                    .OnDelete(DeleteBehavior.Restrict);
-            });
+            //builder.Entity<Cell>(cell =>
+            //{
+            //    cell.HasOne(c => c.Department)
+            //        .WithMany(d => d.Cells)
+            //        .HasForeignKey(c => c.DepartmentId)
+            //        .OnDelete(DeleteBehavior.Restrict);
+            //});
 
-            builder.Entity<Mail>(mail =>
-            {
-                mail.HasOne(m => m.Prisoner)
-                    .WithMany(p => p.Mails)
-                    .HasForeignKey(m => m.PrisonerId)
-                    .OnDelete(DeleteBehavior.Restrict);
-            });
+            //builder.Entity<Mail>(mail =>
+            //{
+            //    mail.HasOne(m => m.Prisoner)
+            //        .WithMany(p => p.Mails)
+            //        .HasForeignKey(m => m.PrisonerId)
+            //        .OnDelete(DeleteBehavior.Restrict);
+            //});
 
             builder.Entity<OfficerPrisoner>(offPr =>
             {
