@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -90,7 +91,7 @@ namespace ProductShop
                                     Name = ps.Name,
                                     Price = ps.Price
                                 })
-                                .OrderByDescending(p=>p.Price)
+                                .OrderByDescending(p => p.Price)
                                 .Take(10)
                                 .ToArray()
                         }
@@ -183,7 +184,7 @@ namespace ProductShop
                 new XmlRootAttribute("CategoryProducts"));
 
             var categoryProductsDtos =
-                (ImportCategoryProductDTO[]) xmlSerializer.Deserialize(new StringReader(inputXml));
+                (ImportCategoryProductDTO[])xmlSerializer.Deserialize(new StringReader(inputXml));
 
             var categoryProducts = Mapper.Map<CategoryProduct[]>(categoryProductsDtos.Where(cp =>
                 context.Categories.Any(c => c.Id == cp.CategoryId) && context.Products.Any(p => p.Id == cp.ProductId)));
@@ -201,14 +202,27 @@ namespace ProductShop
             XmlSerializer xmlSerializer =
                 new XmlSerializer(typeof(ImportCategoryDTO[]), new XmlRootAttribute("Categories"));
 
-            var categoriesDtos = (ImportCategoryDTO[]) xmlSerializer.Deserialize(new StringReader(inputXml));
+            var categoriesDtos = (ImportCategoryDTO[])xmlSerializer.Deserialize(new StringReader(inputXml));
 
-            var categories = Mapper.Map<Category[]>(categoriesDtos.Where(c => c.Name != null));
+            //var categories = Mapper.Map<Category[]>(categoriesDtos.Where(c => c.Name != null));
+            List<Category> categories = new List<Category>();
 
-            context.Categories.AddRange(categories);
+            foreach (var categoryDto in categoriesDtos)
+            {
+                Category category = new Category()
+                {
+                    Name = categoryDto.Name
+                };
+                if (!categories.Any(c => c.Name == category.Name))
+                {
+                    categories.Add(category);
+                }
+                    
+            }
+            context.Categories.AddRange(categories.Distinct());
             context.SaveChanges();
 
-            return $"Successfully imported {categories.Length}";
+            return $"Successfully imported {categories.Count}";
 
         }
 
@@ -220,12 +234,26 @@ namespace ProductShop
 
             var productsDtodDtos = (ImportProductDTO[])xmlSerializer.Deserialize(new StringReader(inputXml));
 
-            var products = Mapper.Map<Product[]>(productsDtodDtos);
+            List<Product> products = new List<Product>();
+
+            foreach (var productDto in productsDtodDtos)
+            {
+                Product product = new Product()
+                {
+                    BuyerId = productDto.BuyerId,
+                    Name = productDto.Name,
+                    SellerId = productDto.SellerId,
+                    Price = productDto.Price
+                };
+                products.Add(product);
+            }
+
+            //var products = Mapper.Map<Product[]>(productsDtodDtos);
 
             context.Products.AddRange(products);
             context.SaveChanges();
 
-            return $"Successfully imported {products.Length}";
+            return $"Successfully imported {products.Count}";
 
         }
 
