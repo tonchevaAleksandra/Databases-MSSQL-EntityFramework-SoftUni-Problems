@@ -71,22 +71,24 @@
             //IncreasePrices(db);
 
             //Problem 16
-            //Console.WriteLine(RemoveBooks(db));
+            Console.WriteLine(RemoveBooks(db));
         }
 
         //Problem 16
         public static int RemoveBooks(BookShopContext context)
         {
-            var categoryBooks = context.BooksCategories
-                .Where(bc => bc.Book.Copies < 4200);
-            context.BooksCategories.RemoveRange(categoryBooks);
-            context.SaveChanges();
+            //var categoryBooks = context.BooksCategories
+            //    .Where(bc => bc.Book.Copies < 4200);
+            //context.BooksCategories.RemoveRange(categoryBooks);
+            //context.SaveChanges();
             var books = context.Books
-                .Where(b => b.Copies < 4200);
+                .Where(b => b.Copies < 4200)
+                .ToList();
             int count = books.Count();
             context.Books.RemoveRange(books);
             context.SaveChanges();
-            return count;
+
+            return books.Count();
         }
         //Problem 15
         public static void IncreasePrices(BookShopContext context)
