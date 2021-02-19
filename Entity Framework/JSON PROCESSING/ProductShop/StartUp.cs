@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ProductShop.DTO;
 
 namespace ProductShop
 {
@@ -68,21 +69,22 @@ namespace ProductShop
             var users = context.Users
                 .ToList()
                 .Where(u => u.ProductsSold.Any(p => p.Buyer != null))
-                .OrderByDescending(u=>u.ProductsSold.Count(p=>p.Buyer!=null))
-                .Select(u => new
+                .OrderByDescending(u => u.ProductsSold.Count(p => p.Buyer != null))
+                .Select(u => new ExportUserDto()
                 {
-                    lastName = u.LastName,
-                    age = u.Age,
-                    soldProducts = new
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Age = u.Age,
+                    SoldProducts = new SoldProductsDto()
                     {
-                        count = u.ProductsSold.Count(/*p => p.Buyer != null*/),
-                        products = u.ProductsSold
+                        Count = u.ProductsSold.Count(p => p.Buyer != null),
+                        Products = u.ProductsSold
                             .ToList()
                         .Where(p => p.Buyer != null)
-                        .Select(p => new
+                        .Select(p => new ProductDto()
                         {
-                            name = p.Name,
-                            price = p.Price
+                            Name = p.Name,
+                            Price = p.Price
                         })
                             .ToList()
                     }
@@ -90,10 +92,10 @@ namespace ProductShop
                 //.OrderByDescending(u => u.soldProducts.count)
                 .ToList();
 
-            var resultObj = new
+            var resultObj = new UserWithProductsDto()
             {
-                usersCount = users.Count,
-                users = users
+                Count = users.Count,
+                Users = users
             };
 
             var result = JsonConvert.SerializeObject(resultObj, new JsonSerializerSettings
