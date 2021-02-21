@@ -56,7 +56,7 @@ namespace MiniORM
 
         public bool Remove(TEntity item)
         {
-            if (item==null)
+            if (item == null)
             {
                 throw new ArgumentNullException(nameof(item), "Item cannot be null!");
             }
