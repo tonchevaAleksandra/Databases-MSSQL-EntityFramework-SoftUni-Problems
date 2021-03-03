@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-
-
 namespace MusicHub.Data.Models
 {
     public class Performer
@@ -26,6 +24,5 @@ namespace MusicHub.Data.Models
 
         public virtual ICollection<SongPerformer> PerformerSongs { get; set; }
             = new HashSet<SongPerformer>();
-
     }
 }
