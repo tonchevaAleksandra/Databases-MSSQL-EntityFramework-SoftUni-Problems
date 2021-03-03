@@ -17,8 +17,8 @@ namespace MusicHub
                 new MusicHubDbContext();
 
             DbInitializer.ResetDatabase(context);
-
             Console.WriteLine(ExportAlbumsInfo(context,9));
+            //Test your solutions here
         }
 
         public static string ExportAlbumsInfo(MusicHubDbContext context, int producerId)
@@ -39,6 +39,7 @@ namespace MusicHub
                             Writer = y.Writer.Name,
 
                         })
+                        .ToList()
                         .OrderByDescending(y => y.SongName)
                         .ThenBy(y => y.Writer)
                         .ToList(),
@@ -51,11 +52,12 @@ namespace MusicHub
             {
                 sb.AppendLine($"-AlbumName: {album.AlbumName}")
                     .AppendLine($"-ReleaseDate: {album.ReleaseDate}")
-                    .AppendLine($"-ProducerName: {album.ProducerName}");
-                for (int i = 0; i < album.Songs.Count; i++)
+                    .AppendLine($"-ProducerName: {album.ProducerName}")
+                    .AppendLine("-Songs:");
+                foreach (var song in album.Songs)
                 {
-                    var song = album.Songs[i];
-                    sb.AppendLine($"---#{i + 1}")
+                    var count = 1;
+                    sb.AppendLine($"---#{count++}")
                         .AppendLine($"---SongName: {song.SongName}")
                         .AppendLine($"---Price: {song.Price:F2}")
                         .AppendLine($"---Writer: {song.Writer}");
@@ -64,7 +66,7 @@ namespace MusicHub
                 sb.AppendLine($"-AlbumPrice: {album.AlbumPrice:F2}");
             }
 
-            return sb.ToString();
+            return sb.ToString().TrimEnd();
         }
 
         public static string ExportSongsAboveDuration(MusicHubDbContext context, int duration)

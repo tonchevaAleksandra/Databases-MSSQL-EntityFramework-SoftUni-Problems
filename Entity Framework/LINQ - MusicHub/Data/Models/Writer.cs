@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MusicHub.Data.Models
@@ -13,6 +14,8 @@ namespace MusicHub.Data.Models
         public string Name { get; set; }
 
         public string Pseudonym { get; set; }
-        public ICollection<Song> Songs => new HashSet<Song>();
+
+        public virtual ICollection<Song> Songs { get; set; }
+            = new HashSet<Song>();
     }
 }
