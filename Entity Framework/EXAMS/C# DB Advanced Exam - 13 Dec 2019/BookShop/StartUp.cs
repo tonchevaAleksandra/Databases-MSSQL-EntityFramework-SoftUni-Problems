@@ -1,14 +1,10 @@
 ﻿namespace BookShop
 {
+    using Data;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Globalization;
     using System.IO;
-    using System.Linq;
-
-    using Microsoft.EntityFrameworkCore;
-    using Newtonsoft.Json;
-
-    using Data;
 
     public class StartUp
     {
@@ -22,7 +18,7 @@
 
             ImportEntities(context, projectDir + @"Datasets/", projectDir + @"ImportResults/");
 
-            //ExportEntities(context, projectDir + @"ExportResults/");
+            ExportEntities(context, projectDir + @"ExportResults/");
 
             using (var transaction = context.Database.BeginTransaction())
             {
