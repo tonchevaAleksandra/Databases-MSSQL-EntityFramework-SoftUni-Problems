@@ -44,7 +44,7 @@ namespace BookShop.DataProcessor
                     }
 
                     DateTime publishedOn;
-                    bool isValidDate = DateTime.TryParseExact(bookDto.PublisheOn, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out publishedOn);
+                    bool isValidDate = DateTime.TryParseExact(bookDto.PublishedOn, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out publishedOn);
 
                     if (!isValidDate)
                     {
@@ -67,15 +67,76 @@ namespace BookShop.DataProcessor
                 }
             }
 
-            context.AddRange(booksToAdd);
+            context.Books.AddRange(booksToAdd);
             context.SaveChanges();
-            return sb.ToString();
+            return sb.ToString().TrimEnd();
 
         }
 
         public static string ImportAuthors(BookShopContext context, string jsonString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            List<Author> authorsToAdd = new List<Author>();
+            AuthorDto[] authorsDtos = JsonConvert.DeserializeObject<AuthorDto[]>(jsonString);
+
+            foreach (var authorsDto in authorsDtos)
+            {
+                if (!IsValid(authorsDto))
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
+                if (authorsToAdd.Any(x => x.Email == authorsDto.Email))
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
+                Author author = new Author()
+                {
+                    FirstName = authorsDto.FirstName,
+                    LastName = authorsDto.LastName,
+                    Phone = authorsDto.Phone,
+                    Email = authorsDto.Email
+                };
+
+                foreach (var authorBookDto in authorsDto.Books)
+                {
+                    if (!authorBookDto.BookId.HasValue)
+                    {
+                        continue;
+                    }
+
+                    Book book = context.Books.FirstOrDefault(x => x.Id == authorBookDto.BookId);
+
+                    if (book == null)
+                    {
+                        continue;
+                    }
+
+                    author.AuthorsBooks.Add(new AuthorBook()
+                    {
+                        Book = book,
+                        Author = author
+                    });
+                }
+
+                if (!author.AuthorsBooks.Any())
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
+                authorsToAdd.Add(author);
+                sb.AppendLine(String.Format(SuccessfullyImportedAuthor, author.FirstName + " " + author.LastName,
+                    author.AuthorsBooks.Count));
+            }
+
+            context.Authors.AddRange(authorsToAdd);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
         private static bool IsValid(object dto)
