@@ -38,11 +38,11 @@
 
             PrintAndExportEntityToFile(projects, exportDir + "Actual Result - ImportBooks.txt");
 
-            var employees =
-             DataProcessor.Deserializer.ImportAuthors(context,
-                 File.ReadAllText(baseDir + "authors.json"));
+            //var employees =
+            // DataProcessor.Deserializer.ImportAuthors(context,
+            //     File.ReadAllText(baseDir + "authors.json"));
 
-            PrintAndExportEntityToFile(employees, exportDir + "Actual Result - ImportAuthors.txt");
+            //PrintAndExportEntityToFile(employees, exportDir + "Actual Result - ImportAuthors.txt");
         }
 
         private static void ExportEntities(BookShopContext context, string exportDir)

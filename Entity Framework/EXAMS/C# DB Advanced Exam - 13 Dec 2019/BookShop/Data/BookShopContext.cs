@@ -6,6 +6,12 @@ namespace BookShop.Data
 
     public class BookShopContext : DbContext
     {
+        public DbSet<Book> Books { get; set; }
+
+        public DbSet<Author> Authors { get; set; }
+
+        public DbSet<AuthorBook> AuthorsBooks { get; set; }
+
         public BookShopContext() { }
 
         public BookShopContext(DbContextOptions options)
