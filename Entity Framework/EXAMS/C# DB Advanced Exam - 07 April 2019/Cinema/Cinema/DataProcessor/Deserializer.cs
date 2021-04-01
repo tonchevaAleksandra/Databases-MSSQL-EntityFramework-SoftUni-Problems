@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 using Cinema.Data.Models;
 using Cinema.Data.Models.Enums;
 using Cinema.DataProcessor.ImportDto;
@@ -17,13 +20,13 @@ namespace Cinema.DataProcessor
     public class Deserializer
     {
         private const string ErrorMessage = "Invalid data!";
-        private const string SuccessfulImportMovie 
+        private const string SuccessfulImportMovie
             = "Successfully imported {0} with genre {1} and rating {2}!";
-        private const string SuccessfulImportHallSeat 
+        private const string SuccessfulImportHallSeat
             = "Successfully imported {0}({1}) with {2} seats!";
-        private const string SuccessfulImportProjection 
+        private const string SuccessfulImportProjection
             = "Successfully imported projection {0} on {1}!";
-        private const string SuccessfulImportCustomerTicket 
+        private const string SuccessfulImportCustomerTicket
             = "Successfully imported customer {0} {1} with bought tickets: {2}!";
 
         public static string ImportMovies(CinemaContext context, string jsonString)
@@ -59,7 +62,7 @@ namespace Cinema.DataProcessor
                     continue;
                 }
 
-                if (moviesToAdd.Any(x=>x.Title==movieDto.Title))
+                if (moviesToAdd.Any(x => x.Title == movieDto.Title))
                 {
                     sb.AppendLine(ErrorMessage);
                     continue;
@@ -107,7 +110,7 @@ namespace Cinema.DataProcessor
 
                 for (int i = 0; i < hallDto.Seats; i++)
                 {
-                    hall.Seats.Add(new Seat(){Hall = hall});
+                    hall.Seats.Add(new Seat() { Hall = hall });
                 }
 
                 string projectionType;
@@ -119,7 +122,7 @@ namespace Cinema.DataProcessor
                 {
                     projectionType = "3D";
                 }
-                else if(hall.Is4Dx)
+                else if (hall.Is4Dx)
                 {
                     projectionType = "4Dx";
                 }
@@ -138,7 +141,63 @@ namespace Cinema.DataProcessor
 
         public static string ImportProjections(CinemaContext context, string xmlString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            XmlSerializer serializer =
+                new XmlSerializer(typeof(ImportProjectionDto[]), new XmlRootAttribute("Projections"));
+
+            List<Projection> projectionsToAdd = new List<Projection>();
+
+            using (StringReader reader = new StringReader(xmlString))
+            {
+                ImportProjectionDto[] projectionDtos = (ImportProjectionDto[])serializer.Deserialize(reader);
+
+                foreach (var projectionDto in projectionDtos)
+                {
+                    if (!IsValid(projectionDto))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    Movie movie = context.Movies.FirstOrDefault(x => x.Id == projectionDto.MovieId);
+                    if (movie == null)
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    if (!context.Halls.Any(x => x.Id == projectionDto.HallId))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    DateTime dateTime;
+                    bool isValidDate = DateTime.TryParseExact(projectionDto.DateTime, "yyyy-MM-dd HH:mm:ss",
+                        CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime);
+                    if (!isValidDate)
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    Projection projection = new Projection()
+                    {
+                        DateTime = dateTime,
+                        HallId = projectionDto.HallId,
+                        MovieId = projectionDto.MovieId
+                    };
+
+                    projectionsToAdd.Add(projection);
+                    sb.AppendLine(string.Format(SuccessfulImportProjection, movie.Title,
+                        projection.DateTime.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)));
+                }
+            }
+                
+            context.Projections.AddRange(projectionsToAdd);
+            context.SaveChanges();
+            return sb.ToString().Trim();
+
         }
 
         public static string ImportCustomerTickets(CinemaContext context, string xmlString)

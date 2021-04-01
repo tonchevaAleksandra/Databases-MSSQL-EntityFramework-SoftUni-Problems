@@ -43,9 +43,9 @@
                     File.ReadAllText(baseDir + "halls-seats.json"));
             PrintAndExportEntityToFile(hallSeats, exportDir + "Actual Result - ImportHallSeats.txt");
 
-            //var projections = DataProcessor.Deserializer.ImportProjections(context,
-            //    File.ReadAllText(baseDir + "projections.xml"));
-            //PrintAndExportEntityToFile(projections, exportDir + "Actual Result - ImportProjections.txt");
+            var projections = DataProcessor.Deserializer.ImportProjections(context,
+                File.ReadAllText(baseDir + "projections.xml"));
+            PrintAndExportEntityToFile(projections, exportDir + "Actual Result - ImportProjections.txt");
 
             //var customerTickets =
             //    DataProcessor.Deserializer.ImportCustomerTickets(context,
