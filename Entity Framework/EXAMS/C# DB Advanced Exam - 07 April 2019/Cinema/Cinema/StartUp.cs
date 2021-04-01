@@ -47,10 +47,10 @@
                 File.ReadAllText(baseDir + "projections.xml"));
             PrintAndExportEntityToFile(projections, exportDir + "Actual Result - ImportProjections.txt");
 
-            //var customerTickets =
-            //    DataProcessor.Deserializer.ImportCustomerTickets(context,
-            //        File.ReadAllText(baseDir + "customers-tickets.xml"));
-            //PrintAndExportEntityToFile(customerTickets, exportDir + "Actual Result - ImportCustomerTickets.txt");
+            var customerTickets =
+                DataProcessor.Deserializer.ImportCustomerTickets(context,
+                    File.ReadAllText(baseDir + "customers-tickets.xml"));
+            PrintAndExportEntityToFile(customerTickets, exportDir + "Actual Result - ImportCustomerTickets.txt");
         }
 
         private static void ExportEntities(CinemaContext context, string exportDir)

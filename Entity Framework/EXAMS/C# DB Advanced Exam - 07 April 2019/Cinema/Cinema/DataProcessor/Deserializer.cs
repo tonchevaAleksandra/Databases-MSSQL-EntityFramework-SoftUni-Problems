@@ -202,7 +202,62 @@ namespace Cinema.DataProcessor
 
         public static string ImportCustomerTickets(CinemaContext context, string xmlString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ImportCustomerDto[]), new XmlRootAttribute("Customers"));
+            List<Customer> customersToAdd = new List<Customer>();
+
+            using (StringReader reader= new StringReader(xmlString))
+            {
+                ImportCustomerDto[] customersDtos = (ImportCustomerDto[])xmlSerializer.Deserialize(reader);
+                foreach (var customerDto in customersDtos)
+                {
+                    if (!IsValid(customerDto))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    Customer customer = new Customer()
+                    {
+                        Age = customerDto.Age,
+                        Balance = customerDto.Balance,
+                        FirstName = customerDto.FirstName,
+                        LastName = customerDto.LastName
+                    };
+
+                    foreach (var ticketDto in customerDto.Tickets)
+                    {
+                        if (!IsValid(ticketDto))
+                        {
+                            continue;
+                        }
+
+                        Projection projection = context.Projections.FirstOrDefault(x => x.Id == ticketDto.ProjectionId);
+                        if (projection==null)
+                        {
+                            continue;
+                        }
+
+                        Ticket ticket = new Ticket()
+                        {
+                            Customer = customer,
+                            Price = ticketDto.Price,
+                            Projection = projection
+                        };
+
+                        customer.Tickets.Add(ticket);
+                    }
+
+                    customersToAdd.Add(customer);
+                    sb.AppendLine(string.Format(SuccessfulImportCustomerTicket, customer.FirstName, customer.LastName,
+                        customer.Tickets.Count));
+                }
+
+            }
+            context.Customers.AddRange(customersToAdd);
+            context.SaveChanges();
+            return sb.ToString().Trim();
         }
 
         private static bool IsValid(object dto)
