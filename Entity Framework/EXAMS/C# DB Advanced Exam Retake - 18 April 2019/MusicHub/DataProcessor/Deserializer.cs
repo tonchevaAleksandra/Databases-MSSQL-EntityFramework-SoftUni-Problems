@@ -211,7 +211,33 @@ namespace MusicHub.DataProcessor
 
         public static string ImportSongPerformers(MusicHubDbContext context, string xmlString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ImportPerformerDto[]), new XmlRootAttribute("Performers"));
+            List<Performer> performersToAdd = new List<Performer>();
+
+            using (StringReader reader= new StringReader(xmlString))
+            {
+                ImportPerformerDto[] performerDtos = (ImportPerformerDto[]) xmlSerializer.Deserialize(reader);
+
+                foreach (var performerDto in performerDtos)
+                {
+                    if (!IsValid(performerDto))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    Performer performer = new Performer()
+                    {
+                        FirstName = performerDto.FirstName,
+                        LastName = performerDto.LastName,
+                        Age = performerDto.Age,
+                        NetWorth = performerDto.NetWorth
+                    };
+
+                }
+            }
         }
 
 

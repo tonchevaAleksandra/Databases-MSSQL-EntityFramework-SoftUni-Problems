@@ -21,7 +21,7 @@ namespace CarDealer
         private const string ResultDirPath = DatasetsDirPath + "Results/";
         public static void Main(string[] args)
         {
-            InitializeMapper();
+            //InitializeMapper();
 
             using CarDealerContext db = new CarDealerContext();
             //ResetDatabase(db);
@@ -61,11 +61,11 @@ namespace CarDealer
 
             //TODO Problem 08
             //string result = GetLocalSuppliers(db);
-            //File.WriteAllText(ResultDirPath + "local-suppliers.xml",result);
+            //File.WriteAllText(ResultDirPath + "local-suppliers.xml", result);
 
             //TODO Problem 09
-            //string result = GetCarsWithTheirListOfParts(db);
-            //File.WriteAllText(ResultDirPath + "cars-and-parts.xml", result);
+            string result = GetCarsWithTheirListOfParts(db);
+            File.WriteAllText(ResultDirPath + "cars-and-parts.xml", result);
 
             //TODO Problem 10
             //string result = GetTotalSalesByCustomer(db);
@@ -143,7 +143,19 @@ namespace CarDealer
                 .OrderByDescending(c => c.TravelledDistance)
                 .ThenBy(c => c.Model)
                 .Take(5)
-                .ProjectTo<ExportCarWithPartsDTO>()
+                .Select(x=> new ExportCarWithPartsDTO()
+                {
+                    Make = x.Make,
+                    Model = x.Model,
+                    Parts = x.PartCars.Select(y=>new ExportPartCarsDTO()
+                    {
+                        Name = y.Part.Name,
+                        Price = y.Part.Price
+                    }).OrderByDescending(y => y.Price)
+                        .ToArray(),
+                    TravelledDistance = x.TravelledDistance
+
+                })
                 .ToArray();
 
             var namespaces = new XmlSerializerNamespaces();
@@ -168,7 +180,12 @@ namespace CarDealer
             var suppliers = context
                 .Suppliers
                 .Where(s => !s.IsImporter)
-                .ProjectTo<ExportLocalSuppliersDTO>()
+                .Select(x=> new ExportLocalSuppliersDTO()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    PartsCount = x.Parts.Count
+                })
                 .ToArray();
 
             XmlSerializer xmlSerializer =
@@ -190,7 +207,12 @@ namespace CarDealer
                 .Where(c => c.Make == "BMW")
                 .OrderBy(c => c.Model)
                 .ThenByDescending(c => c.TravelledDistance)
-                .ProjectTo<ExportCarsBMWDTO>()
+                .Select(x=> new ExportCarsBMWDTO()
+                {
+                    Id = x.Id,
+                    Model = x.Model,
+                    TravelledDistance = x.TravelledDistance
+                })
                 .ToArray();
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ExportCarsBMWDTO[]), new XmlRootAttribute("cars"));
@@ -213,7 +235,12 @@ namespace CarDealer
                 .OrderBy(c => c.Make)
                 .ThenBy(c => c.Model)
                 .Take(10)
-                .ProjectTo<ExportCarWithDistanceDTO>()
+                .Select(x=> new ExportCarWithDistanceDTO
+                {
+                    Make = x.Make,
+                    Model = x.Model,
+                    TravelledDistance = x.TravelledDistance
+                })
                 .ToArray();
 
             XmlSerializer xmlSerializer =
