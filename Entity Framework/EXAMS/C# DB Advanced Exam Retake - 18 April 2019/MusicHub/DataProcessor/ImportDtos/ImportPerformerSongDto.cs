@@ -5,7 +5,7 @@ namespace MusicHub.DataProcessor.ImportDtos
     [XmlType("Song")]
     public class ImportPerformerSongDto
     {
-        [XmlAttribute("Id")]
+        [XmlAttribute("id")]
         public int Id { get; set; }
     }
 }

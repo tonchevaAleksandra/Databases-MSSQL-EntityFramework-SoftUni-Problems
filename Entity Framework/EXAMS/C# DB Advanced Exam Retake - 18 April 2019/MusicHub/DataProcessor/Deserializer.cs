@@ -236,8 +236,40 @@ namespace MusicHub.DataProcessor
                         NetWorth = performerDto.NetWorth
                     };
 
+                    bool isAllSongsValid = true;
+
+                    foreach (var songDto in performerDto.PerformersSongs)
+                    {
+                        Song song = context.Songs.FirstOrDefault(x => x.Id == songDto.Id);
+                        if (song==null)
+                        {
+                            isAllSongsValid = false;
+                            break;
+                        }
+
+                        performer.PerformerSongs.Add(new SongPerformer()
+                        {
+                            Performer = performer,
+                            Song = song
+                        });
+                    }
+
+                    if (!isAllSongsValid)
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    performersToAdd.Add(performer);
+                    sb.AppendLine(string.Format(SuccessfullyImportedPerformer, performer.FirstName,
+                        performer.PerformerSongs.Count));
                 }
             }
+
+            context.Performers.AddRange(performersToAdd);
+            context.SaveChanges();
+
+            return sb.ToString().Trim();
         }
 
 

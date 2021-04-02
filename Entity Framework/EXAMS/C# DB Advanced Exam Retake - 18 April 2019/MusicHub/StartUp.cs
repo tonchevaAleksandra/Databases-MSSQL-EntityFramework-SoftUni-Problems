@@ -44,9 +44,9 @@
                 File.ReadAllText(baseDir + "ImportSongs.xml"));
             PrintAndExportEntityToFile(songs, exportDir + "Actual - ImportSongs.txt");
 
-            //var performers = DataProcessor.Deserializer.ImportSongPerformers(context, 
-            //    File.ReadAllText(baseDir + "ImportSongPerformers.xml"));
-            //PrintAndExportEntityToFile(performers, exportDir + "Actual - ImportSongPerformers.txt");
+            var performers = DataProcessor.Deserializer.ImportSongPerformers(context,
+                File.ReadAllText(baseDir + "ImportSongPerformers.xml"));
+            PrintAndExportEntityToFile(performers, exportDir + "Actual - ImportSongPerformers.txt");
         }
 
         private static void ExportEntities(MusicHubDbContext context, string exportDir)
