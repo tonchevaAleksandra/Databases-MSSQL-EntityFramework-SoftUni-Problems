@@ -55,9 +55,9 @@
             Console.WriteLine(jsonOutput);
             File.WriteAllText(exportDir + "Actual - AlbumsInfo.json", jsonOutput);
 
-            //var xmlOutput = DataProcessor.Serializer.ExportSongsAboveDuration(context, 4);
-            //Console.WriteLine(xmlOutput);
-            //File.WriteAllText(exportDir + "Actual - SongsAboveDuration.xml", xmlOutput);
+            var xmlOutput = DataProcessor.Serializer.ExportSongsAboveDuration(context, 4);
+            Console.WriteLine(xmlOutput);
+            File.WriteAllText(exportDir + "Actual - SongsAboveDuration.xml", xmlOutput);
         }
 
         private static void ResetDatabase(MusicHubDbContext context, bool shouldDropDatabase = false)

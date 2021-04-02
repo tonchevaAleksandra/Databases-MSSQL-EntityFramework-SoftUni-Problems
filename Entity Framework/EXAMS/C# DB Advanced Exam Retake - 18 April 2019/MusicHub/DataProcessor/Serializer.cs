@@ -1,6 +1,9 @@
 ﻿using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
+using MusicHub.DataProcessor.ExportDtos;
 using Newtonsoft.Json;
 
 namespace MusicHub.DataProcessor
@@ -40,7 +43,31 @@ namespace MusicHub.DataProcessor
 
         public static string ExportSongsAboveDuration(MusicHubDbContext context, int duration)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add(String.Empty, String.Empty);
+            var encoding = Encoding.UTF8;
+            var songs = context.Songs.Where(x => x.Duration.TotalSeconds > duration)
+                .Select(x => new ExportSongDto()
+                {
+                    SongName = x.Name,
+                    Writer = x.Writer.Name,
+                    Performer = x.SongPerformers.FirstOrDefault().Performer.FirstName + " " +
+                                x.SongPerformers.FirstOrDefault().Performer.LastName,
+                    AlbumProducer = x.Album.Producer.Name,
+                    Duration = x.Duration.ToString("c")
+                })
+                .OrderBy(x => x.SongName)
+                .ThenBy(x => x.Writer)
+                .ThenBy(x => x.Performer)
+                .ToArray();
+
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ExportSongDto[]), new XmlRootAttribute("Songs"));
+            
+            xmlSerializer.Serialize(new StringWriter(sb), songs, namespaces);
+
+            return sb.ToString().Trim();
         }
     }
 }
