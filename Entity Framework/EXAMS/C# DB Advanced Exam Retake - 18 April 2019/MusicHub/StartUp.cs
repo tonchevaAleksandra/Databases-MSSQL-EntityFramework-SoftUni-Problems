@@ -23,21 +23,22 @@
             ImportEntities(context, projectDir + @"Datasets/", projectDir + @"ImportResults/");
             //ExportEntities(context, projectDir + @"ExportResults/");
 
-            //using (var transaction = context.Database.BeginTransaction())
-            //{
-            //    transaction.Rollback();
-            //}
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                transaction.Rollback();
+            }
         }
 
         private static void ImportEntities(MusicHubDbContext context, string baseDir, string exportDir)
         {
             var writers = DataProcessor.Deserializer.ImportWriters(context,
-                    File.ReadAllText(baseDir + "ImportWriters.json"));
-            PrintAndExportEntityToFile(writers, exportDir + "ImportWriters.txt");
+                File.ReadAllText(baseDir + "ImportWriters.json"));
+           
+            PrintAndExportEntityToFile(writers, exportDir + "Actual - ImportWriters.txt");
 
-            //var producerAlbums = DataProcessor.Deserializer.ImportProducersAlbums(context,
-            //        File.ReadAllText(baseDir + "Actual - ImportProducersAlbums.json"));
-            //PrintAndExportEntityToFile(producerAlbums, exportDir + "ImportProducersAlbums.txt");
+            var producerAlbums = DataProcessor.Deserializer.ImportProducersAlbums(context,
+                    File.ReadAllText(baseDir + "ImportProducersAlbums.json"));
+            PrintAndExportEntityToFile(producerAlbums, exportDir + "Actual - ImportProducersAlbums.txt");
 
             //var songs = DataProcessor.Deserializer.ImportSongs(context, 
             //    File.ReadAllText(baseDir + "Actual - ImportSongs.xml"));

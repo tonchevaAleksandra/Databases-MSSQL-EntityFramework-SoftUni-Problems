@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Text;
 using MusicHub.Data.Models;
 using MusicHub.DataProcessor.ImportDtos;
@@ -57,7 +58,70 @@ namespace MusicHub.DataProcessor
 
         public static string ImportProducersAlbums(MusicHubDbContext context, string jsonString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            List<Producer> producersToAdd = new List<Producer>();
+            ImportProducerAlbumsDto[] producersDtos =
+                JsonConvert.DeserializeObject<ImportProducerAlbumsDto[]>(jsonString);
+
+            foreach (var producerDto in producersDtos)
+            {
+                if (!IsValid(producerDto))
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
+                Producer producer = new Producer()
+                {
+                    Name = producerDto.Name,
+                    Pseudonym = producerDto.Pseudonym,
+                    PhoneNumber = producerDto.PhoneNumber
+                };
+                bool isAllAlbumsValid = true;
+                foreach (var albumDto in producerDto.Albums)
+                {
+                    if (!IsValid(albumDto))
+                    {
+                        isAllAlbumsValid = false;
+                        break;
+                    }
+
+                    DateTime releaseDate;
+                    bool isValidDate = DateTime.TryParseExact(albumDto.ReleaseDate, "dd/MM/yyyy",
+                        CultureInfo.InvariantCulture, DateTimeStyles.None, out releaseDate);
+                    if (!isValidDate)
+                    {
+                        isAllAlbumsValid = false;
+                        break;
+                    }
+
+                    Album album = new Album()
+                    {
+                        Producer = producer,
+                        Name = albumDto.Name,
+                        ReleaseDate = releaseDate
+                    };
+
+                    producer.Albums.Add(album);
+                }
+
+                if (!isAllAlbumsValid)
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
+                producersToAdd.Add(producer);
+                string message = producer.PhoneNumber != null
+                    ? string.Format(SuccessfullyImportedProducerWithPhone, producer.Name, producer.PhoneNumber,
+                        producer.Albums.Count)
+                    : string.Format(SuccessfullyImportedProducerWithNoPhone, producer.Name, producer.Albums.Count);
+                sb.AppendLine(message);
+            }
+
+            context.Producers.AddRange(producersToAdd);
+            context.SaveChanges();
+            return sb.ToString().Trim();
         }
 
         public static string ImportSongs(MusicHubDbContext context, string xmlString)
