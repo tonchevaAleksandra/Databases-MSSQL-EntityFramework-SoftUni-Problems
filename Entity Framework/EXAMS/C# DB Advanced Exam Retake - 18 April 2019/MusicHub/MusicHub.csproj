@@ -17,8 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataProcessor\ImportDtos\" />
     <Folder Include="ImportResults\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Datasets\ImportWriters..json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

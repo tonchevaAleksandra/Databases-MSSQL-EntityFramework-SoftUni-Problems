@@ -18,9 +18,9 @@
 
             ResetDatabase(context, shouldDropDatabase: true);
 
-            //var projectDir = GetProjectDirectory();
-            
-            //ImportEntities(context, projectDir + @"Datasets/", projectDir + @"ImportResults/");
+            var projectDir = GetProjectDirectory();
+
+            ImportEntities(context, projectDir + @"Datasets/", projectDir + @"ImportResults/");
             //ExportEntities(context, projectDir + @"ExportResults/");
 
             //using (var transaction = context.Database.BeginTransaction())
@@ -32,7 +32,7 @@
         private static void ImportEntities(MusicHubDbContext context, string baseDir, string exportDir)
         {
             var writers = DataProcessor.Deserializer.ImportWriters(context,
-                    File.ReadAllText(baseDir + "Actual - ImportWriters.json"));
+                    File.ReadAllText(baseDir + "ImportWriters.json"));
             PrintAndExportEntityToFile(writers, exportDir + "ImportWriters.txt");
 
             //var producerAlbums = DataProcessor.Deserializer.ImportProducersAlbums(context,
