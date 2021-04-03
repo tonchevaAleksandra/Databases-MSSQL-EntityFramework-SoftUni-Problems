@@ -35,7 +35,7 @@ namespace PetClinic.DataProcessor
                     continue;
                 }
 
-                if (animalAidsToAdd.Any(x=>x.Name==animalAidDto.Name))
+                if (animalAidsToAdd.Any(x => x.Name == animalAidDto.Name))
                 {
                     sb.AppendLine(ErrorMessage);
                     continue;
@@ -79,7 +79,7 @@ namespace PetClinic.DataProcessor
                     continue;
                 }
 
-                if (passports.Any(x=>x.SerialNumber==animalDto.Passport.SerialNumber))
+                if (passports.Any(x => x.SerialNumber == animalDto.Passport.SerialNumber))
                 {
                     sb.AppendLine(ErrorMessage);
                     continue;
@@ -131,11 +131,11 @@ namespace PetClinic.DataProcessor
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ImportVetDto[]), new XmlRootAttribute("Vets"));
 
-            using (StringReader reader= new StringReader(xmlString))
+            using (StringReader reader = new StringReader(xmlString))
             {
-                ImportVetDto[] vetsDtos = (ImportVetDto[]) xmlSerializer.Deserialize(reader);
+                ImportVetDto[] vetsDtos = (ImportVetDto[])xmlSerializer.Deserialize(reader);
 
-                foreach (var vetDto in vetsDtos)  
+                foreach (var vetDto in vetsDtos)
                 {
                     if (!IsValid(vetDto))
                     {
@@ -143,7 +143,7 @@ namespace PetClinic.DataProcessor
                         continue;
                     }
 
-                    if (phoneNumbers.Any(x=>x.Equals(vetDto.PhoneNumber)))
+                    if (phoneNumbers.Any(x => x.Equals(vetDto.PhoneNumber)))
                     {
                         sb.AppendLine(ErrorMessage);
                         continue;
@@ -169,7 +169,99 @@ namespace PetClinic.DataProcessor
 
         public static string ImportProcedures(PetClinicContext context, string xmlString)
         {
-            return null;
+            StringBuilder sb = new StringBuilder();
+            List<Procedure> proceduresToAdd = new List<Procedure>();
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ImportProcedureDto[]), new XmlRootAttribute("Procedures"));
+
+            using (StringReader reader = new StringReader(xmlString))
+            {
+                ImportProcedureDto[] procedureDtos = (ImportProcedureDto[])xmlSerializer.Deserialize(reader);
+
+                foreach (var procedureDto in procedureDtos)
+                {
+                    List<AnimalAid> animalAids = new List<AnimalAid>();
+                    if (!IsValid(procedureDto))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    Vet vet = context.Vets.FirstOrDefault(x => x.Name == procedureDto.Vet);
+                    if (vet == null)
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    Animal animal = context.Animals.FirstOrDefault(x => x.Passport.SerialNumber == procedureDto.Animal);
+                    if (animal == null)
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    DateTime date;
+                    bool isValidDate = DateTime.TryParseExact(procedureDto.DateTime, "dd-MM-yyyy",
+                        CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+                    if (!isValidDate)
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    Procedure procedure = new Procedure()
+                    {
+                        Animal = animal,
+                        DateTime = date,
+                        Vet = vet
+                    };
+
+                    bool isAllAnimalAidsValid = true;
+                    foreach (var animalAidDto in procedureDto.AnimalAids)
+                    {
+                        if (!IsValid(animalAidDto))
+                        {
+                            isAllAnimalAidsValid = false;
+                            break;
+                        }
+
+                        AnimalAid animalAid = context.AnimalAids.FirstOrDefault(x => x.Name == animalAidDto.Name);
+                        if (animalAid == null)
+                        {
+                            isAllAnimalAidsValid = false;
+                            break;
+                        }
+
+                        if (animalAids.Any(x => x.Name == animalAid.Name))
+                        {
+                            isAllAnimalAidsValid = false;
+                            break;
+                        }
+
+                        animalAids.Add(animalAid);
+                        procedure.ProcedureAnimalAids.Add(new ProcedureAnimalAid()
+                        {
+                            AnimalAid = animalAid,
+                            Procedure = procedure
+                        });
+                    }
+
+                    if (!isAllAnimalAidsValid)
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    proceduresToAdd.Add(procedure);
+                    sb.AppendLine(SuccessMessageProcedure);
+                }
+            }
+
+            context.Procedures.AddRange(proceduresToAdd);
+            context.SaveChanges();
+
+            return sb.ToString().Trim();
         }
 
         public static bool IsValid(object obj)

@@ -29,8 +29,7 @@ namespace PetClinic.Models
 
         public virtual ICollection<ProcedureAnimalAid> ProcedureAnimalAids { get; set; }
 
-        [NotMapped]
-        public decimal Cost { get; set; }
+        [NotMapped] public decimal Cost => this.ProcedureAnimalAids.Sum(x => x.AnimalAid.Price);
 
         public DateTime DateTime { get; set; }
     }

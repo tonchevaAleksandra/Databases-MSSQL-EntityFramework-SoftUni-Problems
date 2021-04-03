@@ -36,8 +36,8 @@ namespace PetClinic.App
             string vets = DataProcessor.Deserializer.ImportVets(context, File.ReadAllText(baseDir + "vets.xml"));
             PrintAndExportEntityToFile(vets, exportDir + "VetsImport.txt");
 
-            //var procedures = DataProcessor.Deserializer.ImportProcedures(context, File.ReadAllText(baseDir + "procedures.xml"));
-            //PrintAndExportEntityToFile(procedures, exportDir + "ProceduresImport.txt");
+            var procedures = DataProcessor.Deserializer.ImportProcedures(context, File.ReadAllText(baseDir + "procedures.xml"));
+            PrintAndExportEntityToFile(procedures, exportDir + "ProceduresImport.txt");
         }
 
         private static void ExportEntities(PetClinicContext context)
