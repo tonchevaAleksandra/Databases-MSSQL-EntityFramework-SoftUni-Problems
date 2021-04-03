@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Stations.Models.Enums;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Stations.Models.Enums;
 
 namespace Stations.Models
 {
-   public class Train
+    public class Train
     {
         public Train()
         {

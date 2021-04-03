@@ -1,4 +1,5 @@
-﻿using Stations.Data;
+﻿using System;
+using Stations.Data;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Newtonsoft.Json;
 using Stations.DataProcessor.Dto.Import;
 using Stations.Models;
+using Stations.Models.Enums;
 
 namespace Stations.DataProcessor
 {
@@ -31,7 +33,7 @@ namespace Stations.DataProcessor
                     continue;
                 }
 
-                if (stationsToAdd.Any(x=>x.Name==stationDto.Name))
+                if (stationsToAdd.Any(x => x.Name == stationDto.Name))
                 {
                     sb.AppendLine(FailureMessage);
                     continue;
@@ -68,7 +70,7 @@ namespace Stations.DataProcessor
                     continue;
                 }
 
-                if (seatingClassesToAdd.Any(x=>x.Abbreviation.Equals(classDto.Abbreviation)) || seatingClassesToAdd.Any(x=>x.Name==classDto.Name))
+                if (seatingClassesToAdd.Any(x => x.Abbreviation.Equals(classDto.Abbreviation)) || seatingClassesToAdd.Any(x => x.Name == classDto.Name))
                 {
                     sb.AppendLine(FailureMessage);
                     continue;
@@ -92,7 +94,70 @@ namespace Stations.DataProcessor
 
         public static string ImportTrains(StationsDbContext context, string jsonString)
         {
-            return null;
+            var sb = new StringBuilder();
+
+            var serializer = JsonConvert.DeserializeObject<List<ImportTrainDto>>(jsonString);
+
+            var trainsToAdd = new List<Train>();
+
+            foreach (var trainDto in serializer)
+            {
+                if (!IsValid(trainDto) ||
+                    !trainDto.Seats.All(IsValid))
+                {
+                    sb.AppendLine(FailureMessage);
+
+                    continue;
+                }
+
+                if (trainsToAdd.Any(t => t.TrainNumber == trainDto.TrainNumber))
+                {
+                    sb.AppendLine(FailureMessage);
+
+                    continue;
+                }
+
+                if (trainDto.Type == null)
+                {
+                    trainDto.Type = TrainType.HighSpeed;
+                }
+
+                if (!trainDto.Seats
+                       .All(s => context.SeatingClasses
+                                      .Any(sc => sc.Name == s.Name &&
+                                                 sc.Abbreviation == s.Abbreviation)))
+                {
+                    sb.AppendLine(FailureMessage);
+
+                    continue;
+                }
+
+                var trainSeats = trainDto.Seats
+                    .Select(s => new TrainSeat()
+                    {
+                        SeatingClass = context.SeatingClasses.FirstOrDefault(sc =>
+                            sc.Name == s.Name && sc.Abbreviation == s.Abbreviation),
+                        Quantity = s.Quantity.Value
+                    })
+                    .ToList();
+
+                var train = new Train()
+                {
+                    TrainNumber = trainDto.TrainNumber,
+                    Type = trainDto.Type,
+                    TrainSeats = trainSeats
+                };
+
+                trainsToAdd.Add(train);
+
+                sb.AppendLine(string.Format(SuccessMessage, trainDto.TrainNumber));
+            }
+
+            context.Trains.AddRange(trainsToAdd);
+
+            context.SaveChanges();
+
+            return sb.ToString().Trim();
         }
 
         public static string ImportTrips(StationsDbContext context, string jsonString)

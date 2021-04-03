@@ -33,9 +33,9 @@ namespace Stations.App
 
             PrintAndExportEntityToFile(classes, exportDir + "Classes.txt");
 
-            //var trains = DataProcessor.Deserializer.ImportTrains(context, File.ReadAllText(baseDir + "trains.json"));
+            var trains = DataProcessor.Deserializer.ImportTrains(context, File.ReadAllText(baseDir + "trains.json"));
 
-            //PrintAndExportEntityToFile(trains, exportDir + "Trains.txt");
+            PrintAndExportEntityToFile(trains, exportDir + "Trains.txt");
 
             //var trips = DataProcessor.Deserializer.ImportTrips(context, File.ReadAllText(baseDir + "trips.json"));
 
