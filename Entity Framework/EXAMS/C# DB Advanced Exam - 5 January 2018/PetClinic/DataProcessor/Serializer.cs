@@ -1,7 +1,11 @@
 ﻿using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Xml.Serialization;
 using Newtonsoft.Json;
 using PetClinic.Data;
+using PetClinic.DataProcessor.Dto.Export;
 
 namespace PetClinic.DataProcessor
 {
@@ -30,7 +34,38 @@ namespace PetClinic.DataProcessor
 
         public static string ExportAllProcedures(PetClinicContext context)
         {
-            return null;
+            XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
+            namespaces.Add(string.Empty, string.Empty);
+
+            StringBuilder sb = new StringBuilder();
+
+            var procedures = context.Procedures
+                .Select(x => new ExportProcedureDto()
+                {
+                    Passport = x.Animal.PassportSerialNumber,
+                    OwnerNumber = x.Animal.Passport.OwnerPhoneNumber,
+                    DateTime = x.DateTime.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture),
+                    AnimalAids = x.ProcedureAnimalAids.Select(y => new ExportAnimalAidDto()
+                        {
+                            Name = y.AnimalAid.Name,
+                            Price = y.AnimalAid.Price
+                        })
+                        .ToArray(),
+                    TotalPrice = x.ProcedureAnimalAids.Sum(y => y.AnimalAid.Price)
+                })
+                .OrderBy(x => x.DateTime)
+                .ThenBy(x => x.Passport)
+                .ToArray();
+
+            XmlSerializer xmlSerializer =
+                new XmlSerializer(typeof(ExportProcedureDto[]), new XmlRootAttribute("Procedures"));
+
+            using (StringWriter writer= new StringWriter(sb))
+            {
+                xmlSerializer.Serialize(writer, procedures, namespaces);
+            }
+
+            return sb.ToString().Trim();
         }
     }
 }
