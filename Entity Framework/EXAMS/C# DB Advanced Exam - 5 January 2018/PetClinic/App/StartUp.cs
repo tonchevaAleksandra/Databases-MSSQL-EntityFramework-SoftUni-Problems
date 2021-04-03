@@ -23,15 +23,15 @@ namespace PetClinic.App
             }
         }
 
-        private static void ImportEntities(PetClinicContext context, string baseDir = @"..\..\..\..\Datasets\")
+        private static void ImportEntities(PetClinicContext context, string baseDir = @"..\..\..\Datasets\")
         {
             const string exportDir = "../../../Results/";
 
             string animalAids = DataProcessor.Deserializer.ImportAnimalAids(context, File.ReadAllText(baseDir + "animalAids.json"));
             PrintAndExportEntityToFile(animalAids, exportDir + "AnimalAidsImport.txt");
 
-            //string animals = DataProcessor.Deserializer.ImportAnimals(context, File.ReadAllText(baseDir + "animals.json"));
-            //PrintAndExportEntityToFile(animals, exportDir + "AnimalsImport.txt");
+            string animals = DataProcessor.Deserializer.ImportAnimals(context, File.ReadAllText(baseDir + "animals.json"));
+            PrintAndExportEntityToFile(animals, exportDir + "AnimalsImport.txt");
 
             //string vets = DataProcessor.Deserializer.ImportVets(context, File.ReadAllText(baseDir + "vets.xml"));
             //PrintAndExportEntityToFile(vets, exportDir + "VetsImport.txt");
