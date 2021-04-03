@@ -33,6 +33,7 @@ namespace Stations.DataProcessor
 
                 if (stationsToAdd.Any(x=>x.Name==stationDto.Name))
                 {
+                    sb.AppendLine(FailureMessage);
                     continue;
                 }
                 Station station = new Station()
@@ -54,7 +55,39 @@ namespace Stations.DataProcessor
 
         public static string ImportClasses(StationsDbContext context, string jsonString)
         {
-            return null;
+            StringBuilder sb = new StringBuilder();
+            ImportSeatingClassDto[] classDtos = JsonConvert.DeserializeObject<ImportSeatingClassDto[]>(jsonString);
+
+            List<SeatingClass> seatingClassesToAdd = new List<SeatingClass>();
+
+            foreach (var classDto in classDtos)
+            {
+                if (!IsValid(classDto))
+                {
+                    sb.AppendLine(FailureMessage);
+                    continue;
+                }
+
+                if (seatingClassesToAdd.Any(x=>x.Abbreviation.Equals(classDto.Abbreviation)) || seatingClassesToAdd.Any(x=>x.Name==classDto.Name))
+                {
+                    sb.AppendLine(FailureMessage);
+                    continue;
+                }
+
+                SeatingClass seatingClass = new SeatingClass()
+                {
+                    Name = classDto.Name,
+                    Abbreviation = classDto.Abbreviation
+                };
+
+                seatingClassesToAdd.Add(seatingClass);
+                sb.AppendLine(string.Format(SuccessMessage, seatingClass.Name));
+            }
+
+            context.SeatingClasses.AddRange(seatingClassesToAdd);
+            context.SaveChanges();
+
+            return sb.ToString().Trim();
         }
 
         public static string ImportTrains(StationsDbContext context, string jsonString)

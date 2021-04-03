@@ -39,6 +39,7 @@ Record Rzhev successfully imported.
 Invalid data format.
 Record Varna successfully imported.
 Invalid data format.
+Invalid data format.
 Record Heqian successfully imported.
 Record Hirvensalmi successfully imported.
 Record Cikabuyutan Barat successfully imported.
