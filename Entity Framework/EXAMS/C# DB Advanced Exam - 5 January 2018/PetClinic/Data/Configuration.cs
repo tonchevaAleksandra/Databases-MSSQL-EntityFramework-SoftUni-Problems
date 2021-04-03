@@ -2,6 +2,6 @@
 {
     public static class Configuration
     {
-        public static string ConnectionString = @"Server=.;Database=FastFood;Trusted_Connection=True";
+        public static string ConnectionString = @"Server=ALEKSANDRA\SQLEXPRESS;Database=FastFood;Trusted_Connection=True";
     }
 }

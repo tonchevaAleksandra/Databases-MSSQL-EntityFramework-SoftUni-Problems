@@ -1,6 +1,7 @@
 ﻿using PetClinic.Data;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace PetClinic.DataProcessor
 {
@@ -13,7 +14,8 @@ namespace PetClinic.DataProcessor
 
         public static string ImportAnimalAids(PetClinicContext context, string jsonString)
         {
-            return null;
+            StringBuilder sb = new StringBuilder();
+            return sb.ToString().Trim();
         }
 
         public static string ImportAnimals(PetClinicContext context, string jsonString)
