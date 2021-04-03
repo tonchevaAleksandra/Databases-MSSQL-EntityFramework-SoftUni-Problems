@@ -10,7 +10,7 @@ namespace Stations.DataProcessor.Dto.Import
         [MaxLength(10)]
         public string TrainNumber { get; set; }
 
-        [Range(1,3)]
+        [Range(0,2)]
         public TrainType? Type { get; set; }
 
         public List<ImportTrainSeatDto> Seats => new List<ImportTrainSeatDto>();

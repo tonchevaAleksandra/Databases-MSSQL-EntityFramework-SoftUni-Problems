@@ -6,6 +6,7 @@ namespace Stations.DataProcessor.Dto.Import
     {
 
         [Required]
+        [MaxLength(30)]
         public string Name { get; set; }
 
         [Required]

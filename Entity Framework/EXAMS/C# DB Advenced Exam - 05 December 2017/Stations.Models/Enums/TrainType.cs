@@ -2,8 +2,8 @@
 {
     public enum TrainType
     {
-        HighSpeed = 1,
-        LongDistance = 2,
-        Freight = 3
+        HighSpeed = 0,
+        LongDistance = 1,
+        Freight = 2
     }
 }

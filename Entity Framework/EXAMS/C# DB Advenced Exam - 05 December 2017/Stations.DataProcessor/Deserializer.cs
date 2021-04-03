@@ -94,67 +94,56 @@ namespace Stations.DataProcessor
 
         public static string ImportTrains(StationsDbContext context, string jsonString)
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
+            ImportTrainDto[] trainDtos = JsonConvert.DeserializeObject<ImportTrainDto[]>(jsonString);
 
-            var serializer = JsonConvert.DeserializeObject<List<ImportTrainDto>>(jsonString);
+            List<Train> trainsToAdd = new List<Train>();
 
-            var trainsToAdd = new List<Train>();
-
-            foreach (var trainDto in serializer)
+            foreach (var trainDto in trainDtos)
             {
-                if (!IsValid(trainDto) ||
-                    !trainDto.Seats.All(IsValid))
+                if (!IsValid(trainDto) || !trainDto.Seats.All(IsValid))
                 {
                     sb.AppendLine(FailureMessage);
-
                     continue;
                 }
 
-                if (trainsToAdd.Any(t => t.TrainNumber == trainDto.TrainNumber))
+                if (trainsToAdd.Any(x => x.TrainNumber == trainDto.TrainNumber))
                 {
                     sb.AppendLine(FailureMessage);
-
                     continue;
-                }
-
-                if (trainDto.Type == null)
-                {
-                    trainDto.Type = TrainType.HighSpeed;
                 }
 
                 if (!trainDto.Seats
-                       .All(s => context.SeatingClasses
-                                      .Any(sc => sc.Name == s.Name &&
-                                                 sc.Abbreviation == s.Abbreviation)))
+                    .All(s => context.SeatingClasses
+                        .Any(sc => sc.Name == s.Name &&
+                                   sc.Abbreviation == s.Abbreviation)))
                 {
                     sb.AppendLine(FailureMessage);
 
                     continue;
                 }
 
-                var trainSeats = trainDto.Seats
-                    .Select(s => new TrainSeat()
-                    {
-                        SeatingClass = context.SeatingClasses.FirstOrDefault(sc =>
-                            sc.Name == s.Name && sc.Abbreviation == s.Abbreviation),
-                        Quantity = s.Quantity.Value
-                    })
-                    .ToList();
-
-                var train = new Train()
+                Train train = new Train()
                 {
                     TrainNumber = trainDto.TrainNumber,
-                    Type = trainDto.Type,
-                    TrainSeats = trainSeats
+                    Type = trainDto.Type ?? TrainType.HighSpeed
                 };
 
-                trainsToAdd.Add(train);
+                train.TrainSeats = trainDto.Seats
+                    .Select(x => new TrainSeat()
+                    {
+                        SeatingClass =
+                            context.SeatingClasses.FirstOrDefault(s =>
+                                s.Name == x.Name && s.Abbreviation == x.Abbreviation),
+                        Quantity = x.Quantity.Value,
+                        Train = train
+                    }).ToList();
 
-                sb.AppendLine(string.Format(SuccessMessage, trainDto.TrainNumber));
+                trainsToAdd.Add(train);
+                sb.AppendLine(string.Format(SuccessMessage, train.TrainNumber));
             }
 
             context.Trains.AddRange(trainsToAdd);
-
             context.SaveChanges();
 
             return sb.ToString().Trim();
