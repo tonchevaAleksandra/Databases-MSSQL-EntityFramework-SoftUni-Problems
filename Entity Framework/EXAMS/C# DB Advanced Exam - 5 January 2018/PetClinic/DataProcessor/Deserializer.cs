@@ -3,8 +3,10 @@ using PetClinic.Data;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 using Microsoft.EntityFrameworkCore.Internal;
 using Newtonsoft.Json;
 using PetClinic.DataProcessor.Dto.Import;
@@ -123,7 +125,46 @@ namespace PetClinic.DataProcessor
 
         public static string ImportVets(PetClinicContext context, string xmlString)
         {
-            return null;
+            StringBuilder sb = new StringBuilder();
+            List<string> phoneNumbers = new List<string>();
+            List<Vet> vetsToAdd = new List<Vet>();
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ImportVetDto[]), new XmlRootAttribute("Vets"));
+
+            using (StringReader reader= new StringReader(xmlString))
+            {
+                ImportVetDto[] vetsDtos = (ImportVetDto[]) xmlSerializer.Deserialize(reader);
+
+                foreach (var vetDto in vetsDtos)  
+                {
+                    if (!IsValid(vetDto))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    if (phoneNumbers.Any(x=>x.Equals(vetDto.PhoneNumber)))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    Vet vet = new Vet()
+                    {
+                        Age = vetDto.Age,
+                        Name = vetDto.Name,
+                        PhoneNumber = vetDto.PhoneNumber,
+                        Profession = vetDto.Profession
+                    };
+
+                    vetsToAdd.Add(vet);
+                    sb.AppendLine(string.Format(SuccessMessage, vet.Name));
+                }
+            }
+
+            context.Vets.AddRange(vetsToAdd);
+            context.SaveChanges();
+            return sb.ToString().Trim();
         }
 
         public static string ImportProcedures(PetClinicContext context, string xmlString)
