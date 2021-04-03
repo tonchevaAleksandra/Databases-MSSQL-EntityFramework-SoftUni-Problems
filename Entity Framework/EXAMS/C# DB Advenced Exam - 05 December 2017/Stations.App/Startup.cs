@@ -16,7 +16,7 @@ namespace Stations.App
 
             Mapper.Initialize(cfg => cfg.AddProfile<StationsProfile>());
 
-            //ImportEntities(context);
+            ImportEntities(context);
 
             //ExportEntities(context);
         }
@@ -29,20 +29,20 @@ namespace Stations.App
 
             PrintAndExportEntityToFile(stations, exportDir + "Stations.txt");
 
-            //var classes = DataProcessor.Deserializer.ImportClasses(context, File.ReadAllText(baseDir + "classes.json"));
+            var classes = DataProcessor.Deserializer.ImportClasses(context, File.ReadAllText(baseDir + "classes.json"));
 
-            //PrintAndExportEntityToFile(classes, exportDir + "Classes.txt");
+            PrintAndExportEntityToFile(classes, exportDir + "Classes.txt");
 
             //var trains = DataProcessor.Deserializer.ImportTrains(context, File.ReadAllText(baseDir + "trains.json"));
 
             //PrintAndExportEntityToFile(trains, exportDir + "Trains.txt");
 
             //var trips = DataProcessor.Deserializer.ImportTrips(context, File.ReadAllText(baseDir + "trips.json"));
-            
+
             //PrintAndExportEntityToFile(trips, exportDir + "Trips.txt");
 
             //var cards = DataProcessor.Deserializer.ImportCards(context, File.ReadAllText(baseDir + "cards.xml"));
-           
+
             //PrintAndExportEntityToFile(cards, exportDir + "Cards.txt");
 
             //var tickets = DataProcessor.Deserializer.ImportTickets(context, File.ReadAllText(baseDir + "tickets.xml"));

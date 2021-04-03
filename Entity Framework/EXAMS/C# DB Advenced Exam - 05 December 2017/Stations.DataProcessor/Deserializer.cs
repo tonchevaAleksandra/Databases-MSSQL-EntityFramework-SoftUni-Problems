@@ -1,6 +1,12 @@
 ﻿using Stations.Data;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using Microsoft.EntityFrameworkCore.Internal;
+using Newtonsoft.Json;
+using Stations.DataProcessor.Dto.Import;
+using Stations.Models;
 
 namespace Stations.DataProcessor
 {
@@ -12,7 +18,38 @@ namespace Stations.DataProcessor
 
         public static string ImportStations(StationsDbContext context, string jsonString)
         {
-            return null;
+            StringBuilder sb = new StringBuilder();
+            ImportStationDto[] stationDtos = JsonConvert.DeserializeObject<ImportStationDto[]>(jsonString);
+
+            List<Station> stationsToAdd = new List<Station>();
+
+            foreach (var stationDto in stationDtos)
+            {
+                if (!IsValid(stationDto))
+                {
+                    sb.AppendLine(FailureMessage);
+                    continue;
+                }
+
+                if (stationsToAdd.Any(x=>x.Name==stationDto.Name))
+                {
+                    continue;
+                }
+                Station station = new Station()
+                {
+                    Name = stationDto.Name,
+                    Town = stationDto.Town ?? stationDto.Name
+                };
+
+                stationsToAdd.Add(station);
+
+                sb.AppendLine(string.Format(SuccessMessage, station.Name));
+            }
+
+            context.Stations.AddRange(stationsToAdd);
+            context.SaveChanges();
+
+            return sb.ToString().Trim();
         }
 
         public static string ImportClasses(StationsDbContext context, string jsonString)

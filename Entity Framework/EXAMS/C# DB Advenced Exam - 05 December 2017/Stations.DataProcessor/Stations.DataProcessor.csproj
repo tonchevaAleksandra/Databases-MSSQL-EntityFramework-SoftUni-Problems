@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dto\Import\**" />
+    <Compile Remove="Dto\NewFolder\**" />
+    <EmbeddedResource Remove="Dto\Import\**" />
+    <EmbeddedResource Remove="Dto\NewFolder\**" />
+    <None Remove="Dto\Import\**" />
+    <None Remove="Dto\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
@@ -16,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Dto\Export\" />
-    <Folder Include="Dto\Import\" />
   </ItemGroup>
 
 </Project>
