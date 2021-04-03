@@ -180,7 +180,6 @@ namespace PetClinic.DataProcessor
 
                 foreach (var procedureDto in procedureDtos)
                 {
-                    List<AnimalAid> animalAids = new List<AnimalAid>();
                     if (!IsValid(procedureDto))
                     {
                         sb.AppendLine(ErrorMessage);
@@ -188,23 +187,13 @@ namespace PetClinic.DataProcessor
                     }
 
                     Vet vet = context.Vets.FirstOrDefault(x => x.Name == procedureDto.Vet);
-                    if (vet == null)
-                    {
-                        sb.AppendLine(ErrorMessage);
-                        continue;
-                    }
 
                     Animal animal = context.Animals.FirstOrDefault(x => x.Passport.SerialNumber == procedureDto.Animal);
-                    if (animal == null)
-                    {
-                        sb.AppendLine(ErrorMessage);
-                        continue;
-                    }
 
                     DateTime date;
                     bool isValidDate = DateTime.TryParseExact(procedureDto.DateTime, "dd-MM-yyyy",
                         CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
-                    if (!isValidDate)
+                    if (vet == null || animal == null || !isValidDate)
                     {
                         sb.AppendLine(ErrorMessage);
                         continue;
@@ -217,40 +206,30 @@ namespace PetClinic.DataProcessor
                         Vet = vet
                     };
 
-                    bool isAllAnimalAidsValid = true;
                     foreach (var animalAidDto in procedureDto.AnimalAids)
                     {
                         if (!IsValid(animalAidDto))
                         {
-                            isAllAnimalAidsValid = false;
-                            break;
+                            sb.AppendLine(ErrorMessage);
+
+                            continue;
                         }
 
-                        AnimalAid animalAid = context.AnimalAids.FirstOrDefault(x => x.Name == animalAidDto.Name);
-                        if (animalAid == null)
+                        AnimalAid animalAid = context.AnimalAids.FirstOrDefault(aa => aa.Name == animalAidDto.Name);
+
+                        bool isProcedureHasAnimalAid = procedure.ProcedureAnimalAids.Any(p => p.AnimalAid.Name == animalAid.Name);
+
+                        if (animalAid == null || isProcedureHasAnimalAid)
                         {
-                            isAllAnimalAidsValid = false;
-                            break;
+                            sb.AppendLine(ErrorMessage);
+                            continue;
                         }
 
-                        if (animalAids.Any(x => x.Name == animalAid.Name))
-                        {
-                            isAllAnimalAidsValid = false;
-                            break;
-                        }
-
-                        animalAids.Add(animalAid);
                         procedure.ProcedureAnimalAids.Add(new ProcedureAnimalAid()
                         {
                             AnimalAid = animalAid,
                             Procedure = procedure
                         });
-                    }
-
-                    if (!isAllAnimalAidsValid)
-                    {
-                        sb.AppendLine(ErrorMessage);
-                        continue;
                     }
 
                     proceduresToAdd.Add(procedure);
