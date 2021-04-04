@@ -18,6 +18,7 @@
     <Compile Include="Dto\Import\ImportTrainSeatDto.cs" />
     <Compile Include="Dto\Import\ImportSeatingClassDto.cs" />
     <Compile Include="Dto\Import\ImportStationDto.cs" />
+    <Compile Include="Dto\Import\ImportTripDto.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -151,7 +151,8 @@ namespace Stations.DataProcessor
 
         public static string ImportTrips(StationsDbContext context, string jsonString)
         {
-            return null;
+            StringBuilder sb = new StringBuilder();
+
         }
 
         public static string ImportCards(StationsDbContext context, string xmlString)
