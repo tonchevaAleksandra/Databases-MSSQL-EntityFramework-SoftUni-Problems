@@ -63,5 +63,32 @@ create table SubscriptionRequest
     ApplicationUserId int not null foreign key references ApplicationUser
 )
 
+alter table Book
+add IsDeleted bit default (0)
+
+create table BookRequest
+(
+    Id int primary key identity ,
+    BookId int not null foreign key references Book,
+    ApplicationUserId int not null foreign key references ApplicationUser,
+    CreatedDate datetime2 not null ,
+    AvailabilityDate datetime2 ,
+    ExpiryDate datetime2,
+    IsApproved bit default (0)
+)
+
+create table BookComment
+(
+    Id int primary key identity ,
+    Text nvarchar(max) not null ,
+    Rating int not null check (Rating>=1 and Rating<=5),
+    ApplicationUserId int not null foreign key references ApplicationUser,
+    BookId int not null foreign key references Book,
+    IsActive bit default (0)
+)
+
+
+
+
 
 
